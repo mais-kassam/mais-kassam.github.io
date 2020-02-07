@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Ad Surveys using Ad Manager</title>
+    
+    <script>!function(n,e,o,r,i){if(!e){e=e||{},window.permutive=e,e.q=[],e.config=i||{},e.config.projectId=o,e.config.apiKey=r,e.config.environment=e.config.environment||"production";for(var t=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],c=0;c<t.length;c++){var f=t[c];e[f]=function(n){return function(){var o=Array.prototype.slice.call(arguments,0);e.q.push({functionName:n,arguments:o})}}(f)}}}(document,window.permutive,"e0039147-51e7-4224-a814-0e2d438aabcd","da4d09b5-843a-4bd5-bd79-8cea7f69f730",{}); window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}}); permutive.addon('web', {}) </script>
+    <script async src="https://cdn.permutive.com/e0039147-51e7-4224-a814-0e2d438aabcd-web.js"></script>
+
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/fonts.css" />
+    <script>
+
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header one-edge-shadow">
+            <h1 class="brand-logo"><img src="/images/logo-permutive.svg" alt="Permutive Logo"></h1>
+            <div class="header-right">
+            </div>
+        </div>
+    </header>
+
+    
+    <div class="row">
+        <div class="column ad-definition">
+            <h2>Define the questions here</h2>
+            <h3>What is the ad-slot size?</h3>
+            <div class="ad-drop">
+                <select class="custom-select" id="ad-size">
+                    <option value="size-selection">Please select a size...</option>
+                    <option value="custom">Custom...</option>
+                    <option value="out-of-page">Out of Page</option>
+                </select>
+            </div>
+            <div class="custom-input">
+                <h3>Width:<input type="Width" id="width">Height: <input type="Height" id="height"></h3>
+            </div>
+            <!-- <br> -->
+            <h3>How many questions do you want to have?
+            <!-- <div> -->
+                <select class="custom-select" id="no-questions">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4" selected>4</option>
+                </select>
+            <!-- </div> -->
+            </h3>
+            <div class="custom-input" style="display: block;">
+                <h3>End of questions message:</h3>
+                <input type="Thanks" id="thank" class="thanks" placeholder="Thank you for your responses.">
+            </div>
+            <div>
+                <button class="submit" id="submit-btn">Submit</button>
+            </div>
+        </div>
+        <div class="variables">
+            <ul class="variables-list" id="var-list"></ul>    
+        </div>
+        <div class="column">
+            <pre>
+                <div class="copy-btn-div"><button class="copy" id="copy-code"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 415.998 415.998" style="enable-background:new 0 0 415.998 415.998;" xml:space="preserve"> <g> <g> <circle cx="208.239" cy="48" r="12"/> </g> </g> <g> <g> <path d="M367.998,95.999c0-17.673-14.326-32-31.999-32h-44.424c-5.926-6.583-13.538-11.62-22.284-14.136 c-7.367-2.118-13.037-7.788-15.156-15.155C248.37,14.663,229.897,0,207.998,0c-21.898,0-40.37,14.663-46.134,34.706 c-2.122,7.376-7.806,13.039-15.182,15.164c-8.736,2.518-16.341,7.55-22.262,14.129H79.999c-17.674,0-32,14.327-32,32v287.999 c0,17.673,14.326,32,32,32c73.466,0,163.758,0,256,0c17.674,0,32-14.327,32-32C367.999,293.119,367.998,206.096,367.998,95.999z M128,95.742c0.11-14.066,9.614-26.606,23.112-30.496c12.71-3.662,22.477-13.426,26.127-26.116 C181.157,25.51,193.805,16,207.998,16c14.194,0,26.842,9.51,30.758,23.13c3.652,12.698,13.413,22.459,26.111,26.11 c13.618,3.917,23.13,16.566,23.13,30.758v16H128V95.742z M335.999,399.998c-85.455,0-170.77,0-256,0c-8.823,0-16-7.178-16-16 V95.999c0-8.822,7.177-16,16-16h34.742c-1.73,4.892-2.698,10.143-2.74,15.617v32.383h191.998v-32c0-5.615-0.992-10.991-2.764-16 h34.764c8.822,0,15.999,7.178,15.999,16c0,45.743-0.001,260.254,0.002,287.999C351.999,392.82,344.822,399.998,335.999,399.998z" /> </g> </g> <g> <g> <polygon points="274.51,194.508 178.343,290.674 135.955,248.286 124.642,259.6 178.343,313.302 285.823,205.822 		"/> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg></button></div>
+                <code>
+                    
+YOUR CODE GOES HERE
+                </code>
+              </pre>
+        </div>
+    </div>
+    <div class="ad-slot-render">
+        <h2>Here is the render of your ad slot</h2>
+        <iframe src="" frameborder="0" scrolling="no" onload="resizeIframe(this)" id="ad-frame">
+            <p>Your browser does not support iframes.</p>
+          </iframe>
+    </div>
+</body>
+<script src="/main.js"></script>
+</html>
