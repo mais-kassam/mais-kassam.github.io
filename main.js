@@ -845,7 +845,7 @@ window.onclick = function(event) {
 }
 
 function getGiphy(){
-  var xhr = $.get("http://api.giphy.com/v1/gifs/random?api_key=7b2ntI38Cu0wNw7u1Wz050RBKjElZEIS&tag=celebrate&limit=1");
+  var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=7b2ntI38Cu0wNw7u1Wz050RBKjElZEIS&tag=celebrate&limit=1");
   xhr.done(function(data) { 
     document.getElementById("giphy").src = data.data.images.original.url
     copyFunction ()
