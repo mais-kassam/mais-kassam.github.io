@@ -357,12 +357,23 @@ textarea {
 .delete{
   position: relative;
   width: 36px;
-  height: 36px;
   height: 35px;
-  left: 188px;
+  left: 175px;
   border: none;
   float: right;
-  top: 6px;
+  top: 3px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0);
+}
+
+.trash-svg{
+  position: relative;
+  width: 36px;
+  height: 25px;
+  left: 211px;
+  border: none;
+  float: right;
+  top: 7px;
 }
 
 ul {
