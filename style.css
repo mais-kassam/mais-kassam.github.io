@@ -16,11 +16,12 @@ body::placeholder {
   overflow: hidden;
   background-color: #fff;
   padding: 20px 20px 20px 30px;
+  background-image: url("/images/raaadh.png");
 }
-.one-edge-shadow {
-  box-shadow: 0 3px 6px -6px black;
 
-}
+/* .one-edge-shadow {
+  box-shadow: 0 3px 6px -6px black;
+} */
 
 h2{
   font-size: 24px;
