@@ -297,8 +297,8 @@ var strings = {
         .replace("\"vars\"", "   \"vars\"")
         .replace("\"extraUrlParams\"", "   \"extraUrlParams\"")
         .replace("},", "   },")
-        .replace(/": "\[<LIST>,<OF>,<INTEGERS>\]"/g, "!list[integer]\": \"<CSV_LIST>\"")
-        .replace(/": "\[<LIST>,<OF>,<FLOATS>\]"/g, "!list[float]\": \"<CSV_LIST>\"")}
+        .replace(/": "\[<LIST>,<OF>,<INTEGERS>\]"/g, "!list[number]\": \"<CSV_LIST>\"")
+        .replace(/": "\[<LIST>,<OF>,<FLOATS>\]"/g, "!list[number]\": \"<CSV_LIST>\"")}
         }
       }  
       </script>
