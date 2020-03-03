@@ -332,45 +332,22 @@ var strings = {
   },
   
   androidDeployment: function(){
+    if(document.getElementById('java').checked == false && document.getElementById('kotlin').checked == false ){
+    return `# Android Deployment
+
+  Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment.`
+    }else{
     return `# Android Deployment
 
   Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment. Below are examples of the \`PageView\` tag needed:
   
-  ### Kotlin
+  ${returnKotlin()}
 
-  \`\`\`
-  //To track Pageview event
-  val pageTracker = permutive.trackPage(
-    eventProperties = EventProperties.Builder()
- ${returnKotlinJson(propertyData)}
-      .build(),
-    title = "<STRING>",
-    url = Uri.parse("<URL STRING>"),
-    referrer = Uri.parse("<REFERRER STRING>")
-  )
-​
-  //to track PageviewEngagementAggregate event
-  pageTracker.close()
-  \`\`\`
 
-  ### Java
+  ${returnJava()}
 
-  \`\`\`
-  //To track Pageview event
-  final PageTracker pageTracker = permutive.trackPage(
-    new EventProperties.Builder()
- ${returnJavaJson(propertyData)}
-      .build(),
-    "<STRING>",
-    Uri.parse("<URL STRING>"),
-    Uri.parse("<REFERRER STRING>")
-  )
-​
-  //to track PageviewEngagementAggregate event
-  pageTracker.close()
-  \`\`\`
   `
-  },
+  }},
 
   iosDeployment: function(){
     return `# iOS Deployment
@@ -393,6 +370,51 @@ var strings = {
   `
   },
 }
+
+function returnKotlin(){
+  if(document.getElementById('kotlin').checked == true){
+  return `### Kotlin
+
+  \`\`\`
+  //To track Pageview event
+  val pageTracker = permutive.trackPage(
+    eventProperties = EventProperties.Builder()
+ ${returnKotlinJson(propertyData)}
+      .build(),
+    title = "<STRING>",
+    url = Uri.parse("<URL STRING>"),
+    referrer = Uri.parse("<REFERRER STRING>")
+  )
+​
+  //to track PageviewEngagementAggregate event
+  pageTracker.close()
+  \`\`\`
+  `
+  } else return ""
+}
+
+function returnJava(){
+  if(document.getElementById('java').checked == true){
+  return `### Java
+
+  \`\`\`
+  //To track Pageview event
+  final PageTracker pageTracker = permutive.trackPage(
+    new EventProperties.Builder()
+ ${returnJavaJson(propertyData)}
+      .build(),
+    "<STRING>",
+    Uri.parse("<URL STRING>"),
+    Uri.parse("<REFERRER STRING>")
+  )
+​
+  //to track PageviewEngagementAggregate event
+  pageTracker.close()
+  \`\`\`
+  `
+  } else return ""
+}
+
 
 var data = []
 var uniObj
@@ -604,6 +626,14 @@ function setUpEventListeners() {
     if(e.target.id.includes('delete-btn')){
       var child = e.target.parentNode
       child.parentNode.removeChild(child)
+    }
+  })
+  document.getElementById("android").addEventListener('change', function(){
+    var list = document.querySelector(".input-list")
+    if(this.checked){
+      list.style = "display:block"
+    }else{
+      list.style = "display:none"
     }
   })
 }

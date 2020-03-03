@@ -281,6 +281,8 @@ div {
   list-style: none;
   margin-left: -25px;
   margin-top: 4px;
+  margin-bottom: 4px;
+  display: none;
 }
 
 #ad-size.custom-select {
