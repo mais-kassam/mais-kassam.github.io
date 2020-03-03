@@ -44,10 +44,13 @@ var propetyType = function(string){
   <select class="custom-select" id="property-type">
     <option value="string">String</option>
     <option value="integer">Integer</option>
+    <option value="float">Float</option>
     <option value="object">Object</option>
     <option value="date">Date/Time</option>
     <option value="boolean">Boolean</option>
     <option value="lostring">List of Strings</option>
+    <option value="lointegers">List of Integers</option>
+    <option value="lofloats">List of Floats</option>
   </select><button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>`
 }
 
@@ -56,10 +59,13 @@ var typeElement = `
 <select class="custom-select" id="property-type-item-type" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('type')}</li>`
 
 var contentElement = `
@@ -67,18 +73,24 @@ var contentElement = `
 <select class="custom-select" id="property-type-item-content" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object" selected>Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('content')}<ul id="properties-content"><li class="property-item" id="item-content-categories" style="width: 300px;">Categories                
 <select class="custom-select" id="property-type-item-content-categories" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring" selected>List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('content-categories')}</li></ul><button id="add-sub-property-content" class="add-sub-property">+ Add Property</button></li>`
 
 var articleElement = `
@@ -86,74 +98,101 @@ var articleElement = `
 <select class="custom-select" id="property-type-item-article" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object" selected>Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article')}<ul id="properties-article"><li class="property-item" id="item-article-properties" style="width: 300px;">Id                
 <select class="custom-select" id="property-type-item-article-properties" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-properties')}</li><li class="property-item" id="item-article-title" style="width: 300px;">Title                
 <select class="custom-select" id="property-type-item-article-title" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-title')}</li><li class="property-item" id="item-article-description" style="width: 300px;">Description                
 <select class="custom-select" id="property-type-item-article-description" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-description')}</li><li class="property-item" id="item-article-authors" style="width: 300px;">Authors                
 <select class="custom-select" id="property-type-item-article-authors" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring" selected>List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-authors')}</li><li class="property-item" id="item-article-tags" style="width: 300px;">Tags                
 <select class="custom-select" id="property-type-item-article-tags" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring" selected>List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-tags')}</li><li class="property-item" id="item-article-modified" style="width: 300px;">Modified at                
 <select class="custom-select" id="property-type-item-article-modified" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date" selected>Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-modified')}</li><li class="property-item" id="item-article-published" style="width: 300px;">Published at                
 <select class="custom-select" id="property-type-item-article-published" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date" selected>Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-published')}</li><li class="property-item" id="item-article-premium" style="width: 300px;">Premium                
 <select class="custom-select" id="property-type-item-article-premium" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean" selected>Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('article-premium')}</li></ul><button id="add-sub-property-article" class="add-sub-property">+ Add Property</button></li>`
 
 var userElement = `
@@ -161,18 +200,24 @@ var userElement = `
 <select class="custom-select" id="property-type-item-user" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object" selected>Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('user')}<ul id="properties-user"><li class="property-item" id="item-user-type" style="width: 300px;">Type                
 <select class="custom-select" id="property-type-item-user-type" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
+  <option value="float">Float</option>
   <option value="object">Object</option>
   <option value="date">Date/Time</option>
   <option value="boolean">Boolean</option>
   <option value="lostring">List of Strings</option>
+  <option value="lointegers">List of Integers</option>
+  <option value="lofloats">List of Floats</option>
 </select>${trashSvg('user-type')}</li></ul><button id="add-sub-property-user" class="add-sub-property">+ Add Property</button></li>`
 
 var strings = {
@@ -248,7 +293,12 @@ var strings = {
   \`\`\`
     <amp-analytics type="permutive">
       <script type="application/json">
-      {${JSON.stringify(amp, null, 5).substring(0, JSON.stringify(amp, null, 5).length - 9).substr(1).replace("\"vars\"", "   \"vars\"").replace("\"extraUrlParams\"", "   \"extraUrlParams\"").replace("},", "   },")}
+      {${JSON.stringify(amp, null, 5).substring(0, JSON.stringify(amp, null, 5).length - 9).substr(1)
+        .replace("\"vars\"", "   \"vars\"")
+        .replace("\"extraUrlParams\"", "   \"extraUrlParams\"")
+        .replace("},", "   },")
+        .replace(/": "\[<LIST>,<OF>,<INTEGERS>\]"/g, "!list[integer]\": \"<CSV_LIST>\"")
+        .replace(/": "\[<LIST>,<OF>,<FLOATS>\]"/g, "!list[float]\": \"<CSV_LIST>\"")}
         }
       }  
       </script>
@@ -510,9 +560,12 @@ function returnKotlinJson(propertyData){
       .replace(/\\/g, "" )
       .replace(/"(\w+)"\s*: "<STRING>"\,?/g, '   .with("$1", "<STRING>")')
       .replace(/"(\w+)"\s*: "<INTEGER>"\,?/g, '   .with("$1", 12345)')
+      .replace(/"(\w+)"\s*: "<FLOAT>"\,?/g, '   .with("$1", 123.45)')
       .replace(/"(\w+)"\s*: "<BOOLEAN>"\,?/g, '   .with("$1", true)')
       .replace(/"(\w+)"\s*: "<DATE\/TIME>"\,?/g, '   .with("$1", Date())')
       .replace(/"(\w+)"\s*: "\["<LIST>","<OF>","<STRINGS>"\]"\,?/g, '   .withStrings("$1", listOf("<LIST>","<OF>","<STRINGS>"))')
+      .replace(/"(\w+)"\s*: "\[<LIST>,<OF>,<INTEGERS>\]"\,?/g, '   .withInts("$1", listOf(<LIST>,<OF>,<INTEGERS>))')
+      .replace(/"(\w+)"\s*: "\[<LIST>,<OF>,<FLOATS>\]"\,?/g, '   .withFloats("$1", listOf(<LIST>,<OF>,<FLOATS>))')
       .replace(/"(\w+)"\s*: "<STRING>"\,?/g, '   .with("$1", "<STRING>")')
       .replace(/"(\w+)"\s*: {/g, '   .with("$1", EventProperties.Builder()')
       .replace(/( +)}/g, '  $1    .build()\n   $1)')
@@ -532,9 +585,12 @@ function returnJavaJson(propertyData){
       .replace(/\\/g, "" )
       .replace(/"(\w+)"\s*: "<STRING>"\,?/g, '   .with("$1", "<STRING>")')
       .replace(/"(\w+)"\s*: "<INTEGER>"\,?/g, '   .with("$1", 12345)')
+      .replace(/"(\w+)"\s*: "<FLOAT>"\,?/g, '   .with("$1", 123.45)')
       .replace(/"(\w+)"\s*: "<BOOLEAN>"\,?/g, '   .with("$1", true)')
       .replace(/"(\w+)"\s*: "<DATE\/TIME>"\,?/g, '   .with("$1", new Date())')
       .replace(/"(\w+)"\s*: "\["<LIST>","<OF>","<STRINGS>"\]"\,?/g, '   .withStrings("$1", Arrays.asList("<LIST>","<OF>","<STRINGS>"))')
+      .replace(/"(\w+)"\s*: "\[<LIST>,<OF>,<INTEGERS>\]"\,?/g, '   .withInts("$1", Arrays.asList(<LIST>,<OF>,<INTEGERS>))')
+      .replace(/"(\w+)"\s*: "\[<LIST>,<OF>,<FLOATS>\]"\,?/g, '   .withFloats("$1", Arrays.asList(<LIST>,<OF>,<FLOATS>))')
       .replace(/"(\w+)"\s*: "<STRING>"\,?/g, '   .with("$1", "<STRING>")')
       .replace(/"(\w+)"\s*: {/g, '   .with("$1", new EventProperties.Builder()')
       .replace(/( +)}/g, '  $1    .build()\n   $1)')
@@ -574,6 +630,7 @@ function returnSwiftJson(propertyData){
       .replace(/\{/g, `[`)
       .replace("\"<BOOLEAN>\"", `true`)
       .replace("\"<INTEGER>\"", `12345`)
+      .replace("\"<FLOAT>\"", `123.45`)
       .substr(3)
   return json
 }
@@ -583,12 +640,18 @@ function typeOutput(type){
     return '<STRING>'
   }else if(type == 'integer'){
     return '<INTEGER>'
+  }else if(type == 'float'){
+    return '<FLOAT>'
   }else if(type == 'date'){
     return '<DATE/TIME>'
   }else if(type == 'boolean'){
     return '<BOOLEAN>'
   }else if(type == 'lostring'){
     return ["<LIST>","<OF>","<STRINGS>"]
+  }else if(type == 'lointegers'){
+    return "[<LIST>,<OF>,<INTEGERS>]"
+  }else if(type == 'lofloats'){
+    return "[<LIST>,<OF>,<FLOATS>]"
   }else {
     return '{'
   }

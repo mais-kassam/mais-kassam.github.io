@@ -54,7 +54,7 @@ h1.brand-logo {
   border-radius: 4px;
 }
 
-.submit, .add-property {
+.submit {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -71,13 +71,30 @@ h1.brand-logo {
   margin-top: 30px;
 }
 
+.add-property {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  border: 0;
+  font-size: 14px;
+  font-family: 'circular', sans-serif;
+  padding: 10px;
+  /* float: right; */
+  background-color: rgb(122,211,183);
+  color: rgb(255,255,255);
+  margin-top: 0px;
+}
+
 .add-sub-property {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
   -o-appearance: none;
   appearance: none;
-  border-radius: 0px;
+  border-radius: 2px;
   border: 0;
   font-size: 14px;
   font-family: 'circular', sans-serif;
@@ -371,9 +388,8 @@ textarea {
 
 .trash-svg{
   position: relative;
-  width: 36px;
   height: 25px;
-  left: 211px;
+  left: 205px;
   border: none;
   float: right;
   top: 7px;
