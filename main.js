@@ -263,8 +263,7 @@ var strings = {
   Our main JavaScript tag should be deployed on every page in your web environment:
   \`\`\`javascript
     <script>  
-    !function(n,e,o,r,i){if(!e){e=e||{},window.permutive=e,e.q=[],e.config=i||{},e.config.projectId=o,e.config.apiKey=r,e.config.environment=e.config.environment||"production";for(var t=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],c=0;c<t.length;c++){var f=t[c];e[f]=function(n){return function(){var o=Array.prototype.slice.call(arguments,0);e.q.push({functionName:n,arguments:o})}}(f)}}}(document,window.permutive,"<PROJECT_ID>","<PUBLIC_API_KEY>",{});  
-    window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}});  
+    !function(n,e,o,r,i){if(!e){e=e||{},window.permutive=e,e.q=[],e.config=i||{},e.config.projectId=o,e.config.apiKey=r,e.config.environment=e.config.environment||"production";for(var t=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],c=0;c<t.length;c++){var f=t[c];e[f]=function(n){return function(){var o=Array.prototype.slice.call(arguments,0);e.q.push({functionName:n,arguments:o})}}(f)}}}(document,window.permutive,"<PROJECT_ID>","<PUBLIC_API_KEY>",{});  ${returnWebAdserver()}
     permutive.addon('web', { 
       page: ${returnJson(propertyData)}
     });
@@ -336,7 +335,9 @@ var strings = {
   
   Note that similar to our web deployment, custom metadata and properties can be passed into the
   
-  \`page: { ... }\`object, if you would like them included on any \`Pageview\`and \`PageviewEngagement\` events tracked.`
+  \`page: { ... }\`object, if you would like them included on any \`Pageview\`and \`PageviewEngagement\` events tracked.
+  
+  ${returnFIAAdserver()}`
   }, 
 
   userIdentity: function(){
@@ -382,6 +383,21 @@ var strings = {
   
   Please let us know once you have given Permutive access to DFP.`
   },
+
+  appNexus: function(){
+    return `# AppNexus Access
+  
+  In order to activate our AppNexus integration via our dashboard, you'll need to please give us permissions. Please ensure that the following prerequisits have been made:
+  
+  - **AppNexus Installation**
+  You must already have the AppNexus Seller Tag installed on your site and configured to serve your advertising campaigns.
+  - **AppNexus User**
+  You must create an AppNexus user account our integration can use. Please grant this account the "Network Observer" role, as Permutive will need permissions to manage your key-values and segments in AppNexus.
+  - **API Access**
+  You must have API access enabled on your AppNexus user. To get this enabled, please discuss this with your AppNexus account manager.
+  
+  Please let us know once you have given Permutive access to the AppNexus Ad Server.`
+  },
   
   androidDeployment: function(){
     if(document.getElementById('java').checked == false && document.getElementById('kotlin').checked == false ){
@@ -418,6 +434,7 @@ var strings = {
   iso8601DateFormatter.formatOptions = [.withInternetDateTime, .withDashSeparatorInDate, .withColonSeparatorInTime, .withTimeZone];
   Permutive.permutive()?.eventTracker.track("Pageview", properties:[
  ${returnSwiftJson(propertyData)})
+ ${returniOSAdserver()} 
   \`\`\`
   `
   },
@@ -467,6 +484,41 @@ function returnJava(){
   } else return ""
 }
 
+function returnWebAdserver(){
+  if(document.getElementById('appnexusas').checked == true && document.getElementById('googleas').checked == false){
+  return `
+    window.apntag=window.apntag||{};window.apntag.anq=window.apntag.anq||[];window.__permutive=window.__permutive||{};window.__permutive.appnexusEvents=window.__permutive.appnexusEvents||[];['adRequested','adAvailable','adBadRequest','adLoaded','adNoBid','adError','adCollapse'].forEach(function(eventType){window.apntag.anq.push(function(){window.apntag.onEvent(eventType,function(arg){window.__permutive.appnexusEvents.push({eventType:eventType,arg:arg})})})});window.apntag.anq.push(function(){var original=window.apntag.defineTag;window.apntag.defineTag=function(arg){original(arg);try{if(arg.targetId){var kvs=window.localStorage.getItem('_papns');window.apntag.setKeywords(arg.targetId,{"permutive":kvs?JSON.parse(kvs):[]},{overrideKeyValue:!0})}}catch(e){}}})`
+  } else if (document.getElementById('googleas').checked == true && document.getElementById('appnexusas').checked == true){
+    return `
+    window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}});
+    window.apntag=window.apntag||{};window.apntag.anq=window.apntag.anq||[];window.__permutive=window.__permutive||{};window.__permutive.appnexusEvents=window.__permutive.appnexusEvents||[];['adRequested','adAvailable','adBadRequest','adLoaded','adNoBid','adError','adCollapse'].forEach(function(eventType){window.apntag.anq.push(function(){window.apntag.onEvent(eventType,function(arg){window.__permutive.appnexusEvents.push({eventType:eventType,arg:arg})})})});window.apntag.anq.push(function(){var original=window.apntag.defineTag;window.apntag.defineTag=function(arg){original(arg);try{if(arg.targetId){var kvs=window.localStorage.getItem('_papns');window.apntag.setKeywords(arg.targetId,{"permutive":kvs?JSON.parse(kvs):[]},{overrideKeyValue:!0})}}catch(e){}}})`
+  }else if(document.getElementById('googleas').checked == true && document.getElementById('appnexusas').checked == false){
+  return `
+    window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}});`
+  } else return ""
+}
+
+function returniOSAdserver(){
+  if(document.getElementById('googleas').checked == true){
+  return `let request = DFPRequest()
+  if let segments = Permutive.permutive()?.triggersProvider.dfpRequestCustomTargeting {
+      request.customTargeting = segments
+  }
+  self.bannerView.load(request)`
+  } else return ""
+}
+
+function returnFIAAdserver(){
+  if(document.getElementById('googleas').checked == true){
+  return `### DFP Targeting
+
+  To pass Permutive targeting data into DFP, include the following JavaScript within your \`<op-ad>\` elements:
+
+    <script>  
+    window.googletag = window.googletag || {};  window.googletag.cmd = window.googletag.cmd || [];  googletag.cmd.push(function() {    if (googletag.pubads().getTargeting('permutive').length == 0) {      var kvs = localStorage.getItem('_pdfps');      googletag.pubads().setTargeting('permutive', kvs ? JSON.parse(kvs) : []);    }  });
+    </script>`
+  } else return ""
+}
 
 var data = []
 var uniObj
@@ -848,6 +900,13 @@ function dfpSelected (){
   }else return ""
 }
 
+function appNexusSelected (){
+  var input = document.getElementById('appnexus')
+  if(input.checked == true){
+    return strings.appNexus()
+  }else return ""
+}
+
 typeCheck.addEventListener( 'change', function() {
   if(this.checked) {
       propertiesList.insertAdjacentHTML('afterbegin', typeElement)
@@ -948,7 +1007,7 @@ function copyFunction () {
   objStr = ``
   populateObject(propertiesList, propertyData)
   iterate(propertyData)
-  var fullString = strings.intro + "\n" + strings.depolymentTools() + "\n" + strings.keys() + "\n" + strings.contacts() + "\n" + strings.domains() + "\n" + strings.webDeployment() + "\n" + ampSelected() + "\n" + fiaSelected() + "\n" + strings.userIdentity() + "\n" + consentSelected() + "\n" + dfpSelected() + "\n" + androidSelected() + "\n" + iosSelected()
+  var fullString = strings.intro + "\n" + strings.depolymentTools() + "\n" + strings.keys() + "\n" + strings.contacts() + "\n" + strings.domains() + "\n" + strings.webDeployment() + "\n" + ampSelected() + "\n" + fiaSelected() + "\n" + strings.userIdentity() + "\n" + consentSelected() + "\n" + dfpSelected() + "\n" + appNexusSelected() + "\n" + androidSelected() + "\n" + iosSelected()
   const copyText = fullString
   const textArea = document.createElement('textarea')
   textArea.textContent = copyText

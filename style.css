@@ -17,6 +17,7 @@ body::placeholder {
   background-color: #fff;
   padding: 20px 20px 20px 30px;
   background-image: url("/images/raaadh.png");
+  background-size: 117% auto;
 }
 
 /* .one-edge-shadow {
