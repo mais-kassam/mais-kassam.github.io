@@ -1,0 +1,298 @@
+body {
+  margin: 0;
+  font-family: 'circular', sans-serif;
+}
+.header {
+  overflow: hidden;
+  background-color: #fff;
+  padding: 20px 20px 20px 30px;
+  background-image: url("/Deployment Doc Generator/images/raaadh.png");
+  background-size: 117% auto;
+}
+.one-edge-shadow {
+  box-shadow: 0 3px 6px -6px black;
+}
+h1.brand-logo {
+  height: 65px;
+  margin: 0;
+  display: block;
+  text-indent: -9999px;
+  width: 190px;
+  background-size: 190px 37px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-image: url(/images/logo-permutive.svg);
+}
+
+/* Style the header links */
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.submit {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 0px;
+  border: 0;
+  font-size: 18px;
+  font-family: 'circular', sans-serif;
+  padding: 10px;
+  float: right;
+  background-color: rgb(122,211,183);
+  color: rgb(255,255,255);
+  margin-top: 30px;
+}
+
+.edit-btn{
+  border: 0;
+}
+
+.submit:hover{
+  background-color: rgb(89,193,159);
+  color: rgb(255,255,255);
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+/* Change the background color on mouse-over */
+.header a:hover {
+  background-color: #fff;
+  color: black;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+}
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .header-right {
+    float: none;
+  }
+}
+.column {
+  float: left;
+  width: 47%;
+  height: 50%;
+  max-height: 510px;
+  overflow: auto;
+}
+
+.ad-definition{
+  float: left;
+  width: 33%;
+  height: 50%;
+  padding: 30px;
+  max-height: 450px;
+  overflow: auto;
+}
+
+.variables{
+  float: left;
+  width: 14%;
+  height: 50%;
+  max-height: 510px;
+  overflow: auto;
+  font-size: 18px;
+  font-family: 'circular', sans-serif;
+}
+
+.variables-list{
+  list-style: none;
+  margin-left: -25px;
+  min-height: 467px;
+}
+
+.variables-list li{
+  line-height: 30px;
+}
+
+.variables-list:empty{
+  float: left;
+  width: 14%;
+  height: 50%;
+  min-height: 510px;
+  overflow: auto;
+  font-size: 18px;
+  font-family: 'circular', sans-serif;
+}
+
+.ad-slot-render {
+  padding: 30px;
+  border-top: 1px solid rgb(221, 221, 221);
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+pre{
+  margin: 0;
+}
+
+pre code {
+  margin-top: -30px;
+  margin-bottom: -30px;
+  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 20px;
+  overflow-wrap: break-word;
+  min-height: 475px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+div {
+  border-left: 1px solid rgb(221, 221, 221);
+}
+
+.custom-input{
+  border:0;
+  display: none;
+}
+
+.ad-drop{
+  border: 0;
+  margin: 0px;
+}
+
+.custom-input input{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 0px;
+  border: 1px solid rgb(221, 221, 221);
+  font-size: 18px;
+  font-family: 'circular', sans-serif;
+  padding: 10px;
+  width: 70px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+.var-input{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 0px;
+  border: 1px solid rgb(221, 221, 221);
+  font-size: 18px;
+  font-family: 'circular', sans-serif;
+  padding: 10px;
+  width: 70px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+#ad-size.custom-select {
+  margin: 0;
+}
+
+input#thank.thanks{
+  margin: 0;
+  width: 90%;
+}
+
+.copy{
+  position: fixed;
+  height: 50px;
+  width: 50px;
+  margin: 0;
+  color: #fff;
+  background-color: white;
+}
+
+.copy-btn-div{
+  position: relative;
+  float: right;
+  right: 65px;
+  top: 20px;
+}
+
+.custom-select {
+  
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 0px;
+  border: 1px solid rgb(221, 221, 221);
+  font-size: 18px;
+  font-family: 'circular', sans-serif;
+  padding: 10px;
+  margin-left: 10px;
+}
+.custom-select::-ms-expand {
+  display: none;
+}
+.custom-select:hover {
+  border-color: #888;
+}
+.custom-select:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222;
+  outline: none;
+}
+.custom-select option {
+  font-weight:normal;
+}
+@media screen and (max-width: 708px) {
+  .column{
+    width: 100%;
+  }
+  .ad-definition{
+    width: 90%;
+  }
+  pre code{
+    width: 100%;
+  }
+  .variables{
+    width: 100%;
+  }
+}
+
+textarea {
+  position: absolute;
+  left: -100%;
+}
