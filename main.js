@@ -403,16 +403,18 @@ var strings = {
     if(document.getElementById('java').checked == false && document.getElementById('kotlin').checked == false ){
     return `# Android Deployment
 
-  Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment.`
+  Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment.
+  ${returnAndroidAdserver()}`
     }else{
     return `# Android Deployment
 
-  Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment. Below are examples of the \`PageView\` tag needed:
+  Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment. Below are examples of the \`Pageview\` tag needed:
   
   ${returnKotlin()}
 
 
   ${returnJava()}
+  ${returnAndroidAdserver()}
 
   `
   }},
@@ -420,7 +422,7 @@ var strings = {
   iosDeployment: function(){
     return `# iOS Deployment
 
-  Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment. Below are examples of the \`PageView\` tag needed:
+  Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment. Below are examples of the \`Pageview\` tag needed:
   
   ### Swift
 
@@ -496,6 +498,26 @@ function returnWebAdserver(){
   return `
     window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}});`
   } else return ""
+}
+
+function returnAndroidAdserver(){
+  if(document.getElementById('appnexusas').checked == false && document.getElementById('googleas').checked == true){
+  return `### DFP Targeting
+
+  To pass Permutive targeting data into DFP on Android, please view the documentation [here](https://developer.permutive.com/docs/android#section-custom-targeting-with-google-ads):`
+  } else if(document.getElementById('appnexusas').checked == true && document.getElementById('googleas').checked == false){
+  return `### AppNexus Targeting
+
+  To pass Permutive targeting data into AppNexus Ad Server on Android, please view the documentation [here](https://developer.permutive.com/docs/android#section-custom-targeting-with-app-nexus):`
+  } else if(document.getElementById('appnexusas').checked == true && document.getElementById('googleas').checked == true){
+    return `### DFP Targeting
+
+  To pass Permutive targeting data into DFP on Android, please view the documentation [here](https://developer.permutive.com/docs/android#section-custom-targeting-with-google-ads):
+  
+  ### AppNexus Targeting
+  
+  To pass Permutive targeting data into AppNexus Ad Server on Android, please view the documentation [here](https://developer.permutive.com/docs/android#section-custom-targeting-with-app-nexus):`
+  }
 }
 
 function returniOSAdserver(){
