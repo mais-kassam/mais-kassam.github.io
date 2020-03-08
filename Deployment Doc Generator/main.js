@@ -55,7 +55,7 @@ var propetyType = function(string){
 }
 
 var typeElement = `
-<li class="property-item" id="item-type" style="width: 300px;">Type                
+<li class="property-item" id="item-type" style="width: 400px;">Type                
 <select class="custom-select" id="property-type-item-type" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
@@ -69,7 +69,7 @@ var typeElement = `
 </select>${trashSvg('type')}</li>`
 
 var contentElement = `
-<li class="property-item" id="item-content" style="width: 300px;">Content                
+<li class="property-item" id="item-content" style="width: 400px;">Content                
 <select class="custom-select" id="property-type-item-content" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -80,7 +80,7 @@ var contentElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('content')}<ul id="properties-content"><li class="property-item" id="item-content-categories" style="width: 300px;">Categories                
+</select>${trashSvg('content')}<ul id="properties-content"><li class="property-item" id="item-content-categories" style="width: 400px;">Categories                
 <select class="custom-select" id="property-type-item-content-categories" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -94,7 +94,7 @@ var contentElement = `
 </select>${trashSvg('content-categories')}</li></ul><button id="add-sub-property-content" class="add-sub-property">+ Add Property</button></li>`
 
 var articleElement = `
-<li class="property-item" id="item-article" style="width: 300px;">Article                
+<li class="property-item" id="item-article" style="width: 400px;">Article                
 <select class="custom-select" id="property-type-item-article" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -105,7 +105,7 @@ var articleElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article')}<ul id="properties-article"><li class="property-item" id="item-article-properties" style="width: 300px;">Id                
+</select>${trashSvg('article')}<ul id="properties-article"><li class="property-item" id="item-article-properties" style="width: 400px;">Id                
 <select class="custom-select" id="property-type-item-article-properties" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
@@ -116,7 +116,7 @@ var articleElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article-properties')}</li><li class="property-item" id="item-article-title" style="width: 300px;">Title                
+</select>${trashSvg('article-properties')}</li><li class="property-item" id="item-article-title" style="width: 400px;">Title                
 <select class="custom-select" id="property-type-item-article-title" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
@@ -127,7 +127,7 @@ var articleElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article-title')}</li><li class="property-item" id="item-article-description" style="width: 300px;">Description                
+</select>${trashSvg('article-title')}</li><li class="property-item" id="item-article-description" style="width: 400px;">Description                
 <select class="custom-select" id="property-type-item-article-description" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
@@ -138,7 +138,7 @@ var articleElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article-description')}</li><li class="property-item" id="item-article-authors" style="width: 300px;">Authors                
+</select>${trashSvg('article-description')}</li><li class="property-item" id="item-article-authors" style="width: 400px;">Authors                
 <select class="custom-select" id="property-type-item-article-authors" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -149,7 +149,7 @@ var articleElement = `
   <option value="lostring" selected>List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article-authors')}</li><li class="property-item" id="item-article-tags" style="width: 300px;">Tags                
+</select>${trashSvg('article-authors')}</li><li class="property-item" id="item-article-tags" style="width: 400px;">Tags                
 <select class="custom-select" id="property-type-item-article-tags" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -160,7 +160,7 @@ var articleElement = `
   <option value="lostring" selected>List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article-tags')}</li><li class="property-item" id="item-article-modified" style="width: 300px;">Modified at                
+</select>${trashSvg('article-tags')}</li><li class="property-item" id="item-article-modified" style="width: 400px;">Modified at                
 <select class="custom-select" id="property-type-item-article-modified" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -171,7 +171,7 @@ var articleElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article-modified')}</li><li class="property-item" id="item-article-published" style="width: 300px;">Published at                
+</select>${trashSvg('article-modified')}</li><li class="property-item" id="item-article-published" style="width: 400px;">Published at                
 <select class="custom-select" id="property-type-item-article-published" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -182,7 +182,7 @@ var articleElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('article-published')}</li><li class="property-item" id="item-article-premium" style="width: 300px;">Premium                
+</select>${trashSvg('article-published')}</li><li class="property-item" id="item-article-premium" style="width: 400px;">Premium                
 <select class="custom-select" id="property-type-item-article-premium" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -196,7 +196,7 @@ var articleElement = `
 </select>${trashSvg('article-premium')}</li></ul><button id="add-sub-property-article" class="add-sub-property">+ Add Property</button></li>`
 
 var userElement = `
-<li class="property-item" id="item-user" style="width: 300px;">User                
+<li class="property-item" id="item-user" style="width: 400px;">User                
 <select class="custom-select" id="property-type-item-user" style="float: right;">
   <option value="string">String</option>
   <option value="integer">Integer</option>
@@ -207,7 +207,7 @@ var userElement = `
   <option value="lostring">List of Strings</option>
   <option value="lointegers">List of Integers</option>
   <option value="lofloats">List of Floats</option>
-</select>${trashSvg('user')}<ul id="properties-user"><li class="property-item" id="item-user-type" style="width: 300px;">Type                
+</select>${trashSvg('user')}<ul id="properties-user"><li class="property-item" id="item-user-type" style="width: 400px;">Type                
 <select class="custom-select" id="property-type-item-user-type" style="float: right;">
   <option value="string" selected>String</option>
   <option value="integer">Integer</option>
@@ -811,7 +811,7 @@ function addProperty (value) {
   var propertyInput = document.createElement('input')
   propertyInput.id = `item-${propertyDataArr.length + 1}`
   property.appendChild(propertyInput)
-  propertyInput.style.width = '300px'
+  propertyInput.style.width = '400px'
   propertyInput.classList = 'var-input'
   propertyInput.focus()
   changeStateAddPropertiesButtons(true)
@@ -819,7 +819,7 @@ function addProperty (value) {
     if (propertyInput.value !== '' && e.keyCode === 13){
       changeStateAddPropertiesButtons(false)
       property.innerHTML = ''
-      property.style.width = '300px'
+      property.style.width = '400px'
       if (property.id == `item-${propertyDataArr.length + 1}`){
         var propertyObj = new Property(propertyDataArr.length + 1, propertyInput.value)
         var listName = list.id.split('properties-')[1]
@@ -835,7 +835,7 @@ function addProperty (value) {
         propType(typeEl.value, property, propertyDataArr[parseInt(typeEl.id.split('-')[3]) - 1].value)
       })
     }else{
-      propertyInput.style = 'width: 300px; border: 1px solid rgb(249,99,107)'
+      propertyInput.style = 'width: 400px; border: 1px solid rgb(249,99,107)'
       propertyInput.placeholder = "Please enter a property name"
       propertyInput.placeholder.color = "rgb(249,99,107)"
     }
