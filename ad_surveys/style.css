@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'circular', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
 }
 .header {
   overflow: hidden;
@@ -23,6 +23,10 @@ h1.brand-logo {
   background-repeat: no-repeat;
   background-position: left center;
   background-image: url(/images/logo-permutive.svg);
+}
+
+h1 {
+  font-size: 28px;
 }
 
 /* Style the header links */
@@ -47,7 +51,7 @@ h1.brand-logo {
   appearance: none;
   border-radius: 0px;
   border: 0;
-  font-size: 18px;
+  font-size: 14px;
   font-family: 'circular', sans-serif;
   padding: 10px;
   float: right;
@@ -122,7 +126,7 @@ h1.brand-logo {
   height: 50%;
   max-height: 510px;
   overflow: auto;
-  font-size: 18px;
+  font-size: 14px;
   font-family: 'circular', sans-serif;
 }
 
@@ -134,6 +138,7 @@ h1.brand-logo {
 
 .variables-list li{
   line-height: 30px;
+  font-size: 14px;
 }
 
 .variables-list:empty{
@@ -142,7 +147,7 @@ h1.brand-logo {
   height: 50%;
   min-height: 510px;
   overflow: auto;
-  font-size: 18px;
+  font-size: 14px;
   font-family: 'circular', sans-serif;
 }
 
@@ -201,7 +206,7 @@ div {
   appearance: none;
   border-radius: 0px;
   border: 1px solid rgb(221, 221, 221);
-  font-size: 18px;
+  font-size: 14px;
   font-family: 'circular', sans-serif;
   padding: 10px;
   width: 70px;
@@ -217,7 +222,7 @@ div {
   appearance: none;
   border-radius: 0px;
   border: 1px solid rgb(221, 221, 221);
-  font-size: 18px;
+  font-size: 14px;
   font-family: 'circular', sans-serif;
   padding: 10px;
   width: 70px;
@@ -259,7 +264,7 @@ input#thank.thanks{
   appearance: none;
   border-radius: 0px;
   border: 1px solid rgb(221, 221, 221);
-  font-size: 18px;
+  font-size: 14px;
   font-family: 'circular', sans-serif;
   padding: 10px;
   margin-left: 10px;
