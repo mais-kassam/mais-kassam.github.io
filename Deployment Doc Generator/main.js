@@ -703,8 +703,12 @@ function returnSwiftJson(propertyData){
       .replace(/"(\w+)"\s*: "<DATE\/TIME>"/g, '"$1": iso8601DateFormatter.string(from: Date())')
       .replace(/\{/g, `[`)
       .replace("\"<BOOLEAN>\"", `true`)
-      .replace("\"<INTEGER>\"", `12345`)
-      .replace("\"<FLOAT>\"", `123.45`)
+      .replace(/"(\w+)"\s*: "<BOOLEAN>"\,/g, `"$1": true,`)
+      .replace(/"(\w+)"\s*: "<BOOLEAN>"/g, `"$1": true`)
+      .replace(/"(\w+)"\s*: "<INTEGER>"\,/g, `"$1": 12345,`)
+      .replace(/"(\w+)"\s*: "<INTEGER>"/g, `"$1": 12345`)
+      .replace(/"(\w+)"\s*: "<FLOAT>"\,/g, `"$1": 123.45,`)
+      .replace(/"(\w+)"\s*: "<FLOAT>"/g, `"$1": 123.45`)
       .substr(3)
   return json
 }
