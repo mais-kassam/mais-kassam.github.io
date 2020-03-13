@@ -420,6 +420,12 @@ var strings = {
   }},
 
   iosDeployment: function(){
+    if(document.getElementById('swift').checked == false && document.getElementById('objective-c').checked == false ){
+    return `# iOS Deployment
+
+  Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment.
+  ${returniOSAdserver()}`
+    }else{ 
     return `# iOS Deployment
 
   Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment. Below are examples of the \`Pageview\` tag needed:
@@ -428,8 +434,9 @@ var strings = {
   ${returnObjectiveC()}
   ${returniOSAdserver()}
   `
-  },
-}
+  }
+}}
+
 
 function returnSwift(){
   if(document.getElementById('swift').checked == true){
