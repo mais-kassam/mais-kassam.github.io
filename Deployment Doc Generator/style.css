@@ -305,7 +305,7 @@ div {
   border: none;
 }
 
-.input-list{
+.input-list-android, .input-list-ios{
   border: none;
   list-style: none;
   margin-left: -25px;

@@ -424,7 +424,15 @@ var strings = {
 
   Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment. Below are examples of the \`Pageview\` tag needed:
   
-  ### Swift
+  ${returnSwift()}
+  ${returnObjectiveC()}
+  `
+  },
+}
+
+function returnSwift(){
+  if(document.getElementById('swift').checked == true){
+    return `### Swift
 
   \`\`\`
   let context = PermutiveEventActionContext()
@@ -436,10 +444,36 @@ var strings = {
   iso8601DateFormatter.formatOptions = [.withInternetDateTime, .withDashSeparatorInDate, .withColonSeparatorInTime, .withTimeZone];
   Permutive.permutive()?.eventTracker.track("Pageview", properties:[
  ${returnSwiftJson(propertyData)})
- ${returniOSAdserver()} 
+ ${returnSwiftAdserver()} 
   \`\`\`
   `
-  },
+  }else return ""
+}
+
+function returnObjectiveC(){
+  if(document.getElementById('objective-c').checked == true){
+    return `### Objective C
+
+  \`\`\`
+  // Setting the Permutive Context
+  PermutiveEventActionContext *context = [[PermutiveEventActionContext alloc] init];
+  context.title = @"<STRING>";
+  context.url = [[NSURL alloc] initWithString: @"<URL STRING>"];
+  context.referrer = [[NSURL alloc] initWithString: @"<REFERRER STRING>"];
+  [Permutive setContext:[[PermutiveEventActionContext alloc] init]];
+
+  // Send a Pageview event
+  NSDate *articlePublishDate = [NSDate date]; // Current date used for convenience.
+  NSISO8601DateFormatter *iso8601DateFormatter = [[NSISO8601DateFormatter alloc] init];
+  iso8601DateFormatter.formatOptions = NSISO8601DateFormatWithInternetDateTime | NSISO8601DateFormatWithDashSeparatorInDate | NSISO8601DateFormatWithColonSeparatorInTime | NSISO8601DateFormatWithTimeZone;
+  NSDictionary *properties = @{
+${returnObjectiveCJson(propertyData)};
+ [Permutive.permutive.eventTracker track:@"Pageview" properties:properties];
+
+ ${returnObjectiveCAdserver()} 
+  \`\`\`
+  `
+  }else return ""
 }
 
 function returnKotlin(){
@@ -517,16 +551,26 @@ function returnAndroidAdserver(){
   ### AppNexus Targeting
   
   To pass Permutive targeting data into AppNexus Ad Server on Android, please view the documentation [here](https://developer.permutive.com/docs/android#section-custom-targeting-with-app-nexus):`
-  }
+  } else return ""
 }
 
-function returniOSAdserver(){
+function returnSwiftAdserver(){
   if(document.getElementById('googleas').checked == true){
   return `let request = DFPRequest()
   if let segments = Permutive.permutive()?.triggersProvider.dfpRequestCustomTargeting {
       request.customTargeting = segments
   }
   self.bannerView.load(request)`
+  } else return ""
+}
+
+function returnObjectiveCAdserver(){
+  if(document.getElementById('googleas').checked == true){
+  return `// Get DFP custom segments
+  NSDictionary *customSegments = [Permutive.permutive.triggersProvider dfpRequestCustomTargeting];
+  if (customSegments != NULL) {
+      // Assign dfpRequest.customTargetting = customSegments;
+  }`
   } else return ""
 }
 
@@ -713,6 +757,33 @@ function returnSwiftJson(propertyData){
   return json
 }
 
+function returnObjectiveCJson(propertyData){
+  var json = JSON.stringify(propertyData,function(k,v){
+      if(v instanceof Array)
+        return JSON.stringify(v);
+      return v;
+    },2)
+      .replace(/\\/g, "" )
+      .replace(/"(\w+)"\s*:/g, '  @"$1":')
+      .replace(/"\[/g, `[`)
+      .replace(/\]"/g, `]`)
+      .replace(/\}/g, `  }`)
+      .replace(/"(\w+)"\s*: "<DATE\/TIME>"/g, '"$1": [iso8601DateFormatter stringFromDate: articlePublishDate]')
+      .replace(/\{/g, `@{`)
+      .replace(/"(\w+)"\s*: "<BOOLEAN>"\,/g, `"$1": @YES,`)
+      .replace(/"(\w+)"\s*: "<BOOLEAN>"/g, `"$1": @YES`)
+      .replace(/"(\w+)"\s*: "<INTEGER>"\,/g, `"$1": @12345,`)
+      .replace(/"(\w+)"\s*: "<INTEGER>"/g, `"$1": @12345`)
+      .replace(/"(\w+)"\s*: "<FLOAT>"\,/g, `"$1": @123.45,`)
+      .replace(/"(\w+)"\s*: "<FLOAT>"/g, `"$1": @123.45`)
+      .replace(/"(\w+)"\s*: "<STRING>"\,/g, `"$1": @"<STRING>",`)
+      .replace(/"(\w+)"\s*: "<STRING>"/g, `"$1": @"<STRING>"`)
+      .replace(/"(\w+)"\s*: \["<LIST>","<OF>","<STRINGS>"\]\,/g, `"$1": @[@"<LIST>", @"<OF>", @"<STRINGS>"],`)
+      .replace(/"(\w+)"\s*: \["<LIST>","<OF>","<STRINGS>"\]/g, `"$1": @[@"<LIST>", @"<OF>", @"<STRINGS>"]`)
+      .substr(3)
+  return json
+}
+
 function typeOutput(type){
   if(type == 'string'){
     return '<STRING>'
@@ -771,8 +842,18 @@ function setUpEventListeners() {
       child.parentNode.removeChild(child)
     }
   })
+
   document.getElementById("android").addEventListener('change', function(){
-    var list = document.querySelector(".input-list")
+    var list = document.querySelector(".input-list-android")
+    if(this.checked){
+      list.style = "display:block"
+    }else{
+      list.style = "display:none"
+    }
+  })
+
+  document.getElementById("ios").addEventListener('change', function(){
+    var list = document.querySelector(".input-list-ios")
     if(this.checked){
       list.style = "display:block"
     }else{
