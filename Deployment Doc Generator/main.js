@@ -426,6 +426,7 @@ var strings = {
   
   ${returnSwift()}
   ${returnObjectiveC()}
+  ${returniOSAdserver()}
   `
   },
 }
@@ -551,6 +552,14 @@ function returnAndroidAdserver(){
   ### AppNexus Targeting
   
   To pass Permutive targeting data into AppNexus Ad Server on Android, please view the documentation [here](https://developer.permutive.com/docs/android#section-custom-targeting-with-app-nexus):`
+  } else return ""
+}
+
+function returniOSAdserver(){
+  if(document.getElementById('googleas').checked == true){
+  return `### DFP Targeting
+
+  To pass Permutive targeting data into DFP on iOS, please view the documentation [here](https://developer.permutive.com/docs/ios#section-google-ad-words-dfp-custom-targets):`
   } else return ""
 }
 
