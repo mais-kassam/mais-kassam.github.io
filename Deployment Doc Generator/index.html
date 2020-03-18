@@ -104,6 +104,14 @@
                 <input type="Thanks" id="thank" class="thanks" placeholder="Thank you for your responses.">
             </div> -->
             <button class="submit" id="submit-btn">Submit</button>
+            <button style="margin-left: 20px;" class="submit" id="copy-btn">Copy JSON</button>
+            <button style="margin-left: 20px;" class="submit" id="dwnld-btn">Download JSON</button>
+            <a id="copyfunc" style="display: none;"></a>
+            <div class="custom-input" style="display: block; margin-top: 60px;">
+                <h2 style="margin-bottom: 20px; height: 30px">Load in an existing project</h2>
+                <textarea id="json-input" class="code-input" placeholder="Output of project JSON"></textarea>
+            </div>
+            <input type="file" class="custom-file-input" id="files" name="files[]" multiple /> <output id="list"></output>
         </div>
         <div class="column">
             <h2>Extra custom data points</h2>

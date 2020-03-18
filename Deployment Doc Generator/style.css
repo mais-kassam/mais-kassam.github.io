@@ -323,6 +323,55 @@ div {
   width: 85%;
 }
 
+#json-input.code-input{
+  margin: 0;
+  width: 85%;
+  background-color:#EEEEEE;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
+  min-height: 300px;
+  text-align: start;
+  margin: 1px;
+  padding: 1px;
+  width: 85%;
+  max-height: 300px;
+  resize: none;
+  position: static;
+  margin-bottom: 15px;
+}
+
+.custom-file-input {
+  color: transparent;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: 'Select some files';
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  border: 0;
+  font-size: 14px;
+  font-family: 'circular', sans-serif;
+  padding: 10px;
+  /* float: right; */
+  background-color: rgb(122,211,183);
+  color: rgb(255,255,255);
+  margin-top: 30px;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
+}
+
 .copy{
   position: fixed;
   height: 50px;
@@ -345,6 +394,7 @@ div {
   font-family: 'circular', sans-serif;
   padding: 10px;
   margin-left: 10px;
+  float: right;
 }
 .custom-select::-ms-expand {
   display: none;

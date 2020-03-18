@@ -1,4 +1,6 @@
 var propertyData = {}
+var projectData = {}
+var projectSchemaData = {}
 var propertyDataArr = []
 var domainsArr = []
 var space = ""
@@ -8,6 +10,7 @@ var tempKey
 var amp =  {"vars": {"namespace": "<NAMESPACE>","key": "<PUBLIC_API_KEY>"},"extraUrlParams": {}}
 var java =  {}
 var keysTracker = []
+var projKeysTracker = []
 var javaKeysTracker = []
 
 var propertiesList = document.getElementById('properties-propertyData')
@@ -17,6 +20,8 @@ var articleCheck = document.getElementById('article')
 var userCheck = document.getElementById('user')
 
 var trashSvg = function(string){return `<button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>`} 
+
+
 
 var saArr = [
   "Mais Kassam (maisam@permutive.com)",
@@ -605,6 +610,33 @@ function returnFIAAdserver(){
 var data = []
 var uniObj
 
+function downloadJson (){
+  var dataString = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(buildJsonObj(), null, 3));
+  var downloadFunction = document.getElementById('copyfunc')
+  downloadFunction.setAttribute('href', dataString)
+  var date = new Date()
+  downloadFunction.setAttribute('download', `${namespaceOutput(document.querySelector('#client-input').value) + '_' + date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear()}.json`)
+  downloadFunction.click()
+}
+
+function handleFileSelect(evt) { var files = evt.target.files; 
+  var output = []; for (var i = 0, f; f = files[i]; i++) { 
+    // output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ', f.size, ' bytes, last modified: ', f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a', '</li>'); 
+    var reader = new FileReader()
+    reader.onload = (function(file) { 
+      return function(e) { 
+        populateList(e.target.result)
+        // call the populate(theFile) function here 
+      }; 
+    })(f); 
+    // Read in the image file as a data URL. 
+    reader.readAsText(f);
+  } 
+  document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>'; 
+} 
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+
 var camelize = function(str) {
   return str
     .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
@@ -649,12 +681,194 @@ Object.keys(obj).forEach(key => {
   })
 }
 
+const listIterate = (obj, list) => {
+var obj_lngt = Object.keys(obj).length
+var counter = 0
+Object.keys(obj).forEach(key => {   
+    counter++   
+    if (obj[key] == '[object Object]') {
+      projKeysTracker.push(key)
+        list.insertAdjacentHTML('beforeend', 
+        `<li class="property-item" id="item-${counter}-${key}" style="width: 400px;">${key}                
+        <select class="custom-select" id="property-type-item-${counter}-${key}" style="float: right;">
+          <option value="string">String</option>
+          <option value="integer">Integer</option>
+          <option value="float">Float</option>
+          <option value="object" selected>Object</option>
+          <option value="date">Date/Time</option>
+          <option value="boolean">Boolean</option>
+          <option value="lostring">List of Strings</option>
+          <option value="lointegers">List of Integers</option>
+          <option value="lofloats">List of Floats</option>
+        </select><button id="delete-btn-item-item-${counter}-${key}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"></path><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"></rect><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "></polygon><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "></polygon></g></svg>
+        <ul id="properties-${key}"></ul>
+        <button id="add-sub-property-${key}" class="add-sub-property">+ Add Property</button></li>`)
+        document.getElementById(`add-sub-property-${key}`).addEventListener('click', function(){
+          addProperty(`properties-${key}`)
+        })
+        document.getElementById(`property-type-item-${counter}-${key}`).addEventListener('change', function () {
+          var typeEl = document.getElementById(`property-type-item-${counter}-${key}`)
+          propType(typeEl.value, property, key)
+        })
+        listIterate(obj[key], document.getElementById(`properties-${key}`))
+    }
+    if(projKeysTracker.length > 0 && obj[key] != '[object Object]'){
+      list.insertAdjacentHTML('beforeend', propElement(key, obj[key].toString(), counter))
+      document.getElementById(`property-type-${key}`).addEventListener('change', function () {
+        var typeEl = document.getElementById(`property-type-${key}`)
+        propType(typeEl.value, typeEl.parentNode, key)
+      })
+    }else if (obj[key] != '[object Object]'){
+      list.insertAdjacentHTML('beforeend', propElement(key, obj[key].toString(), counter))
+      document.getElementById(`property-type-${key}`).addEventListener('change', function () {
+        var typeEl = document.getElementById(`property-type-${key}`)
+        propType(typeEl.value, typeEl.parentNode, key)
+      })
+    }
+    if(counter == obj_lngt || key == projKeysTracker.toString()){
+      projKeysTracker.pop()
+    }
+  })
+}
+
+function propElement (key, type, counter){
+  return `
+  <li class="property-item" id="item-${counter}-${key}" style="width: 400px;">${key}
+  <select class="custom-select" id="property-type-${key}">
+    ${stringSelect(type)}
+    ${integerSelect(type)}
+    ${floatSelect(type)}
+    <option value="object">Object</option>
+    ${dateSelect(type)}
+    ${booleanSelect(type)}
+    ${lostringSelect(type)}
+    ${lointegersSelect(type)}
+    ${lofloatsSelect(type)}
+  </select><button id="delete-btn-${key}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg></li>`
+}
+
+function stringSelect(type){
+  if(type == '<STRING>'){
+    return '<option value="string" selected>String</option>'
+  }else{
+    return '<option value="string">String</option>'
+  }
+}
+
+function integerSelect(type){
+  if(type == '<INTEGER>'){
+    return '<option value="integer" selected>Integer</option>'
+  }else{
+    return '<option value="integer">Integer</option>'
+  }
+}
+
+function floatSelect(type){
+  if(type == '<FLOAT>'){
+    return '<option value="float" selected>Float</option>'
+  }else{
+    return '<option value="float">Float</option>'
+  }
+}
+
+function dateSelect(type){
+  if(type == '<DATE/TIME>'){
+    return '<option value="date" selected>Date/Time</option>'
+  }else{
+    return '<option value="date">Date/Time</option>'
+  }
+}
+
+function booleanSelect(type){
+  if(type == '<BOOLEAN>'){
+    return '<option value="boolean" selected>Boolean</option>'
+  }else{
+    return '<option value="boolean">Boolean</option>'
+  }
+}
+
+function lostringSelect(type){
+  if(type == '<LIST>,<OF>,<STRINGS>'){
+    return '<option value="lostring" selected>List of Strings</option>'
+  }else{
+    return '<option value="lostring">List of Strings</option>'
+  }
+}
+
+function lointegersSelect(type){
+  if(type == '<LIST>,<OF>,<INTEGERS>'){
+    return '<option value="lointegers" selected>List of Integers</option>'
+  }else{
+    return '<option value="lointegers">List of Integers</option>'
+  }
+}
+
+function lofloatsSelect(type){
+  if(type == '<LIST>,<OF>,<INTEGERS>'){
+    return '<option value="lofloats" selected>List of Floats</option>'
+  }else{
+    return '<option value="lofloats">List of Floats</option>'
+  }
+}
+
 function changeStateAddPropertiesButtons(value){
   var nodes = document.querySelectorAll('.add-property, .add-sub-property')
   var nodesArr = Array.prototype.slice.call(nodes)
   nodesArr.forEach(el => {
     el.disabled = value
   });
+}
+
+function populateList(jsonObj){
+  document.getElementById('json-input').value = jsonObj
+  console.log(JSON.parse(jsonObj))
+  projectData = JSON.parse(jsonObj)
+  projectSchemaData = projectData['schema']
+  listIterate(projectSchemaData, document.getElementById('properties-propertyData'))
+  populateDom(projectData)
+  setUpEventListeners()
+}
+
+function populateDom (projectData){
+  document.getElementById('client-input').value = projectData.clientName
+  document.getElementById('sa-input').value = projectData.projectSa
+  document.getElementById('csm-input').value = projectData.projectCsm
+  document.getElementById('domains-list').insertAdjacentHTML('afterbegin', populateDomains(projectData.deploymentDomains))
+  document.getElementById('projectid-input').value = projectData.projectId
+  document.getElementById('apikey-input').value = projectData.apiKey
+  projectData.type === true ? document.getElementById('type').checked = true : document.getElementById('type').checked = false
+  projectData.content === true ? document.getElementById('content').checked = true : document.getElementById('content').checked = false
+  projectData.article === true ? document.getElementById('article').checked = true : document.getElementById('article').checked = false
+  projectData.user === true ? document.getElementById('user').checked = true : document.getElementById('user').checked = false
+  projectData.amp === true ? document.getElementById('amp').checked = true : document.getElementById('amp').checked = false
+  projectData.fia === true ? document.getElementById('fia').checked = true : document.getElementById('fia').checked = false
+  if(projectData.android === true){
+    var list = document.querySelector(".input-list-android")
+    list.style = "display:block"
+    document.getElementById('android').checked = true
+    projectData.kotlin === true ? document.getElementById('kotlin').checked = true : document.getElementById('kotlin').checked = false
+    projectData.java === true ? document.getElementById('java').checked = true : document.getElementById('java').checked = false
+  }
+  if(projectData.ios === true){
+    var list = document.querySelector(".input-list-ios")
+    list.style = "display:block"
+    document.getElementById('ios').checked = true
+    projectData.swift === true ? document.getElementById('swift').checked = true : document.getElementById('swift').checked = false
+    projectData.objectiveC === true ? document.getElementById('objective-c').checked = true : document.getElementById('objective-c').checked = false
+  }
+  projectData.googleAS === true ? document.getElementById('googleas').checked = true : document.getElementById('googleas').checked = false
+  projectData.appNexusAS === true ? document.getElementById('appnexusas').checked = true : document.getElementById('appnexusas').checked = false
+  projectData.consent === true ? document.getElementById('consent').checked = true : document.getElementById('consent').checked = false
+  projectData.dfp === true ? document.getElementById('dfp').checked = true : document.getElementById('dfp').checked = false
+  projectData.appNexus === true ? document.getElementById('appnexus').checked = true : document.getElementById('appnexus').checked = false
+}
+
+function populateDomains (arr){
+  var domEl = ''
+  for(var i=0; i<arr.length; i++){
+    domEl += `<li>${arr[i]}</li>`
+  }
+  return domEl
 }
 
 function populateObject(list, obj){
@@ -824,9 +1038,16 @@ function typeOutput(type){
 
 function returnDomainList (){
   var string = ``
-  for(var i = 0; i < domainsArr.length; i++){
-    string += `- ${domainsArr[i]} \n`
+  if(domainsArr.length > 0){
+    for(var i = 0; i < domainsArr.length; i++){
+      string += `- ${domainsArr[i]} \n`
+    }
+  }else if(projectData.deploymentDomains !== undefined && projectData.deploymentDomains.length > 0){
+    for(var i = 0; i < projectData.deploymentDomains.length; i++){
+      string += `- ${projectData.deploymentDomains[i]} \n`
+    }
   }
+
   return string
 }
 
@@ -837,15 +1058,18 @@ function namespaceOutput (value){
 function returnPerson(input, arr){
   var person 
   for(var i = 0 ; i < arr.length ; i++){
-    if(arr[i].toLowerCase().includes(input.toLowerCase()) === true){
+    if((arr[i].toLowerCase().includes(input.toLowerCase()) === true) || (arr[i].toLowerCase() == input.toLowerCase())){
       person = arr[i]
     }
   }
+  console.log(person)
   return person
 }
 
 function setUpEventListeners() {
   document.getElementById('submit-btn').addEventListener('click', getGiphy)
+  document.getElementById('copy-btn').addEventListener('click', copyJson)
+  document.getElementById('dwnld-btn').addEventListener('click', downloadJson)
   document.getElementById('add-property').addEventListener('click', addProperty)
   document.getElementById('domains-input').addEventListener('keypress', function(e){
     if(e.keyCode === 13){
@@ -933,6 +1157,7 @@ function addProperty (value) {
       type.style = 'float: right;'
       document.getElementById(`property-type-${property.id}`).addEventListener('change', function () {
         var typeEl = document.getElementById(`property-type-${property.id}`)
+        // console.log(typeEl.value, typeEl.parentNode, property, propertyDataArr[parseInt(typeEl.id.split('-')[3]) - 1].value)
         propType(typeEl.value, property, propertyDataArr[parseInt(typeEl.id.split('-')[3]) - 1].value)
       })
     }else{
@@ -948,6 +1173,7 @@ function propType (type, property, value) {
   var childNodesArr = Array.prototype.slice.call(childNodes)
 
   if (type === 'object'){
+    console.log(type)
     for(var i = 0 ; i < childNodesArr.length ; i++){
       if (childNodesArr[i].type !== 'submit'){
         var addProp = document.createElement('button')
@@ -1126,10 +1352,57 @@ function getGiphy(){
   });
 }
 
+function returnDomains(){
+  if (domainsArr.length === 0){
+    return projectData.deploymentDomains
+  }else return domainsArr
+}
+
+function buildJsonObj (){
+  return {
+    clientName: namespaceOutput(document.querySelector('#client-input').value),
+    projectCsm: returnPerson(document.querySelector('#csm-input').value, csmArr),
+    projectSa: returnPerson(document.querySelector('#sa-input').value, saArr),
+    deploymentDomains: returnDomains(),
+    projectId: document.querySelector('#projectid-input').value,
+    apiKey: document.querySelector('#apikey-input').value,
+    type: document.getElementById('type').checked,
+    content: document.getElementById('content').checked,
+    article: document.getElementById('article').checked,
+    user: document.getElementById('user').checked,
+    amp: document.getElementById('amp').checked,
+    fia: document.getElementById('fia').checked,
+    android: document.getElementById('android').checked,
+    kotlin: document.getElementById('kotlin').checked,
+    java: document.getElementById('java').checked,
+    ios: document.getElementById('ios').checked,
+    swift: document.getElementById('swift').checked,
+    objectiveC: document.getElementById('objective-c').checked,
+    googleAS: document.getElementById('googleas').checked,
+    appNexusAS: document.getElementById('appnexusas').checked,
+    consent: document.getElementById('consent').checked,
+    dfp: document.getElementById('dfp').checked,
+    appNexus: document.getElementById('appnexus').checked,
+    schema: propertyData
+  }
+}
+
+function copyJson (){
+  var copyText = JSON.stringify(buildJsonObj(), null, 3)
+  const textArea = document.createElement('textarea')
+  textArea.textContent = copyText
+  document.body.append(textArea)
+  textArea.select()
+  document.execCommand('copy')
+}
+
 function copyFunction () {
   objStr = ``
   populateObject(propertiesList, propertyData)
   iterate(propertyData)
+  var projectJson = buildJsonObj()
+  document.getElementById('json-input').value = JSON.stringify(projectJson, null, 3)
+  console.log(projectJson)
   var fullString = strings.intro + "\n" + strings.depolymentTools() + "\n" + strings.keys() + "\n" + strings.contacts() + "\n" + strings.domains() + "\n" + strings.webDeployment() + "\n" + ampSelected() + "\n" + fiaSelected() + "\n" + strings.userIdentity() + "\n" + consentSelected() + "\n" + dfpSelected() + "\n" + appNexusSelected() + "\n" + androidSelected() + "\n" + iosSelected()
   const copyText = fullString
   const textArea = document.createElement('textarea')
