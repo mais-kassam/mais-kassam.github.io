@@ -346,7 +346,7 @@ div {
   visibility: hidden;
 }
 .custom-file-input::before {
-  content: 'Select some files';
+  content: 'Upload JSON file';
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
