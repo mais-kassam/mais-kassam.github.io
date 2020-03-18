@@ -621,15 +621,12 @@ function downloadJson (){
 
 function handleFileSelect(evt) { var files = evt.target.files; 
   var output = []; for (var i = 0, f; f = files[i]; i++) { 
-    // output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ', f.size, ' bytes, last modified: ', f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a', '</li>'); 
     var reader = new FileReader()
     reader.onload = (function(file) { 
       return function(e) { 
         populateList(e.target.result)
-        // call the populate(theFile) function here 
       }; 
     })(f); 
-    // Read in the image file as a data URL. 
     reader.readAsText(f);
   } 
   document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>'; 
@@ -865,8 +862,10 @@ function populateDom (projectData){
 
 function populateDomains (arr){
   var domEl = ''
-  for(var i=0; i<arr.length; i++){
-    domEl += `<li>${arr[i]}</li>`
+  if(arr){
+    for(var i=0; i<arr.length; i++){
+      domEl += `<li>${arr[i]}</li>`
+    }
   }
   return domEl
 }
@@ -1157,7 +1156,6 @@ function addProperty (value) {
       type.style = 'float: right;'
       document.getElementById(`property-type-${property.id}`).addEventListener('change', function () {
         var typeEl = document.getElementById(`property-type-${property.id}`)
-        // console.log(typeEl.value, typeEl.parentNode, property, propertyDataArr[parseInt(typeEl.id.split('-')[3]) - 1].value)
         propType(typeEl.value, property, propertyDataArr[parseInt(typeEl.id.split('-')[3]) - 1].value)
       })
     }else{
