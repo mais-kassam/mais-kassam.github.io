@@ -817,6 +817,8 @@ function changeStateAddPropertiesButtons(value){
 }
 
 function populateList(jsonObj){
+  document.getElementById('properties-propertyData').innerHTML = ''
+  document.getElementById('domains-list').innerHTML = ''
   document.getElementById('json-input').value = jsonObj
   console.log(JSON.parse(jsonObj))
   projectData = JSON.parse(jsonObj)
