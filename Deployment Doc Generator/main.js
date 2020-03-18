@@ -818,7 +818,6 @@ function populateList(jsonObj){
   document.getElementById('properties-propertyData').innerHTML = ''
   document.getElementById('domains-list').innerHTML = ''
   document.getElementById('json-input').value = jsonObj
-  console.log(JSON.parse(jsonObj))
   projectData = JSON.parse(jsonObj)
   projectSchemaData = projectData['schema']
   listIterate(projectSchemaData, document.getElementById('properties-propertyData'))
@@ -1061,7 +1060,6 @@ function returnPerson(input, arr){
       person = arr[i]
     }
   }
-  console.log(person)
   return person
 }
 
@@ -1171,7 +1169,6 @@ function propType (type, property, value) {
   var childNodesArr = Array.prototype.slice.call(childNodes)
 
   if (type === 'object'){
-    console.log(type)
     for(var i = 0 ; i < childNodesArr.length ; i++){
       if (childNodesArr[i].type !== 'submit'){
         var addProp = document.createElement('button')
@@ -1400,7 +1397,6 @@ function copyFunction () {
   iterate(propertyData)
   var projectJson = buildJsonObj()
   document.getElementById('json-input').value = JSON.stringify(projectJson, null, 3)
-  console.log(projectJson)
   var fullString = strings.intro + "\n" + strings.depolymentTools() + "\n" + strings.keys() + "\n" + strings.contacts() + "\n" + strings.domains() + "\n" + strings.webDeployment() + "\n" + ampSelected() + "\n" + fiaSelected() + "\n" + strings.userIdentity() + "\n" + consentSelected() + "\n" + dfpSelected() + "\n" + appNexusSelected() + "\n" + androidSelected() + "\n" + iosSelected()
   const copyText = fullString
   const textArea = document.createElement('textarea')
