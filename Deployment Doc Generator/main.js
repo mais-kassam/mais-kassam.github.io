@@ -1109,8 +1109,25 @@ function addDomain(){
     domainsArr.push(input.value)
     var domain = document.createElement('li')
     domain.textContent = input.value
+    var domainDelete = `<a class="icon icon-inline icon-remove remove-domain" id="delete-domain" style="display: inline-block;"></a>`
+    domain.insertAdjacentHTML('beforeend', domainDelete)
+    domain.className = 'domain'
     list.appendChild(domain)
     input.value = ''
+    var nodes = document.querySelectorAll('#delete-domain')
+    var nodesArr = Array.prototype.slice.call(nodes)
+    if(nodesArr){
+      nodesArr.forEach(el => {
+        el.addEventListener('click', function(){
+          if(this.parentNode.parentNode === null){
+            return
+          }else{
+            this.parentNode.parentNode.removeChild(this.parentNode);
+            return
+          }
+        })
+      });
+    }
   } else return
 }
 
