@@ -825,11 +825,31 @@ function populateList(jsonObj){
   setUpEventListeners()
 }
 
+function domainEventListeners (){
+  var nodes = document.querySelectorAll('#delete-domain')
+  var nodesArr = Array.prototype.slice.call(nodes)
+  if(nodesArr){
+    nodesArr.forEach(el => {
+      el.addEventListener('click', function(){
+        if(this.parentNode.parentNode === null){
+          return
+        }else{
+          this.parentNode.parentNode.removeChild(this.parentNode);
+          console.log(this.parentNode.textContent)
+          domainsArr.splice(this.parentNode.textContent, 1)
+          return
+        }
+      })
+    });
+  }
+}
+
 function populateDom (projectData){
   document.getElementById('client-input').value = projectData.clientName
   document.getElementById('sa-input').value = projectData.projectSa
   document.getElementById('csm-input').value = projectData.projectCsm
   document.getElementById('domains-list').insertAdjacentHTML('afterbegin', populateDomains(projectData.deploymentDomains))
+  domainEventListeners()
   document.getElementById('projectid-input').value = projectData.projectId
   document.getElementById('apikey-input').value = projectData.apiKey
   projectData.type === true ? document.getElementById('type').checked = true : document.getElementById('type').checked = false
@@ -863,7 +883,7 @@ function populateDomains (arr){
   var domEl = ''
   if(arr){
     for(var i=0; i<arr.length; i++){
-      domEl += `<li>${arr[i]}</li>`
+      domEl += `<li>${arr[i]}<a class="icon icon-inline icon-remove remove-domain" id="delete-domain" style="display: inline-block; position: relative; top: 1px;"></a></li>`
     }
   }
   return domEl
@@ -1109,25 +1129,11 @@ function addDomain(){
     domainsArr.push(input.value)
     var domain = document.createElement('li')
     domain.textContent = input.value
-    var domainDelete = `<a class="icon icon-inline icon-remove remove-domain" id="delete-domain" style="display: inline-block;"></a>`
+    var domainDelete = `<a class="icon icon-inline icon-remove remove-domain" id="delete-domain" style="display: inline-block; position: relative; top: 1px;"></a>`
     domain.insertAdjacentHTML('beforeend', domainDelete)
-    domain.className = 'domain'
     list.appendChild(domain)
     input.value = ''
-    var nodes = document.querySelectorAll('#delete-domain')
-    var nodesArr = Array.prototype.slice.call(nodes)
-    if(nodesArr){
-      nodesArr.forEach(el => {
-        el.addEventListener('click', function(){
-          if(this.parentNode.parentNode === null){
-            return
-          }else{
-            this.parentNode.parentNode.removeChild(this.parentNode);
-            return
-          }
-        })
-      });
-    }
+    domainEventListeners()
   } else return
 }
 
@@ -1369,7 +1375,10 @@ function getGiphy(){
 
 function returnDomains(){
   if (domainsArr.length === 0){
-    return projectData.deploymentDomains
+    for(var i = 0; i < projectData.deploymentDomains.length; i++){
+      domainsArr[i] = projectData.deploymentDomains[i]
+    }
+    return domainsArr
   }else return domainsArr
 }
 
