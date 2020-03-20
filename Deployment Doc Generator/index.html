@@ -44,7 +44,8 @@
             </div>
             <div class="custom-input" style="display: block;">
                 <h3>What are the deployment domains?</h3>
-                <input id="domains-input" class="text-input" placeholder="Enter the domain and then press enter">
+                <input id="domains-input" class="text-input" style="width: calc(85% - 65px)" placeholder="Enter the domain and then press enter">
+                <button style="position: absolute; margin-top: 1px;" class="submit" id="domain-btn">Submit</button>
                 <ul id="domains-list"></ul>
             </div>
             <div class="custom-input" style="display: block;">
@@ -80,29 +81,6 @@
                     <input type="checkbox" value="Consent" id="consent"> Consent<br>
                     <input type="checkbox" value="DFP Access" id="dfp"> DFP Access<br>
                     <input type="checkbox" value="AppNexus Access" id="appnexus"> AppNexus Access<br>
-            <!-- <h3>What is the ad-slot size?</h3>
-            <div class="ad-drop">
-                <select class="custom-select" id="ad-size">
-                    <option value="size-selection">Please select a size...</option>
-                    <option value="custom">Custom...</option>
-                    <option value="out-of-page">Out of Page</option>
-                </select>
-            </div>
-            <div class="custom-input">
-                <h3>Width:<input type="Width" id="width">Height: <input type="Height" id="height"></h3>
-            </div>
-            <h3>How many questions do you want to have?
-                <select class="custom-select" id="no-questions">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4" selected>4</option>
-                </select>
-            </h3>
-            <div class="custom-input" style="display: block;">
-                <h3>End of questions message:</h3>
-                <input type="Thanks" id="thank" class="thanks" placeholder="Thank you for your responses.">
-            </div> -->
             <button class="submit" id="submit-btn">Submit</button>
             <button style="margin-left: 20px;" class="submit" id="copy-btn">Copy JSON</button>
             <button style="margin-left: 20px;" class="submit" id="dwnld-btn">Download JSON</button>

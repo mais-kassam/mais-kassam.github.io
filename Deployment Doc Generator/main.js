@@ -1068,6 +1068,9 @@ function setUpEventListeners() {
   document.getElementById('copy-btn').addEventListener('click', copyJson)
   document.getElementById('dwnld-btn').addEventListener('click', downloadJson)
   document.getElementById('add-property').addEventListener('click', addProperty)
+  document.getElementById('domain-btn').addEventListener('click', function(){
+    addDomain()
+  })
   document.getElementById('domains-input').addEventListener('keypress', function(e){
     if(e.keyCode === 13){
       addDomain()
