@@ -631,7 +631,6 @@ function handleFileSelect(evt) { var files = evt.target.files;
 } 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-
 var camelize = function(str) {
   return str
     .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
@@ -822,6 +821,7 @@ function populateList(jsonObj){
   projectSchemaData = projectData['schema']
   listIterate(projectSchemaData, document.getElementById('properties-propertyData'))
   populateDom(projectData)
+  returnDomains()
   setUpEventListeners()
 }
 
@@ -835,8 +835,11 @@ function domainEventListeners (){
           return
         }else{
           this.parentNode.parentNode.removeChild(this.parentNode);
-          console.log(this.parentNode.textContent)
-          domainsArr.splice(this.parentNode.textContent, 1)
+          for (var i = 0; i < domainsArr.length; i++){
+            if (this.parentNode.textContent === domainsArr[i]){
+              domainsArr.splice(i, 1)
+            }
+          }
           return
         }
       })
