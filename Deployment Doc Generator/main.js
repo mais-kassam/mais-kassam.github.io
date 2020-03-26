@@ -1375,10 +1375,11 @@ function getGiphy(){
 
 function returnDomains(){
   if (domainsArr.length === 0){
-    for(var i = 0; i < projectData.deploymentDomains.length; i++){
-      domainsArr[i] = projectData.deploymentDomains[i]
-    }
-    return domainsArr
+    if (projectData.deploymentDomains !== undefined && projectData.deploymentDomains.length !== 0){
+      for(var i = 0; i < projectData.deploymentDomains.length; i++){
+        domainsArr[i] = projectData.deploymentDomains[i]
+      }return domainsArr
+    }else return domainsArr
   }else return domainsArr
 }
 
