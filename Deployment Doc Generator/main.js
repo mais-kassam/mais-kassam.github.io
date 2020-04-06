@@ -300,7 +300,11 @@ var strings = {
         .replace("\"extraUrlParams\"", "   \"extraUrlParams\"")
         .replace("},", "   },")
         .replace(/": "\[<LIST>,<OF>,<INTEGERS>\]"/g, "!list[number]\": \"<CSV_LIST>\"")
-        .replace(/": "\[<LIST>,<OF>,<FLOATS>\]"/g, "!list[number]\": \"<CSV_LIST>\"")}
+        .replace(/": "\[<LIST>,<OF>,<FLOATS>\]"/g, "!list[number]\": \"<CSV_LIST>\"")
+        .replace(/: "<BOOLEAN>"/g, `: <BOOLEAN>`)
+        .replace(/: "<DATE\/TIME>"/g, `: <DATE/TIME>`)
+        .replace(/: "<INTEGER>"/g, `: <INTEGER>`)
+        .replace(/: "<FLOAT>"/g, `: <FLOAT>`)}
         }
       }  
       </script>
@@ -981,6 +985,10 @@ function returnJson(propertyData){
       .replace(/"\[/g, `[`)
       .replace(/\]"/g, `]`)
       .replace(/\}/g, `      }`)
+      .replace(/: "<BOOLEAN>"/g, `: <BOOLEAN>`)
+      .replace(/: "<DATE\/TIME>"/g, `: <DATE/TIME>`)
+      .replace(/: "<INTEGER>"/g, `: <INTEGER>`)
+      .replace(/: "<FLOAT>"/g, `: <FLOAT>`)
   return json
 }
 
