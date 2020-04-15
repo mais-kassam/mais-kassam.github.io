@@ -39,7 +39,8 @@ var csmArr = [
   "John Chen (john@permutive.com)",
   "Rico Rosa (rico@permutive.com)",
   "Chris Gwynne (chris@permutive.com)",
-  "Becky Dutta (Becky@permutive.com)"
+  "Becky Dutta (Becky@permutive.com)",
+  "Brett Goverman (brett.goverman@permutive.com)"
 ]
 
 var propetyType = function(string){
