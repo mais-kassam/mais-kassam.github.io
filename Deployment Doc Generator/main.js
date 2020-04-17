@@ -231,7 +231,7 @@ var strings = {
 
   - Install our [Chrome Extension](https://chrome.google.com/webstore/detail/permutive-extension/jbkoldmncaepofapfinnlbjmfmnabfpj) to validate events.
   - You can use our [documentation](https://support.permutive.com/hc/en-us/articles/360010090520-Deployment-testing-and-verification) here to test your deployment.
-  - You can use [this](https://app.periscopedata.com/shared/${document.querySelector('#projectid-input').value}) [dashboard](https://app.periscopedata.com/shared/${document.querySelector('#projectid-input').value}) to see any schema rejections`},
+  - You can use [this dashboard](https://app.periscopedata.com/shared/${document.querySelector('#dashboard-input').value}) to see any schema rejections`},
 
   keys: function (){
     return `## Keys
@@ -368,6 +368,18 @@ var strings = {
   - Once an ID is mapped to a user, the relationship cannot be reversed. For that reason, please ensure the correct ID is mapped to each user, and if an ID is not available, nothing is mapped.
   - Please have a look at our [documents here](https://developer.permutive.com/page/the-permutive-javascript-sdk#section-identifying-users-identify-users) for more information`
   },
+
+  identitySolution: function(){
+    return `## ITP Identity solution
+
+  Here is a [guide](https://www.notion.so/Setting-a-server-side-HttpOnly-identifier-1f8c22ae43ff46bb8408bb41fafa2b1f) on how to set a server-side HttpOnly identifier in order to work around the updated changes to ITP 2.3`
+  },
+
+  cnameSolution: function(){
+  return `## CNAME'ing solution
+
+  Here is a [guide](https://www.notion.so/CNAME-ing-Permutive-API-9c25d418d8334a79bdf2e41865610179) on how to CNAME Permutive's API in order to work around the updated changes to ITP 2.3`
+  },
   
   consent: function(){
     return `# Consent token
@@ -412,11 +424,20 @@ var strings = {
     return `# Android Deployment
 
   Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment.
+
+  - Please ensure that Permutive is deployed behind a feature flag.
+  - When deploying Permutive it is also recommended to proceed with a staged rollout.
+
   ${returnAndroidAdserver()}`
     }else{
     return `# Android Deployment
 
-  Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment. Below are examples of the \`Pageview\` tag needed:
+  Please see our [Android documentation](https://developer.permutive.com/docs/android) for a full description on the deployment. 
+  
+  - Please ensure that Permutive is deployed behind a feature flag.
+  - When deploying Permutive it is also recommended to proceed with a staged rollout.
+  
+  Below are examples of the \`Pageview\` tag needed:
   
   ${returnKotlin()}
 
@@ -432,11 +453,20 @@ var strings = {
     return `# iOS Deployment
 
   Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment.
+
+  - Please ensure that Permutive is deployed behind a feature flag
+  - When deploying Permutive it is also recommended to proceed with a staged rollout
+
   ${returniOSAdserver()}`
     }else{ 
     return `# iOS Deployment
 
-  Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment. Below are examples of the \`Pageview\` tag needed:
+  Please see our [iOS documentation](https://developer.permutive.com/docs/ios) for a full description on the deployment. 
+
+  - Please ensure that Permutive is deployed behind a feature flag
+  - When deploying Permutive it is also recommended to proceed with a staged rollout
+    
+  Below are examples of the \`Pageview\` tag needed:
   
   ${returnSwift()}
   ${returnObjectiveC()}
@@ -860,6 +890,7 @@ function populateDom (projectData){
   domainEventListeners()
   document.getElementById('projectid-input').value = projectData.projectId
   document.getElementById('apikey-input').value = projectData.apiKey
+  document.getElementById('dashboard-input').value = projectData.dashboard
   projectData.type === true ? document.getElementById('type').checked = true : document.getElementById('type').checked = false
   projectData.content === true ? document.getElementById('content').checked = true : document.getElementById('content').checked = false
   projectData.article === true ? document.getElementById('article').checked = true : document.getElementById('article').checked = false
@@ -885,6 +916,8 @@ function populateDom (projectData){
   projectData.consent === true ? document.getElementById('consent').checked = true : document.getElementById('consent').checked = false
   projectData.dfp === true ? document.getElementById('dfp').checked = true : document.getElementById('dfp').checked = false
   projectData.appNexus === true ? document.getElementById('appnexus').checked = true : document.getElementById('appnexus').checked = false
+  projectData.identitySolution === true ? document.getElementById('identity-solution').checked = true : document.getElementById('identity-solution').checked = false
+  projectData.cnameSolution === true ? document.getElementById('cname-solution').checked = true : document.getElementById('cname-solution').checked = false
 }
 
 function populateDomains (arr){
@@ -1247,6 +1280,20 @@ function ampSelected (){
   }else return ""
 }
 
+function identitySelected (){
+  var input = document.getElementById('identity-solution')
+  if(input.checked == true){
+    return strings.identitySolution()
+  }else return ""
+}
+
+function cnameSelected (){
+  var input = document.getElementById('cname-solution')
+  if(input.checked == true){
+    return strings.cnameSolution()
+  }else return ""
+}
+
 function fiaSelected (){
   var input = document.getElementById('fia')
   if(input.checked == true){
@@ -1403,6 +1450,7 @@ function buildJsonObj (){
     deploymentDomains: returnDomains(),
     projectId: document.querySelector('#projectid-input').value,
     apiKey: document.querySelector('#apikey-input').value,
+    dashboard: document.querySelector('#dashboard-input').value,
     type: document.getElementById('type').checked,
     content: document.getElementById('content').checked,
     article: document.getElementById('article').checked,
@@ -1420,6 +1468,8 @@ function buildJsonObj (){
     consent: document.getElementById('consent').checked,
     dfp: document.getElementById('dfp').checked,
     appNexus: document.getElementById('appnexus').checked,
+    identitySolution: document.getElementById('identity-solution').checked,
+    cnameSolution: document.getElementById('cname-solution').checked,
     schema: propertyData
   }
 }
@@ -1439,7 +1489,7 @@ function copyFunction () {
   iterate(propertyData)
   var projectJson = buildJsonObj()
   document.getElementById('json-input').value = JSON.stringify(projectJson, null, 3)
-  var fullString = strings.intro + "\n" + strings.depolymentTools() + "\n" + strings.keys() + "\n" + strings.contacts() + "\n" + strings.domains() + "\n" + strings.webDeployment() + "\n" + ampSelected() + "\n" + fiaSelected() + "\n" + strings.userIdentity() + "\n" + consentSelected() + "\n" + dfpSelected() + "\n" + appNexusSelected() + "\n" + androidSelected() + "\n" + iosSelected()
+  var fullString = strings.intro + "\n" + strings.depolymentTools() + "\n" + strings.keys() + "\n" + strings.contacts() + "\n" + strings.domains() + "\n" + strings.webDeployment() + "\n" + identitySelected() + "\n" + cnameSelected() + "\n" + ampSelected() + "\n" + fiaSelected() + "\n" + strings.userIdentity() + "\n" + consentSelected() + "\n" + dfpSelected() + "\n" + appNexusSelected() + "\n" + androidSelected() + "\n" + iosSelected()
   const copyText = fullString
   const textArea = document.createElement('textarea')
   textArea.textContent = copyText

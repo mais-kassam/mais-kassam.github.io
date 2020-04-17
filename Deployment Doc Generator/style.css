@@ -326,7 +326,7 @@ div {
   margin: 0;
 }
 
-#client-input.text-input, #sa-input.text-input, #csm-input.text-input, #apikey-input.text-input, #projectid-input.text-input, #domains-input.text-input {
+#client-input.text-input, #sa-input.text-input, #csm-input.text-input, #apikey-input.text-input, #projectid-input.text-input, #domains-input.text-input, #dashboard-input.text-input {
   margin: 0;
   width: 85%;
 }
