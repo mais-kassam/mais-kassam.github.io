@@ -18,15 +18,15 @@ var typeCheck = document.getElementById('type')
 var contentCheck = document.getElementById('content')
 var articleCheck = document.getElementById('article')
 var userCheck = document.getElementById('user')
+var watsonCheck = document.getElementById('watson')
 
 var trashSvg = function(string){return `<button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>`} 
 
 var saArr = [
   "Mais Kassam (maisam@permutive.com)",
   "Mitch Welzen (mitch@permutive.com)",
-  "David Reischer (david@permutive.com)",
-  "Jane Usoskina (jane@permutive.com)",
-  "Michal Kucharz (michal@permutive.com)"
+  "Michal Kucharz (michal@permutive.com)",
+  "Scott Tsai (scott.tsai@permutive.com)"
 ]
 
 var csmArr = [
@@ -43,185 +43,101 @@ var csmArr = [
   "Brett Goverman (brett.goverman@permutive.com)"
 ]
 
+var optionsString = function(selected){
+  return `  
+  <option value="string"${selected === 'string' ? ' selected' : ''}>String</option>
+  <option value="integer"${selected === 'integer' ? ' selected' : ''}>Integer</option>
+  <option value="float"${selected === 'float' ? ' selected' : ''}>Float</option>
+  <option value="object"${selected === 'object' ? ' selected' : ''}>Object</option>
+  <option value="date"${selected === 'date' ? ' selected' : ''}>Date/Time</option>
+  <option value="boolean"${selected === 'boolean' ? ' selected' : ''}>Boolean</option>
+  <option value="lostring"${selected === 'lostring' ? ' selected' : ''}>List of Strings</option>
+  <option value="lointegers"${selected === 'lointegers' ? ' selected' : ''}>List of Integers</option>
+  <option value="lofloats"${selected === 'lofloats' ? ' selected' : ''}>List of Floats</option>
+  <option value="loobjects"${selected === 'loobjects' ? ' selected' : ''}>List of Objects</option>`}
+
 var propetyType = function(string){
   return `                
   <select class="custom-select" id="property-type">
-    <option value="string">String</option>
-    <option value="integer">Integer</option>
-    <option value="float">Float</option>
-    <option value="object">Object</option>
-    <option value="date">Date/Time</option>
-    <option value="boolean">Boolean</option>
-    <option value="lostring">List of Strings</option>
-    <option value="lointegers">List of Integers</option>
-    <option value="lofloats">List of Floats</option>
+    ${optionsString(loobjects)}
   </select><button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>`
 }
 
 var typeElement = `
 <li class="property-item" id="item-type" style="width: 400px;">Type                
 <select class="custom-select" id="property-type-item-type" style="float: right;">
-  <option value="string" selected>String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('string')}
 </select>${trashSvg('type')}</li>`
 
 var contentElement = `
 <li class="property-item" id="item-content" style="width: 400px;">Content                
 <select class="custom-select" id="property-type-item-content" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object" selected>Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+${optionsString('object')}
 </select>${trashSvg('content')}<ul id="properties-content"><li class="property-item" id="item-content-categories" style="width: 400px;">Categories                
 <select class="custom-select" id="property-type-item-content-categories" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring" selected>List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('lostring')}
 </select>${trashSvg('content-categories')}</li></ul><button id="add-sub-property-content" class="add-sub-property">+ Add Property</button></li>`
 
 var articleElement = `
 <li class="property-item" id="item-article" style="width: 400px;">Article                
 <select class="custom-select" id="property-type-item-article" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object" selected>Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+${optionsString('object')}
 </select>${trashSvg('article')}<ul id="properties-article"><li class="property-item" id="item-article-properties" style="width: 400px;">Id                
 <select class="custom-select" id="property-type-item-article-properties" style="float: right;">
-  <option value="string" selected>String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('string')}
 </select>${trashSvg('article-properties')}</li><li class="property-item" id="item-article-title" style="width: 400px;">Title                
 <select class="custom-select" id="property-type-item-article-title" style="float: right;">
-  <option value="string" selected>String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('string')}
 </select>${trashSvg('article-title')}</li><li class="property-item" id="item-article-description" style="width: 400px;">Description                
 <select class="custom-select" id="property-type-item-article-description" style="float: right;">
-  <option value="string" selected>String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('string')}
 </select>${trashSvg('article-description')}</li><li class="property-item" id="item-article-authors" style="width: 400px;">Authors                
 <select class="custom-select" id="property-type-item-article-authors" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring" selected>List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('lostring')}
 </select>${trashSvg('article-authors')}</li><li class="property-item" id="item-article-tags" style="width: 400px;">Tags                
 <select class="custom-select" id="property-type-item-article-tags" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring" selected>List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('lostring')}
 </select>${trashSvg('article-tags')}</li><li class="property-item" id="item-article-modified" style="width: 400px;">Modified at                
 <select class="custom-select" id="property-type-item-article-modified" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date" selected>Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('date')}
 </select>${trashSvg('article-modified')}</li><li class="property-item" id="item-article-published" style="width: 400px;">Published at                
 <select class="custom-select" id="property-type-item-article-published" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date" selected>Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('date')}
 </select>${trashSvg('article-published')}</li><li class="property-item" id="item-article-premium" style="width: 400px;">Premium                
 <select class="custom-select" id="property-type-item-article-premium" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean" selected>Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('boolean')}
 </select>${trashSvg('article-premium')}</li></ul><button id="add-sub-property-article" class="add-sub-property">+ Add Property</button></li>`
+
+var watsonElement = `
+<li class="property-item" id="item-watson" style="width: 400px;">classifications_watson                
+<select class="custom-select" id="property-type-item-classifications-watson" style="float: right;">
+${optionsString('object')}
+</select>${trashSvg('classifications_watson')}<ul id="properties-classifications-watson">
+<li class="property-item" id="item-classifications-watson-concepts" style="width: 400px;">alchemy_concepts                
+<select class="custom-select" id="property-type-item-classifications-watson-concepts" style="float: right;">
+  ${optionsString('loobjects')}
+</select>${trashSvg('classifications-watson-entity-names')}</li>
+<li class="property-item" id="item-classifications-watson-concepts" style="width: 400px;">alchemy_entity_names                
+<select class="custom-select" id="property-type-item-classifications-watson-entity-names" style="float: right;">
+  ${optionsString('loobjects')}
+</select>${trashSvg('classifications-watson-entity-names')}</li>
+<li class="property-item" id="item-classifications-watson-keywords" style="width: 400px;">keywords                
+<select class="custom-select" id="property-type-item-classifications-watson-keywords" style="float: right;">
+  ${optionsString('loobjects')}
+</select>${trashSvg('classifications-watson-keywords')}</li>
+<li class="property-item" id="item-classifications-watson-concepts" style="width: 400px;">sentiment                
+<select class="custom-select" id="property-type-item-classifications-watson-sentiment" style="float: right;">
+  ${optionsString('loobjects')}
+</select>${trashSvg('classifications-watson-sentiment')}</li></ul><button id="add-sub-property-watson" class="add-sub-property">+ Add Property</button></li>`
+
 
 var userElement = `
 <li class="property-item" id="item-user" style="width: 400px;">User                
 <select class="custom-select" id="property-type-item-user" style="float: right;">
-  <option value="string">String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object" selected>Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+${optionsString('object')}
 </select>${trashSvg('user')}<ul id="properties-user"><li class="property-item" id="item-user-type" style="width: 400px;">Type                
 <select class="custom-select" id="property-type-item-user-type" style="float: right;">
-  <option value="string" selected>String</option>
-  <option value="integer">Integer</option>
-  <option value="float">Float</option>
-  <option value="object">Object</option>
-  <option value="date">Date/Time</option>
-  <option value="boolean">Boolean</option>
-  <option value="lostring">List of Strings</option>
-  <option value="lointegers">List of Integers</option>
-  <option value="lofloats">List of Floats</option>
+  ${optionsString('string')}
 </select>${trashSvg('user-type')}</li></ul><button id="add-sub-property-user" class="add-sub-property">+ Add Property</button></li>`
 
 var strings = {
@@ -231,15 +147,16 @@ var strings = {
 
   - Install our [Chrome Extension](https://chrome.google.com/webstore/detail/permutive-extension/jbkoldmncaepofapfinnlbjmfmnabfpj) to validate events.
   - You can use our [documentation](https://support.permutive.com/hc/en-us/articles/360010090520-Deployment-testing-and-verification) here to test your deployment.
-  - You can use [this dashboard](https://app.periscopedata.com/shared/${document.querySelector('#dashboard-input').value}) to see any schema rejections`},
+  - You can use [this dashboard](${document.querySelector('#dashboard-input').value}) to see any schema rejections`},
 
   keys: function (){
     return `## Keys
 
-  Below are the project and API keys for your project. You will need to use them for the various code snippets in this document.
+  Below are the organization and API keys for your project. You will need to use them for the various code snippets in this document.
   
-  - **<PROJECT_ID>**: \`${document.querySelector('#projectid-input').value}\`
-  - **<PUBLIC_API_KEY>**: \`${document.querySelector('#apikey-input').value}\`
+  - **<ORGANIZATION_ID>**: \`${document.querySelector('#projectid-input').value}\`
+  - **<WORKSPACE_ID>**: \`${document.querySelector('#workspaceid-input').value != '' ? document.querySelector('#workspaceid-input').value : document.querySelector('#projectid-input').value}\` (This will only be different if you have Enterprise Workspaces)
+  - **<WORKSPACE_API_KEY>**: \`${document.querySelector('#apikey-input').value}\`
   - **<NAMESPACE>**: \`${namespaceOutput(document.querySelector('#client-input').value)}\``
   },
 
@@ -267,15 +184,15 @@ var strings = {
   Our main JavaScript tag should be deployed on every page in your web environment:
   \`\`\`javascript
     <script>  
-    !function(n,e,o,r,i){if(!e){e=e||{},window.permutive=e,e.q=[],e.config=i||{},e.config.projectId=o,e.config.apiKey=r,e.config.environment=e.config.environment||"production";for(var t=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],c=0;c<t.length;c++){var f=t[c];e[f]=function(n){return function(){var o=Array.prototype.slice.call(arguments,0);e.q.push({functionName:n,arguments:o})}}(f)}}}(document,window.permutive,"<PROJECT_ID>","<PUBLIC_API_KEY>",{});  ${returnWebAdserver()}
+    !function(n,e,i){if(!n){n=n||{},window.permutive=n,n.q=[],n.config=i||{},n.config.apiKey=e,n.config.environment=n.config.environment||"production";for(var o=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],r=0;r<o.length;r++){var t=o[r];n[t]=function(e){return function(){var i=Array.prototype.slice.call(arguments,0);n.q.push({functionName:e,arguments:i})}}(t)}}}(window.permutive,"<WORKSPACE_API_KEY>",{});  ${returnWebAdserver()}
     permutive.addon('web', { 
       page: ${returnJson(propertyData)}
     });
     </script>
-    <script async src="https://cdn.permutive.com/<PROJECT_ID>-web.js"></script>
+    <script async src="https://<ORGANIZATION_ID>.edge.permutive.app/<WORKSPACE_ID>-web.js"></script>
   \`\`\`
   - The main tag should be placed in between your pages' \`<head> </head>\` tags. Our tag will load Permutive JavaScript asynchronously, ensuring that the page is not blocked while Permutive is loading.
-  - Please replace the \`<PROJECT_ID>\` and \`<PUBLIC_API_KEY>\` values in the above snippet
+  - Please replace the \`<ORGANIZATION_ID>\`, \`<WORKSPACE_ID>\` and \`<WORKSPACE_API_KEY>\` values in the above snippet
   - If a custom property is available, please fill it in dynamically and send it in the data format specified. **If a custom property is not available, please do not send it at all.**
   - The script has to be placed before a call to \`window.googletag.enableServices()\` is made.`
   },
@@ -720,15 +637,7 @@ Object.keys(obj).forEach(key => {
         list.insertAdjacentHTML('beforeend', 
         `<li class="property-item" id="item-${counter}-${key}" style="width: 400px;">${key}                
         <select class="custom-select" id="property-type-item-${counter}-${key}" style="float: right;">
-          <option value="string">String</option>
-          <option value="integer">Integer</option>
-          <option value="float">Float</option>
-          <option value="object" selected>Object</option>
-          <option value="date">Date/Time</option>
-          <option value="boolean">Boolean</option>
-          <option value="lostring">List of Strings</option>
-          <option value="lointegers">List of Integers</option>
-          <option value="lofloats">List of Floats</option>
+          ${optionsString('object')}
         </select><button id="delete-btn-item-item-${counter}-${key}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"></path><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"></rect><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "></polygon><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "></polygon></g></svg>
         <ul id="properties-${key}"></ul>
         <button id="add-sub-property-${key}" class="add-sub-property">+ Add Property</button></li>`)
@@ -1403,6 +1312,20 @@ userCheck.addEventListener( 'change', function() {
       return
     }else{
       var child = document.getElementById('item-user')
+      child.parentNode.removeChild(child)
+    }
+  }
+});
+
+watsonCheck.addEventListener( 'change', function() {
+  if(this.checked) {
+      propertiesList.insertAdjacentHTML('beforeend', watsonElement)
+      addPropEventListener(document.getElementById('add-sub-property-watson'), 'properties-classifications-watson')
+  } else {
+    if($(document.getElementById('item-watson')).length == 0){
+      return
+    }else{
+      var child = document.getElementById('item-watson')
       child.parentNode.removeChild(child)
     }
   }
