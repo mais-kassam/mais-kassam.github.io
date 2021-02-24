@@ -259,9 +259,9 @@ pre code {
 	word-wrap: break-word;
 }
 
-div {
-	/* border-left: 1px solid rgb(221, 221, 221); */
-}
+/* div {
+	border-left: 1px solid rgb(221, 221, 221);
+} */
 
 .custom-input {
 	border: 0;
