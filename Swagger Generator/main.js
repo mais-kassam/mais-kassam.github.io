@@ -28,10 +28,59 @@ function checkType(value) {
 
 
 var swaggerOutput = {
-  fields:{},
-  name: "Object",
-  required: false, 
-  type:"struct"
+  fields:{}
+}
+
+function convertSwagger(swaggerOutput) {
+  var output = {}
+  output.schema = swaggerOutput.fields
+  return output
+}
+
+function clientName(prop, parent) {
+  if(parent === 'client'){
+    switch (prop) {
+      case 'domain':
+        return 'Client Domain';
+      case 'referrer':
+        return 'Client Referrer';
+      case 'title':
+        return 'Client Title';
+      case 'tyoe':
+        return 'Client Type';
+      case 'url':
+        return 'Client URL';
+      case 'user_agent':
+        return 'Client User Agent';
+      default:
+        return prop;
+    }
+  }else{
+    return prop;
+  }
+}
+
+function clientDesciption(prop, parent) {
+  if(parent === 'client'){
+    switch (prop) {
+      case 'domain':
+        return 'The domain the event fired on';
+      case 'referrer':
+        return 'The referrer to the URL';
+      case 'title':
+        return 'The title of the web page the event occurred on (shown in the page tab)';
+      case 'tyoe':
+        return 'The type of the client, e.g. AMP, FIA, web, iOS, Android';
+      case 'url':
+        return 'The URL of the web page the event occurred on';
+      case 'user_agent':
+        return 'The user agent of the client the event occurred on';
+      default:
+        return '';
+    }
+  }else{
+    return '';
+  }
 }
 
 function createSwagger (obj, parent, output) {
@@ -50,16 +99,16 @@ function createSwagger (obj, parent, output) {
         checkType(obj[prop])
         if(output.fields === undefined){
           output[prop] = {
-            name: prop,
+            name: clientName(prop, parent),
             required: false,
-            description: "",
+            description: clientDesciption(prop, parent),
             type: checkType(obj[prop])
           }
         }else{
           output.fields[prop] = {
-            name: prop,
+            name: clientName(prop, parent),
             required: false,
-            description: "",
+            description: clientDesciption(prop, parent),
             type: checkType(obj[prop])
             // type: Object.prototype.toString.call(obj[prop]).slice(-7, -1).toLowerCase()
           }
@@ -118,6 +167,7 @@ var contentCheck = document.getElementById('content')
 var articleCheck = document.getElementById('article')
 var userCheck = document.getElementById('user')
 var watsonCheck = document.getElementById('watson')
+var clientCheck = document.getElementById('client')
 
 var trashSvg = function(string){return `<button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>`} 
 
@@ -211,6 +261,38 @@ ${optionsString('object')}
 <select class="custom-select" id="property-type-item-classifications-watson-sentiment" style="float: right;">
   ${optionsString('loobjects')}
 </select>${trashSvg('classifications-watson-sentiment')}</li></ul><button id="add-sub-property-watson" class="add-sub-property">+ Add Property</button></li>`
+
+var clientElement = `
+<li class="property-item" id="item-client" style="width: 400px;">client                
+<select class="custom-select" id="property-type-item-client" style="float: right;">
+${optionsString('object')}
+</select>${trashSvg('client')}<ul id="properties-client">
+<li class="property-item" id="item-client-domain" style="width: 400px;">domain                
+<select class="custom-select" id="property-type-item-client-domain" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('client-domain')}</li>
+<li class="property-item" id="item-client-referrer" style="width: 400px;">referrer                
+<select class="custom-select" id="property-type-item-client-referrer" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('client-referrer')}</li>
+<li class="property-item" id="item-client-title" style="width: 400px;">title                
+<select class="custom-select" id="property-type-item-client-title" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('client-title')}</li>
+<li class="property-item" id="item-client-type" style="width: 400px;">type                
+<select class="custom-select" id="property-type-item-client-type" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('client-type')}</li>
+<li class="property-item" id="item-client-url" style="width: 400px;">url                
+<select class="custom-select" id="property-type-item-client-url" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('client-url')}</li>
+<li class="property-item" id="item-client-user-agent" style="width: 400px;">user_agent                
+<select class="custom-select" id="property-type-item-client-user-agent" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('client-user-agent')}</li>
+
+</ul><button id="add-sub-property-client" class="add-sub-property">+ Add Property</button></li>`
 
 
 var userElement = `
@@ -746,6 +828,20 @@ watsonCheck.addEventListener( 'change', function() {
   }
 });
 
+clientCheck.addEventListener( 'change', function() {
+  if(this.checked) {
+      propertiesList.insertAdjacentHTML('beforeend', clientElement)
+      addPropEventListener(document.getElementById('add-sub-property-client'), 'properties-classifications-client')
+  } else {
+    if($(document.getElementById('item-client')).length == 0){
+      return
+    }else{
+      var child = document.getElementById('item-client')
+      child.parentNode.removeChild(child)
+    }
+  }
+});
+
 var modal = document.getElementById("myModal");
 
 var span = document.getElementsByClassName("close")[0];
@@ -778,7 +874,8 @@ function buildJsonObj (){
 }
 
 function copyJson (){
-  var copyText = JSON.stringify(buildJsonObj(), null, 3)
+  var projectJson = buildJsonObj()
+  var copyText = JSON.stringify(convertSwagger(createSwagger(projectJson.schema, null, swaggerOutput)), null, 3)
   const textArea = document.createElement('textarea')
   textArea.textContent = copyText
   document.body.append(textArea)
@@ -793,7 +890,7 @@ function copyFunction () {
   var projectJson = buildJsonObj()
   document.getElementById('json-input').value = JSON.stringify(projectJson, null, 3)
   console.log(projectJson.schema)
-  document.getElementById('json-input-swagger').value = JSON.stringify(createSwagger(projectJson.schema, null, swaggerOutput), null, 3)
+  document.getElementById('json-input-swagger').value = JSON.stringify(convertSwagger(createSwagger(projectJson.schema, null, swaggerOutput)), null, 3)
 }
 
 function init() {
