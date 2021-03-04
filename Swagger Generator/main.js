@@ -59,12 +59,40 @@ function clientName(prop, parent) {
         return 'Client Referrer';
       case 'title':
         return 'Client Title';
-      case 'tyoe':
+      case 'type':
         return 'Client Type';
       case 'url':
         return 'Client URL';
       case 'user_agent':
         return 'Client User Agent';
+      default:
+        return capitalise(prop, parent);
+    }
+  }else if(parent === 'isp_info'){
+    switch (prop) {
+      case 'autonomous_system_number':
+        return 'ISP - Autonomous System Number';
+      case 'autonomous_system_organization':
+        return 'ISP - Autonomous System Organization';
+      case 'isp':
+        return 'ISP - Name';
+      case 'organization':
+        return 'ISP - Organization';
+      default:
+        return capitalise(prop, parent);
+    }
+  }else if(parent === 'geo_info'){
+    switch (prop) {
+      case 'city':
+        return 'Geo - City';
+      case 'continent':
+        return 'Geo - Continent';
+      case 'country':
+        return 'Geo - Country';
+      case 'postal_code':
+        return 'Geo - Postal Code';
+      case 'province':
+        return 'Geo - Province';
       default:
         return capitalise(prop, parent);
     }
@@ -82,12 +110,40 @@ function clientDesciption(prop, parent) {
         return 'The referrer to the URL';
       case 'title':
         return 'The title of the web page the event occurred on (shown in the page tab)';
-      case 'tyoe':
+      case 'type':
         return 'The type of the client, e.g. AMP, FIA, web, iOS, Android';
       case 'url':
         return 'The URL of the web page the event occurred on';
       case 'user_agent':
         return 'The user agent of the client the event occurred on';
+      default:
+        return '';
+    }  
+  }else if(parent === 'isp_info'){
+    switch (prop) {
+      case 'autonomous_system_number':
+        return 'Autonomous system number for the user\'s ISP';
+      case 'autonomous_system_organization':
+        return 'Autonomous system organization for the user\'s ISP';
+      case 'isp':
+        return 'Name of the user\'s ISP';
+      case 'organization':
+        return 'Organization of the user\'s ISP';
+      default:
+        return '';
+    }
+  }else if(parent === 'geo_info'){
+    switch (prop) {
+      case 'city':
+        return 'Geolocation data for the user\'s city';
+      case 'continent':
+        return 'Geolocation data for the user\'s continent';
+      case 'country':
+        return 'Geolocation data for the user\'s country';
+      case 'postal_code':
+        return 'Geolocation data for the user\'s postal code';
+      case 'province':
+        return 'Geolocation data for the user\'s province';
       default:
         return '';
     }
@@ -179,8 +235,10 @@ var typeCheck = document.getElementById('type')
 var contentCheck = document.getElementById('content')
 var articleCheck = document.getElementById('article')
 var userCheck = document.getElementById('user')
-var watsonCheck = document.getElementById('watson')
+// var watsonCheck = document.getElementById('watson')
 var clientCheck = document.getElementById('client')
+var ispCheck = document.getElementById('isp')
+var geoCheck = document.getElementById('geo')
 
 var trashSvg = function(string){return `<button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>`} 
 
@@ -304,7 +362,56 @@ ${optionsString('object')}
 <select class="custom-select" id="property-type-item-client-user-agent" style="float: right;">
   ${optionsString('string')}
 </select>${trashSvg('client-user-agent')}</li>
+</ul><button id="add-sub-property-client" class="add-sub-property">+ Add Property</button></li>`
 
+var ispElement = `
+<li class="property-item" id="item-isp" style="width: 400px;">isp_info                
+<select class="custom-select" id="property-type-item-isp" style="float: right;">
+${optionsString('object')}
+</select>${trashSvg('isp')}<ul id="properties-isp">
+<li class="property-item" id="item-isp-autonomous-system-number" style="width: 400px;">autonomous_system_number                
+<select class="custom-select" id="property-type-item-isp-autonomous-system-number" style="float: right;">
+  ${optionsString('integer')}
+</select>${trashSvg('isp-autonomous-system-number')}</li>
+<li class="property-item" id="item-isp-autonomous-system-organization" style="width: 420px;">autonomous_system_organization                
+<select class="custom-select" id="property-type-item-isp-autonomous-system-organization" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('isp-autonomous-system-organization')}</li>
+<li class="property-item" id="item-isp-name" style="width: 400px;">isp                
+<select class="custom-select" id="property-type-item-isp-name" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('isp-name')}</li>
+<li class="property-item" id="item-isp-organization" style="width: 400px;">organization                
+<select class="custom-select" id="property-type-item-isp-organization" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('isp-organization')}</li>
+</ul><button id="add-sub-property-client" class="add-sub-property">+ Add Property</button></li>`
+
+var geoElement = `
+<li class="property-item" id="item-geo" style="width: 400px;">geo_info                
+<select class="custom-select" id="property-type-item-geo" style="float: right;">
+${optionsString('object')}
+</select>${trashSvg('geo')}<ul id="properties-isp">
+<li class="property-item" id="item-geo-city" style="width: 400px;">city                
+<select class="custom-select" id="property-type-item-geo-city" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('geo-city')}</li>
+<li class="property-item" id="item-geo-continent" style="width: 400px;">continent                
+<select class="custom-select" id="property-type-item-geo-continent" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('geo-continent')}</li>
+<li class="property-item" id="item-geo-country" style="width: 400px;">country                
+<select class="custom-select" id="property-type-item-geo-country" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('geo-country')}</li>
+<li class="property-item" id="item-geo-postal-code" style="width: 400px;">postal_code                
+<select class="custom-select" id="property-type-item-geo-postal-code" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('geo-postal-code')}</li>
+<li class="property-item" id="item-geo-province" style="width: 400px;">province                
+<select class="custom-select" id="property-type-item-geo-province" style="float: right;">
+  ${optionsString('string')}
+</select>${trashSvg('geo-province')}</li>
 </ul><button id="add-sub-property-client" class="add-sub-property">+ Add Property</button></li>`
 
 
@@ -827,29 +934,57 @@ userCheck.addEventListener( 'change', function() {
   }
 });
 
-watsonCheck.addEventListener( 'change', function() {
-  if(this.checked) {
-      propertiesList.insertAdjacentHTML('beforeend', watsonElement)
-      addPropEventListener(document.getElementById('add-sub-property-watson'), 'properties-classifications-watson')
-  } else {
-    if($(document.getElementById('item-watson')).length == 0){
-      return
-    }else{
-      var child = document.getElementById('item-watson')
-      child.parentNode.removeChild(child)
-    }
-  }
-});
+// watsonCheck.addEventListener( 'change', function() {
+//   if(this.checked) {
+//       propertiesList.insertAdjacentHTML('beforeend', watsonElement)
+//       addPropEventListener(document.getElementById('add-sub-property-watson'), 'properties-classifications-watson')
+//   } else {
+//     if($(document.getElementById('item-watson')).length == 0){
+//       return
+//     }else{
+//       var child = document.getElementById('item-watson')
+//       child.parentNode.removeChild(child)
+//     }
+//   }
+// });
 
 clientCheck.addEventListener( 'change', function() {
   if(this.checked) {
       propertiesList.insertAdjacentHTML('beforeend', clientElement)
-      addPropEventListener(document.getElementById('add-sub-property-client'), 'properties-classifications-client')
+      addPropEventListener(document.getElementById('add-sub-property-client'), 'properties-client')
   } else {
     if($(document.getElementById('item-client')).length == 0){
       return
     }else{
       var child = document.getElementById('item-client')
+      child.parentNode.removeChild(child)
+    }
+  }
+});
+
+ispCheck.addEventListener( 'change', function() {
+  if(this.checked) {
+      propertiesList.insertAdjacentHTML('beforeend', ispElement)
+      addPropEventListener(document.getElementById('add-sub-property-isp'), 'properties-isp')
+  } else {
+    if($(document.getElementById('item-isp')).length == 0){
+      return
+    }else{
+      var child = document.getElementById('item-isp')
+      child.parentNode.removeChild(child)
+    }
+  }
+});
+
+geoCheck.addEventListener( 'change', function() {
+  if(this.checked) {
+      propertiesList.insertAdjacentHTML('beforeend', geoElement)
+      addPropEventListener(document.getElementById('add-sub-property-geo'), 'properties-geo')
+  } else {
+    if($(document.getElementById('item-geo')).length == 0){
+      return
+    }else{
+      var child = document.getElementById('item-geo')
       child.parentNode.removeChild(child)
     }
   }
