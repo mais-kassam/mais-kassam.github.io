@@ -37,6 +37,19 @@ function convertSwagger(swaggerOutput) {
   return output
 }
 
+function capitalise(prop, parent) {
+  var reg = /\b([a-zÁ-ú]{3,})/g;
+  var propResult = prop.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function(str){ return str.toUpperCase(); });  
+  var parentResult = parent.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function(str){ return str.toUpperCase(); });  
+
+  var propResult = prop
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, function(str){ return str.toUpperCase(); })
+  return parentResult + ' ' + propResult
+}
+
+
+
 function clientName(prop, parent) {
   if(parent === 'client'){
     switch (prop) {
@@ -53,10 +66,10 @@ function clientName(prop, parent) {
       case 'user_agent':
         return 'Client User Agent';
       default:
-        return prop;
+        return capitalise(prop, parent);
     }
   }else{
-    return prop;
+    return capitalise(prop, parent);
   }
 }
 
@@ -120,7 +133,7 @@ function createSwagger (obj, parent, output) {
         if(output.fields === undefined){
           output[prop] = {
             fieldType: {
-              name: prop,
+              name: capitalise(prop, parent),
               required: false,
               type: "string"
             },
@@ -129,7 +142,7 @@ function createSwagger (obj, parent, output) {
         }else{
           output.fields[prop] = {
             fieldType: {
-              name: prop,
+              name: capitalise(prop, parent),
               required: false,
               type: "string"
             },
