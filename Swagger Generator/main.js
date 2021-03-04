@@ -40,12 +40,17 @@ function convertSwagger(swaggerOutput) {
 function capitalise(prop, parent) {
   var reg = /\b([a-zÁ-ú]{3,})/g;
   var propResult = prop.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function(str){ return str.toUpperCase(); });  
-  var parentResult = parent.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function(str){ return str.toUpperCase(); });  
+  if (parent){
+    var parentResult = parent.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function(str){ return str.toUpperCase(); });  
+  }else{
+    var parentResult = ''
+  }
 
   var propResult = prop
     .replace(/([A-Z])/g, ' $1')
     .replace(/^./, function(str){ return str.toUpperCase(); })
-  return parentResult + ' ' + propResult
+  var result = parent ? parentResult + ' ' + propResult : propResult
+  return result
 }
 
 
