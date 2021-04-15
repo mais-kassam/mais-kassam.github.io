@@ -1,34 +1,34 @@
 
 function isInt(n) {
-   return n % 1 === 0;
+  return n % 1 === 0;
 }
 
 function checkType(value) {
   var val;
-  if(Object.prototype.toString.call(value) === '[object Number]'){
-    isInt(value) ? val =  'integer' : val = 'float'
+  if (Object.prototype.toString.call(value) === '[object Number]') {
+    isInt(value) ? val = 'integer' : val = 'float'
     console.log(val)
     return val
-  }else if (Object.prototype.toString.call(value) === '[object String]'){
-    if (value === '<INTEGER>'){
+  } else if (Object.prototype.toString.call(value) === '[object String]') {
+    if (value === '<INTEGER>') {
       return 'integer'
-    }else if (value === '<FLOAT>'){
+    } else if (value === '<FLOAT>') {
       return 'float'
-    }else if (value === '<BOOLEAN>'){
+    } else if (value === '<BOOLEAN>') {
       return 'boolean'
-    }else if (value === '<DATE/TIME>'){
+    } else if (value === '<DATE/TIME>') {
       return 'date'
-    }else{
+    } else {
       return 'string'
     }
-  }else if (Object.prototype.toString.call(value) === '[object Boolean]' || value === '<BOOLEAN>'){
+  } else if (Object.prototype.toString.call(value) === '[object Boolean]' || value === '<BOOLEAN>') {
     return 'boolean'
   }
 }
 
 
 var swaggerOutput = {
-  fields:{}
+  fields: {}
 }
 
 function convertSwagger(swaggerOutput) {
@@ -39,16 +39,16 @@ function convertSwagger(swaggerOutput) {
 
 function capitalise(prop, parent) {
   var reg = /\b([a-zÁ-ú]{3,})/g;
-  var propResult = prop.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function(str){ return str.toUpperCase(); });  
-  if (parent){
-    var parentResult = parent.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function(str){ return str.toUpperCase(); });  
-  }else{
+  var propResult = prop.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function (str) { return str.toUpperCase(); });
+  if (parent) {
+    var parentResult = parent.replace('_', ' ').replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1)).replace(/^./, function (str) { return str.toUpperCase(); });
+  } else {
     var parentResult = ''
   }
 
   var propResult = prop
     .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, function(str){ return str.toUpperCase(); })
+    .replace(/^./, function (str) { return str.toUpperCase(); })
   var result = parent ? parentResult + ' ' + propResult : propResult
   return result
 }
@@ -56,7 +56,7 @@ function capitalise(prop, parent) {
 
 
 function clientName(prop, parent) {
-  if(parent === 'client'){
+  if (parent === 'client') {
     switch (prop) {
       case 'domain':
         return 'Client Domain';
@@ -73,7 +73,7 @@ function clientName(prop, parent) {
       default:
         return capitalise(prop, parent);
     }
-  }else if(parent === 'isp_info'){
+  } else if (parent === 'isp_info') {
     switch (prop) {
       case 'autonomous_system_number':
         return 'ISP - Autonomous System Number';
@@ -86,7 +86,7 @@ function clientName(prop, parent) {
       default:
         return capitalise(prop, parent);
     }
-  }else if(parent === 'geo_info'){
+  } else if (parent === 'geo_info') {
     switch (prop) {
       case 'city':
         return 'Geo - City';
@@ -101,13 +101,13 @@ function clientName(prop, parent) {
       default:
         return capitalise(prop, parent);
     }
-  }else{
+  } else {
     return capitalise(prop, parent);
   }
 }
 
 function clientDesciption(prop, parent) {
-  if(parent === 'client'){
+  if (parent === 'client') {
     switch (prop) {
       case 'domain':
         return 'The domain the event fired on';
@@ -123,8 +123,8 @@ function clientDesciption(prop, parent) {
         return 'The user agent of the client the event occurred on';
       default:
         return '';
-    }  
-  }else if(parent === 'isp_info'){
+    }
+  } else if (parent === 'isp_info') {
     switch (prop) {
       case 'autonomous_system_number':
         return 'Autonomous system number for the user\'s ISP';
@@ -137,7 +137,7 @@ function clientDesciption(prop, parent) {
       default:
         return '';
     }
-  }else if(parent === 'geo_info'){
+  } else if (parent === 'geo_info') {
     switch (prop) {
       case 'city':
         return 'Geolocation data for the user\'s city';
@@ -152,33 +152,33 @@ function clientDesciption(prop, parent) {
       default:
         return '';
     }
-  }else{
+  } else {
     return '';
   }
 }
 
-function createSwagger (obj, parent, output) {
-  for(prop in obj){
-    if (Object.prototype.toString.call(obj[prop]) === "[object Object]"){
+function createSwagger(obj, parent, output) {
+  for (prop in obj) {
+    if (Object.prototype.toString.call(obj[prop]) === "[object Object]") {
       console.log(Object.prototype.toString.call(obj[prop]))
       output.fields[prop] = {
-        fields:{},
+        fields: {},
         name: "Object",
-        required: false, 
-        type:"struct"
+        required: false,
+        type: "struct"
       }
       createSwagger(obj[prop], prop, output.fields[prop])
-    }else{
-      if(Object.prototype.toString.call(obj[prop]) !== "[object Array]"){
+    } else {
+      if (Object.prototype.toString.call(obj[prop]) !== "[object Array]") {
         checkType(obj[prop])
-        if(output.fields === undefined){
+        if (output.fields === undefined) {
           output[prop] = {
             name: clientName(prop, parent),
             required: false,
             description: clientDesciption(prop, parent),
             type: checkType(obj[prop])
           }
-        }else{
+        } else {
           output.fields[prop] = {
             name: clientName(prop, parent),
             required: false,
@@ -187,11 +187,11 @@ function createSwagger (obj, parent, output) {
             // type: Object.prototype.toString.call(obj[prop]).slice(-7, -1).toLowerCase()
           }
         }
-        
-      }else{
+
+      } else {
 
         // We need to add in a check to see the array is an array of strings or an array of integers etc.
-        if(output.fields === undefined){
+        if (output.fields === undefined) {
           output[prop] = {
             fieldType: {
               name: capitalise(prop, parent),
@@ -200,7 +200,7 @@ function createSwagger (obj, parent, output) {
             },
             type: "array"
           }
-        }else{
+        } else {
           output.fields[prop] = {
             fieldType: {
               name: capitalise(prop, parent),
@@ -228,9 +228,9 @@ var domainsArr = []
 var space = ""
 var objString = []
 var jsonObj = []
-var tempKey 
-var amp =  {"vars": {"namespace": "<NAMESPACE>","key": "<PUBLIC_API_KEY>"},"extraUrlParams": {}}
-var java =  {}
+var tempKey
+var amp = { "vars": { "namespace": "<NAMESPACE>", "key": "<PUBLIC_API_KEY>" }, "extraUrlParams": {} }
+var java = {}
 var keysTracker = []
 var projKeysTracker = []
 var javaKeysTracker = []
@@ -245,9 +245,9 @@ var clientCheck = document.getElementById('client')
 var ispCheck = document.getElementById('isp')
 var geoCheck = document.getElementById('geo')
 
-var trashSvg = function(string){return `<button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>`} 
+var trashSvg = function (string) { return `<button id="delete-btn-${string}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg>` }
 
-var optionsString = function(selected){
+var optionsString = function (selected) {
   return `  
   <option value="string"${selected === 'string' ? ' selected' : ''}>String</option>
   <option value="integer"${selected === 'integer' ? ' selected' : ''}>Integer</option>
@@ -258,9 +258,10 @@ var optionsString = function(selected){
   <option value="lostring"${selected === 'lostring' ? ' selected' : ''}>List of Strings</option>
   <option value="lointegers"${selected === 'lointegers' ? ' selected' : ''}>List of Integers</option>
   <option value="lofloats"${selected === 'lofloats' ? ' selected' : ''}>List of Floats</option>
-  <option value="loobjects"${selected === 'loobjects' ? ' selected' : ''}>List of Objects</option>`}
+  <option value="loobjects"${selected === 'loobjects' ? ' selected' : ''}>List of Objects</option>`
+}
 
-var propetyType = function(string){
+var propetyType = function (string) {
   return `                
   <select class="custom-select" id="property-type">
     ${optionsString("string")}
@@ -434,116 +435,117 @@ ${optionsString('object')}
 var data = []
 var uniObj
 
-function downloadJson (){
+function downloadJson() {
   var dataString = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(buildJsonObj(), null, 3));
   var downloadFunction = document.getElementById('copyfunc')
   downloadFunction.setAttribute('href', dataString)
   var date = new Date()
-  downloadFunction.setAttribute('download', `${namespaceOutput(document.querySelector('#client-input').value) + '_' + date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear()}.json`)
+  downloadFunction.setAttribute('download', `${namespaceOutput(document.querySelector('#client-input').value) + '_' + date.getDate() + '-' + parseInt(date.getMonth() + 1) + '-' + date.getFullYear()}.json`)
   downloadFunction.click()
 }
 
-function handleFileSelect(evt) { var files = evt.target.files; 
-  var output = []; for (var i = 0, f; f = files[i]; i++) { 
+function handleFileSelect(evt) {
+  var files = evt.target.files;
+  var output = []; for (var i = 0, f; f = files[i]; i++) {
     var reader = new FileReader()
-    reader.onload = (function(file) { 
-      return function(e) { 
+    reader.onload = (function (file) {
+      return function (e) {
         populateList(e.target.result)
-      }; 
-    })(f); 
+      };
+    })(f);
     reader.readAsText(f);
-  } 
-  document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>'; 
-} 
+  }
+  document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+}
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-var camelize = function(str) {
+var camelize = function (str) {
   return str
-    .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+    .replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
     .replace(/\s/g, '')
-    .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
+    .replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
 }
 
-function variableType(objType){
-  if(objType  == '<LIST>,<OF>,<STRINGS>'){
+function variableType(objType) {
+  if (objType == '<LIST>,<OF>,<STRINGS>') {
     return '<CSV_LIST>'
   }
   return objType
 }
 
-function keyBuilder(key,value){
-  if(value == '<CSV_LIST>'){
-    return 'properties.'+key+'!list[string]'
-  }else{
-    return 'properties.'+key
+function keyBuilder(key, value) {
+  if (value == '<CSV_LIST>') {
+    return 'properties.' + key + '!list[string]'
+  } else {
+    return 'properties.' + key
   }
 }
 
-const iterate = (obj,parentKey) => {
-var obj_lngt = Object.keys(obj).length
-var counter = 0
-Object.keys(obj).forEach(key => {   
-    counter++   
+const iterate = (obj, parentKey) => {
+  var obj_lngt = Object.keys(obj).length
+  var counter = 0
+  Object.keys(obj).forEach(key => {
+    counter++
     if (obj[key] == '[object Object]') {
-        keysTracker.push(key)
-        iterate(obj[key], tempKey)
+      keysTracker.push(key)
+      iterate(obj[key], tempKey)
     }
-    if(keysTracker.length > 0 && obj[key] != '[object Object]'){
-      var temp = keyBuilder(keysTracker.join('.')+'.'+key,variableType(obj[key].toString()))
+    if (keysTracker.length > 0 && obj[key] != '[object Object]') {
+      var temp = keyBuilder(keysTracker.join('.') + '.' + key, variableType(obj[key].toString()))
       amp.extraUrlParams[temp] = variableType(obj[key].toString())
-    }else if (obj[key] != '[object Object]'){
-      var temp = keyBuilder(key,variableType(obj[key].toString()))
+    } else if (obj[key] != '[object Object]') {
+      var temp = keyBuilder(key, variableType(obj[key].toString()))
       amp.extraUrlParams[temp] = variableType(obj[key].toString())
     }
-    if(counter == obj_lngt || key == keysTracker.toString()){
-        keysTracker.pop()
+    if (counter == obj_lngt || key == keysTracker.toString()) {
+      keysTracker.pop()
     }
   })
 }
 
 const listIterate = (obj, list) => {
-var obj_lngt = Object.keys(obj).length
-var counter = 0
-Object.keys(obj).forEach(key => {   
-    counter++   
+  var obj_lngt = Object.keys(obj).length
+  var counter = 0
+  Object.keys(obj).forEach(key => {
+    counter++
     if (obj[key] == '[object Object]') {
       projKeysTracker.push(key)
-        list.insertAdjacentHTML('beforeend', 
+      list.insertAdjacentHTML('beforeend',
         `<li class="property-item" id="item-${counter}-${key}" style="width: 400px;">${key}                
         <select class="custom-select" id="property-type-item-${counter}-${key}" style="float: right;">
           ${optionsString('object')}
         </select><button id="delete-btn-item-item-${counter}-${key}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"></path><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"></rect><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "></polygon><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "></polygon></g></svg>
         <ul id="properties-${key}"></ul>
         <button id="add-sub-property-${key}" class="add-sub-property">+ Add Property</button></li>`)
-        document.getElementById(`add-sub-property-${key}`).addEventListener('click', function(){
-          addProperty(`properties-${key}`)
-        })
-        document.getElementById(`property-type-item-${counter}-${key}`).addEventListener('change', function () {
-          var typeEl = document.getElementById(`property-type-item-${counter}-${key}`)
-          propType(typeEl.value, property, key)
-        })
-        listIterate(obj[key], document.getElementById(`properties-${key}`))
+      document.getElementById(`add-sub-property-${key}`).addEventListener('click', function () {
+        addProperty(`properties-${key}`)
+      })
+      document.getElementById(`property-type-item-${counter}-${key}`).addEventListener('change', function () {
+        var typeEl = document.getElementById(`property-type-item-${counter}-${key}`)
+        propType(typeEl.value, property, key)
+      })
+      listIterate(obj[key], document.getElementById(`properties-${key}`))
     }
-    if(projKeysTracker.length > 0 && obj[key] != '[object Object]'){
+    if (projKeysTracker.length > 0 && obj[key] != '[object Object]') {
       list.insertAdjacentHTML('beforeend', propElement(key, obj[key].toString(), counter))
       document.getElementById(`property-type-${key}`).addEventListener('change', function () {
         var typeEl = document.getElementById(`property-type-${key}`)
         propType(typeEl.value, typeEl.parentNode, key)
       })
-    }else if (obj[key] != '[object Object]'){
+    } else if (obj[key] != '[object Object]') {
       list.insertAdjacentHTML('beforeend', propElement(key, obj[key].toString(), counter))
       document.getElementById(`property-type-${key}`).addEventListener('change', function () {
         var typeEl = document.getElementById(`property-type-${key}`)
         propType(typeEl.value, typeEl.parentNode, key)
       })
     }
-    if(counter == obj_lngt || key == projKeysTracker.toString()){
+    if (counter == obj_lngt || key == projKeysTracker.toString()) {
       projKeysTracker.pop()
     }
   })
 }
 
-function propElement (key, type, counter){
+function propElement(key, type, counter) {
   return `
   <li class="property-item" id="item-${counter}-${key}" style="width: 400px;">${key}
   <select class="custom-select" id="property-type-${key}">
@@ -559,71 +561,71 @@ function propElement (key, type, counter){
   </select><button id="delete-btn-${key}" class="delete"></button><svg enable-background="new 0 0 512 512" id="trash-svg" class="trash-svg" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M444.852,66.908h-99.339V47.04c0-21.943-17.792-39.736-39.736-39.736h-99.339   c-21.944,0-39.736,17.793-39.736,39.736v19.868H67.363v19.868h20.47l19.887,377.489c0,21.944,17.792,39.736,39.736,39.736h218.546   c21.944,0,39.736-17.792,39.736-39.736l19.538-377.489h19.577V66.908z M186.57,47.04c0-10.962,8.926-19.868,19.868-19.868h99.339   c10.962,0,19.868,8.906,19.868,19.868v19.868H186.57V47.04z M385.908,463.236l-0.039,0.505v0.524   c0,10.943-8.906,19.868-19.868,19.868H147.455c-10.942,0-19.868-8.925-19.868-19.868v-0.524l-0.019-0.523L107.72,86.776h297.669   L385.908,463.236z" fill="#8792a1"/><rect fill="#8792a1" height="317.885" width="19.868" x="246.173" y="126.511"/><polygon fill="#8792a1" points="206.884,443.757 186.551,126.493 166.722,127.753 187.056,445.017  "/><polygon fill="#8792a1" points="345.649,127.132 325.82,125.891 305.777,443.776 325.606,445.017  "/></g></svg></li>`
 }
 
-function stringSelect(type){
-  if(type == '<STRING>'){
+function stringSelect(type) {
+  if (type == '<STRING>') {
     return '<option value="string" selected>String</option>'
-  }else{
+  } else {
     return '<option value="string">String</option>'
   }
 }
 
-function integerSelect(type){
-  if(type == '<INTEGER>'){
+function integerSelect(type) {
+  if (type == '<INTEGER>') {
     return '<option value="integer" selected>Integer</option>'
-  }else{
+  } else {
     return '<option value="integer">Integer</option>'
   }
 }
 
-function floatSelect(type){
-  if(type == '<FLOAT>'){
+function floatSelect(type) {
+  if (type == '<FLOAT>') {
     return '<option value="float" selected>Float</option>'
-  }else{
+  } else {
     return '<option value="float">Float</option>'
   }
 }
 
-function dateSelect(type){
-  if(type == '<DATE/TIME>'){
+function dateSelect(type) {
+  if (type == '<DATE/TIME>') {
     return '<option value="date" selected>Date/Time</option>'
-  }else{
+  } else {
     return '<option value="date">Date/Time</option>'
   }
 }
 
-function booleanSelect(type){
-  if(type == '<BOOLEAN>'){
+function booleanSelect(type) {
+  if (type == '<BOOLEAN>') {
     return '<option value="boolean" selected>Boolean</option>'
-  }else{
+  } else {
     return '<option value="boolean">Boolean</option>'
   }
 }
 
-function lostringSelect(type){
-  if(type == '<LIST>,<OF>,<STRINGS>'){
+function lostringSelect(type) {
+  if (type == '<LIST>,<OF>,<STRINGS>') {
     return '<option value="lostring" selected>List of Strings</option>'
-  }else{
+  } else {
     return '<option value="lostring">List of Strings</option>'
   }
 }
 
-function lointegersSelect(type){
-  if(type == '<LIST>,<OF>,<INTEGERS>'){
+function lointegersSelect(type) {
+  if (type == '<LIST>,<OF>,<INTEGERS>') {
     return '<option value="lointegers" selected>List of Integers</option>'
-  }else{
+  } else {
     return '<option value="lointegers">List of Integers</option>'
   }
 }
 
-function lofloatsSelect(type){
-  if(type == '<LIST>,<OF>,<INTEGERS>'){
+function lofloatsSelect(type) {
+  if (type == '<LIST>,<OF>,<INTEGERS>') {
     return '<option value="lofloats" selected>List of Floats</option>'
-  }else{
+  } else {
     return '<option value="lofloats">List of Floats</option>'
   }
 }
 
-function changeStateAddPropertiesButtons(value){
+function changeStateAddPropertiesButtons(value) {
   var nodes = document.querySelectorAll('.add-property, .add-sub-property')
   var nodesArr = Array.prototype.slice.call(nodes)
   nodesArr.forEach(el => {
@@ -631,7 +633,7 @@ function changeStateAddPropertiesButtons(value){
   });
 }
 
-function populateList(jsonObj){
+function populateList(jsonObj) {
   document.getElementById('properties-propertyData').innerHTML = ''
   document.getElementById('json-input').value = jsonObj
   projectData = JSON.parse(jsonObj)
@@ -640,7 +642,7 @@ function populateList(jsonObj){
   setUpEventListeners()
 }
 
-function populateListSwagger(jsonObj){
+function populateListSwagger(jsonObj) {
   document.getElementById('properties-propertyData').innerHTML = ''
   document.getElementById('json-input-swagger').value = jsonObj
   projectData = JSON.parse(jsonObj)
@@ -649,18 +651,18 @@ function populateListSwagger(jsonObj){
   setUpEventListeners()
 }
 
-function domainEventListeners (){
+function domainEventListeners() {
   var nodes = document.querySelectorAll('#delete-domain')
   var nodesArr = Array.prototype.slice.call(nodes)
-  if(nodesArr){
+  if (nodesArr) {
     nodesArr.forEach(el => {
-      el.addEventListener('click', function(){
-        if(this.parentNode.parentNode === null){
+      el.addEventListener('click', function () {
+        if (this.parentNode.parentNode === null) {
           return
-        }else{
+        } else {
           this.parentNode.parentNode.removeChild(this.parentNode);
-          for (var i = 0; i < domainsArr.length; i++){
-            if (this.parentNode.textContent === domainsArr[i]){
+          for (var i = 0; i < domainsArr.length; i++) {
+            if (this.parentNode.textContent === domainsArr[i]) {
               domainsArr.splice(i, 1)
             }
           }
@@ -672,74 +674,74 @@ function domainEventListeners (){
 }
 
 
-function populateDomains (arr){
+function populateDomains(arr) {
   var domEl = ''
-  if(arr){
-    for(var i=0; i<arr.length; i++){
+  if (arr) {
+    for (var i = 0; i < arr.length; i++) {
       domEl += `<li>${arr[i]}<a class="icon icon-inline icon-remove remove-domain" id="delete-domain" style="display: inline-block; position: relative; top: 1px;"></a></li>`
     }
   }
   return domEl
 }
 
-function populateObject(list, obj){
+function populateObject(list, obj) {
   var listNodes = list.childNodes
   var listArr = Array.prototype.slice.call(listNodes)
-    for(var i = 0; i<listArr.length; i++){
-        if(listArr[i].localName == 'li'){
-            var subNodes = listArr[i].childNodes 
-            var subListArr = Array.prototype.slice.call(subNodes)
-            for(var y = 0; y<subListArr.length; y++){
-                if(subListArr[y].localName == 'select'){
-                    if(subListArr[y].value !== 'object'){
-                        obj[`${camelize(subListArr[y-1].textContent.split('\n')[0])}`] = typeOutput(subListArr[y].value)
-                    }else{
-                        obj[`${camelize(subListArr[y-1].textContent.split('\n')[0])}`] = {}
-                        var string = camelize(subListArr[y-1].textContent.split('\n')[0])
-                        var propNodes = subListArr[y].parentNode.childNodes
-                        var propListArr = Array.prototype.slice.call(propNodes)
-                        for(var z = 0; z<propListArr.length; z++){
-                            if(propListArr[z].localName == 'ul'){
-                                populateObject(propListArr[z], obj[string])
-                            }
-                        }
-                    }
-                }
+  for (var i = 0; i < listArr.length; i++) {
+    if (listArr[i].localName == 'li') {
+      var subNodes = listArr[i].childNodes
+      var subListArr = Array.prototype.slice.call(subNodes)
+      for (var y = 0; y < subListArr.length; y++) {
+        if (subListArr[y].localName == 'select') {
+          if (subListArr[y].value !== 'object') {
+            obj[`${camelize(subListArr[y - 1].textContent.split('\n')[0])}`] = typeOutput(subListArr[y].value)
+          } else {
+            obj[`${camelize(subListArr[y - 1].textContent.split('\n')[0])}`] = {}
+            var string = camelize(subListArr[y - 1].textContent.split('\n')[0])
+            var propNodes = subListArr[y].parentNode.childNodes
+            var propListArr = Array.prototype.slice.call(propNodes)
+            for (var z = 0; z < propListArr.length; z++) {
+              if (propListArr[z].localName == 'ul') {
+                populateObject(propListArr[z], obj[string])
+              }
             }
+          }
         }
+      }
     }
+  }
 }
 
-function typeOutput(type){
-  if(type == 'string'){
+function typeOutput(type) {
+  if (type == 'string') {
     return '<STRING>'
-  }else if(type == 'integer'){
+  } else if (type == 'integer') {
     return '<INTEGER>'
-  }else if(type == 'float'){
+  } else if (type == 'float') {
     return '<FLOAT>'
-  }else if(type == 'date'){
+  } else if (type == 'date') {
     return '<DATE/TIME>'
-  }else if(type == 'boolean'){
+  } else if (type == 'boolean') {
     return '<BOOLEAN>'
-  }else if(type == 'lostring'){
-    return ["<LIST>","<OF>","<STRINGS>"]
-  }else if(type == 'lointegers'){
+  } else if (type == 'lostring') {
+    return ["<LIST>", "<OF>", "<STRINGS>"]
+  } else if (type == 'lointegers') {
     return "[<LIST>,<OF>,<INTEGERS>]"
-  }else if(type == 'lofloats'){
+  } else if (type == 'lofloats') {
     return "[<LIST>,<OF>,<FLOATS>]"
-  }else {
+  } else {
     return '{'
   }
 }
 
-function returnDomainList (){
+function returnDomainList() {
   var string = ``
-  if(domainsArr.length > 0){
-    for(var i = 0; i < domainsArr.length; i++){
+  if (domainsArr.length > 0) {
+    for (var i = 0; i < domainsArr.length; i++) {
       string += `- ${domainsArr[i]} \n`
     }
-  }else if(projectData.deploymentDomains !== undefined && projectData.deploymentDomains.length > 0){
-    for(var i = 0; i < projectData.deploymentDomains.length; i++){
+  } else if (projectData.deploymentDomains !== undefined && projectData.deploymentDomains.length > 0) {
+    for (var i = 0; i < projectData.deploymentDomains.length; i++) {
       string += `- ${projectData.deploymentDomains[i]} \n`
     }
   }
@@ -747,14 +749,14 @@ function returnDomainList (){
   return string
 }
 
-function namespaceOutput (value){
+function namespaceOutput(value) {
   return value.toLowerCase().replace(' ', '')
 }
 
-function returnPerson(input, arr){
-  var person 
-  for(var i = 0 ; i < arr.length ; i++){
-    if((arr[i].toLowerCase().includes(input.toLowerCase()) === true) || (arr[i].toLowerCase() == input.toLowerCase())){
+function returnPerson(input, arr) {
+  var person
+  for (var i = 0; i < arr.length; i++) {
+    if ((arr[i].toLowerCase().includes(input.toLowerCase()) === true) || (arr[i].toLowerCase() == input.toLowerCase())) {
       person = arr[i]
     }
   }
@@ -767,29 +769,29 @@ function setUpEventListeners() {
   document.getElementById('dwnld-btn').addEventListener('click', downloadJson)
   document.getElementById('add-property').addEventListener('click', addProperty)
 
-  document.addEventListener('click', function(e){
-    if(e.target.id.includes('delete-btn')){
+  document.addEventListener('click', function (e) {
+    if (e.target.id.includes('delete-btn')) {
       var child = e.target.parentNode
       child.parentNode.removeChild(child)
     }
   })
 }
 
-function Property (id, value, type){
+function Property(id, value, type) {
   this.id = id;
   this.value = value;
   this.type = type;
 }
 
-function addProperty (value) {
+function addProperty(value) {
   var property = document.createElement('li')
   property.className = 'property-item'
   property.id = `item-${propertyDataArr.length + 1}`
   var list
 
-  if (value && value.type !== 'click'){
+  if (value && value.type !== 'click') {
     list = document.getElementById(value)
-  }else{
+  } else {
     list = document.getElementById('properties-propertyData')
   }
 
@@ -801,12 +803,12 @@ function addProperty (value) {
   propertyInput.classList = 'var-input'
   propertyInput.focus()
   changeStateAddPropertiesButtons(true)
-  document.addEventListener('keypress', function(e){
-    if (propertyInput.value !== '' && e.keyCode === 13){
+  document.addEventListener('keypress', function (e) {
+    if (propertyInput.value !== '' && e.keyCode === 13) {
       changeStateAddPropertiesButtons(false)
       property.innerHTML = ''
       property.style.width = '400px'
-      if (property.id == `item-${propertyDataArr.length + 1}`){
+      if (property.id == `item-${propertyDataArr.length + 1}`) {
         var propertyObj = new Property(propertyDataArr.length + 1, propertyInput.value)
         var listName = list.id.split('properties-')[1]
         propertyDataArr.push(propertyObj)
@@ -820,7 +822,7 @@ function addProperty (value) {
         var typeEl = document.getElementById(`property-type-${property.id}`)
         propType(typeEl.value, property, propertyDataArr[parseInt(typeEl.id.split('-')[3]) - 1].value)
       })
-    }else{
+    } else {
       propertyInput.style = 'width: 400px; border: 1px solid rgb(249,99,107)'
       propertyInput.placeholder = "Please enter a property name"
       propertyInput.placeholder.color = "rgb(249,99,107)"
@@ -828,13 +830,13 @@ function addProperty (value) {
   })
 }
 
-function propType (type, property, value) {
+function propType(type, property, value) {
   var childNodes = property.childNodes
   var childNodesArr = Array.prototype.slice.call(childNodes)
 
-  if (type === 'object'){
-    for(var i = 0 ; i < childNodesArr.length ; i++){
-      if (childNodesArr[i].type !== 'submit'){
+  if (type === 'object') {
+    for (var i = 0; i < childNodesArr.length; i++) {
+      if (childNodesArr[i].type !== 'submit') {
         var addProp = document.createElement('button')
         addProp.id = `add-sub-property`
         addProp.classList = 'add-sub-property'
@@ -843,23 +845,23 @@ function propType (type, property, value) {
         list.id = `properties-${camelize(value)}`
         property.appendChild(list)
         property.appendChild(addProp)
-        addProp.addEventListener('click', function(){
+        addProp.addEventListener('click', function () {
           addProperty(`properties-${camelize(value)}`)
         })
         return
-      }else {
+      } else {
         childNodesArr[i].style = 'display:block'
       }
-    }    
+    }
   } else if (type === 'string') {
-    for(var i = 0 ; i < childNodesArr.length ; i++){
-      if (childNodesArr[i].type === 'submit' && childNodesArr[i].innerText === '+ Add Property'){
+    for (var i = 0; i < childNodesArr.length; i++) {
+      if (childNodesArr[i].type === 'submit' && childNodesArr[i].innerText === '+ Add Property') {
         childNodesArr[i].style = 'display:none'
       }
     }
   } else if (type === 'integer') {
-    for(var i = 0 ; i < childNodesArr.length ; i++){
-      if (childNodesArr[i].type === 'submit' && childNodesArr[i].innerText === '+ Add Property'){
+    for (var i = 0; i < childNodesArr.length; i++) {
+      if (childNodesArr[i].type === 'submit' && childNodesArr[i].innerText === '+ Add Property') {
         childNodesArr[i].style = 'display:none'
       }
     }
@@ -867,72 +869,72 @@ function propType (type, property, value) {
 }
 
 
-typeCheck.addEventListener( 'change', function() {
-  if(this.checked) {
-      propertiesList.insertAdjacentHTML('afterbegin', typeElement)
+typeCheck.addEventListener('change', function () {
+  if (this.checked) {
+    propertiesList.insertAdjacentHTML('afterbegin', typeElement)
   } else {
-    if($(document.getElementById('item-type')).length == 0){
+    if ($(document.getElementById('item-type')).length == 0) {
       return
-    }else{
+    } else {
       var child = document.getElementById('item-type')
       child.parentNode.removeChild(child)
     }
   }
 });
 
-function addPropEventListener(button, string){
-  button.addEventListener('click', function(){
+function addPropEventListener(button, string) {
+  button.addEventListener('click', function () {
     addProperty(string)
   })
 }
 
-contentCheck.addEventListener( 'change', function() {
-  if(this.checked && $(document.getElementById('item-type')).length == 0) {
-      propertiesList.insertAdjacentHTML('afterbegin', contentElement)
-      addPropEventListener(document.getElementById('add-sub-property-content'), 'properties-content')
-  } else if(this.checked && $(document.getElementById('item-type')).length > 0){
+contentCheck.addEventListener('change', function () {
+  if (this.checked && $(document.getElementById('item-type')).length == 0) {
+    propertiesList.insertAdjacentHTML('afterbegin', contentElement)
+    addPropEventListener(document.getElementById('add-sub-property-content'), 'properties-content')
+  } else if (this.checked && $(document.getElementById('item-type')).length > 0) {
     document.getElementById('item-type').insertAdjacentHTML('afterend', contentElement)
     addPropEventListener(document.getElementById('add-sub-property-content'), 'properties-content')
-  }else{
-    if($(document.getElementById('item-content')).length == 0){
+  } else {
+    if ($(document.getElementById('item-content')).length == 0) {
       return
-    }else{
+    } else {
       var child = document.getElementById('item-content')
       child.parentNode.removeChild(child)
     }
   }
 });
 
-articleCheck.addEventListener( 'change', function() {
-  if(this.checked && $(document.getElementById('item-type')).length == 0 && $(document.getElementById('item-content')).length == 0) {
-      propertiesList.insertAdjacentHTML('afterbegin', articleElement)
-      addPropEventListener(document.getElementById('add-sub-property-article'), 'properties-article')
-  } else if(this.checked && ($(document.getElementById('item-type')).length > 0 || $(document.getElementById('item-content')).length > 0)){
-    if($(document.getElementById('item-content')).length == 0){
+articleCheck.addEventListener('change', function () {
+  if (this.checked && $(document.getElementById('item-type')).length == 0 && $(document.getElementById('item-content')).length == 0) {
+    propertiesList.insertAdjacentHTML('afterbegin', articleElement)
+    addPropEventListener(document.getElementById('add-sub-property-article'), 'properties-article')
+  } else if (this.checked && ($(document.getElementById('item-type')).length > 0 || $(document.getElementById('item-content')).length > 0)) {
+    if ($(document.getElementById('item-content')).length == 0) {
       document.getElementById('item-type').insertAdjacentHTML('afterend', articleElement)
       addPropEventListener(document.getElementById('add-sub-property-article'), 'properties-article')
-    }else{
+    } else {
       document.getElementById('item-content').insertAdjacentHTML('afterend', articleElement)
       addPropEventListener(document.getElementById('add-sub-property-article'), 'properties-article')
     }
-  }else{
-    if($(document.getElementById('item-article')).length == 0){
+  } else {
+    if ($(document.getElementById('item-article')).length == 0) {
       return
-    }else{
+    } else {
       var child = document.getElementById('item-article')
       child.parentNode.removeChild(child)
     }
   }
 });
 
-userCheck.addEventListener( 'change', function() {
-  if(this.checked) {
-      propertiesList.insertAdjacentHTML('beforeend', userElement)
-      addPropEventListener(document.getElementById('add-sub-property-user'), 'properties-user')
+userCheck.addEventListener('change', function () {
+  if (this.checked) {
+    propertiesList.insertAdjacentHTML('beforeend', userElement)
+    addPropEventListener(document.getElementById('add-sub-property-user'), 'properties-user')
   } else {
-    if($(document.getElementById('item-user')).length == 0){
+    if ($(document.getElementById('item-user')).length == 0) {
       return
-    }else{
+    } else {
       var child = document.getElementById('item-user')
       child.parentNode.removeChild(child)
     }
@@ -953,42 +955,42 @@ userCheck.addEventListener( 'change', function() {
 //   }
 // });
 
-clientCheck.addEventListener( 'change', function() {
-  if(this.checked) {
-      propertiesList.insertAdjacentHTML('beforeend', clientElement)
-      addPropEventListener(document.getElementById('add-sub-property-client'), 'properties-client')
+clientCheck.addEventListener('change', function () {
+  if (this.checked) {
+    propertiesList.insertAdjacentHTML('beforeend', clientElement)
+    addPropEventListener(document.getElementById('add-sub-property-client'), 'properties-client')
   } else {
-    if($(document.getElementById('item-client')).length == 0){
+    if ($(document.getElementById('item-client')).length == 0) {
       return
-    }else{
+    } else {
       var child = document.getElementById('item-client')
       child.parentNode.removeChild(child)
     }
   }
 });
 
-ispCheck.addEventListener( 'change', function() {
-  if(this.checked) {
-      propertiesList.insertAdjacentHTML('beforeend', ispElement)
-      addPropEventListener(document.getElementById('add-sub-property-isp'), 'properties-isp')
+ispCheck.addEventListener('change', function () {
+  if (this.checked) {
+    propertiesList.insertAdjacentHTML('beforeend', ispElement)
+    addPropEventListener(document.getElementById('add-sub-property-isp'), 'properties-isp')
   } else {
-    if($(document.getElementById('item-isp')).length == 0){
+    if ($(document.getElementById('item-isp')).length == 0) {
       return
-    }else{
+    } else {
       var child = document.getElementById('item-isp')
       child.parentNode.removeChild(child)
     }
   }
 });
 
-geoCheck.addEventListener( 'change', function() {
-  if(this.checked) {
-      propertiesList.insertAdjacentHTML('beforeend', geoElement)
-      addPropEventListener(document.getElementById('add-sub-property-geo'), 'properties-geo')
+geoCheck.addEventListener('change', function () {
+  if (this.checked) {
+    propertiesList.insertAdjacentHTML('beforeend', geoElement)
+    addPropEventListener(document.getElementById('add-sub-property-geo'), 'properties-geo')
   } else {
-    if($(document.getElementById('item-geo')).length == 0){
+    if ($(document.getElementById('item-geo')).length == 0) {
       return
-    }else{
+    } else {
       var child = document.getElementById('item-geo')
       child.parentNode.removeChild(child)
     }
@@ -999,34 +1001,34 @@ var modal = document.getElementById("myModal");
 
 var span = document.getElementsByClassName("close")[0];
 
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
   document.getElementById("giphy").src = ""
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
     document.getElementById("giphy").src = ""
   }
 }
 
-function getGiphy(){
+function getGiphy() {
   var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=7b2ntI38Cu0wNw7u1Wz050RBKjElZEIS&tag=celebrate&limit=1");
-  xhr.done(function(data) { 
+  xhr.done(function (data) {
     document.getElementById("giphy").src = data.data.images.original.url
-    copyFunction ()
+    copyFunction()
   });
 }
 
 
-function buildJsonObj (){
+function buildJsonObj() {
   return {
     schema: propertyData
   }
 }
 
-function copyJson (){
+function copyJson() {
   var projectJson = buildJsonObj()
   var copyText = JSON.stringify(convertSwagger(createSwagger(projectJson.schema, null, swaggerOutput)), null, 3)
   const textArea = document.createElement('textarea')
@@ -1036,7 +1038,7 @@ function copyJson (){
   document.execCommand('copy')
 }
 
-function copyFunction () {
+function copyFunction() {
   objStr = ``
   populateObject(propertiesList, propertyData)
   iterate(propertyData)

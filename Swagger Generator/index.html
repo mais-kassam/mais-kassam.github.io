@@ -1,128 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>Deployment Document Generator</title>
+		<title>Swagger Generator</title>
 
-    <!-- <script>!function(n,e,o,r,i){if(!e){e=e||{},window.permutive=e,e.q=[],e.config=i||{},e.config.projectId=o,e.config.apiKey=r,e.config.environment=e.config.environment||"production";for(var t=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],c=0;c<t.length;c++){var f=t[c];e[f]=function(n){return function(){var o=Array.prototype.slice.call(arguments,0);e.q.push({functionName:n,arguments:o})}}(f)}}}(document,window.permutive,"e0039147-51e7-4224-a814-0e2d438aabcd","da4d09b5-843a-4bd5-bd79-8cea7f69f730",{}); window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}}); permutive.addon('web', {}) </script>
+		<!-- <script>!function(n,e,o,r,i){if(!e){e=e||{},window.permutive=e,e.q=[],e.config=i||{},e.config.projectId=o,e.config.apiKey=r,e.config.environment=e.config.environment||"production";for(var t=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],c=0;c<t.length;c++){var f=t[c];e[f]=function(n){return function(){var o=Array.prototype.slice.call(arguments,0);e.q.push({functionName:n,arguments:o})}}(f)}}}(document,window.permutive,"e0039147-51e7-4224-a814-0e2d438aabcd","da4d09b5-843a-4bd5-bd79-8cea7f69f730",{}); window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}}); permutive.addon('web', {}) </script>
     <script async src="https://cdn.permutive.com/e0039147-51e7-4224-a814-0e2d438aabcd-web.js"></script> -->
 
-    <script
-      async
-      src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-    ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/Swagger Generator/style.css" />
-    <link rel="stylesheet" href="/fonts.css" />
-    <script></script>
-  </head>
-  <body>
-    <header>
-      <div class="header one-edge-shadow">
-        <h1 style="float: left;">Swagger Generator (Alpha)</h1>
-        <h1 class="brand-logo" style="float: right; padding-right: 20px;">
-          <a href="/index.html"
-            ><img
-              src="/Deployment Doc Generator/images/logo-permutive.svg"
-              alt="Permutive Logo"
-          /></a>
-        </h1>
-        <div class="header-right"></div>
-      </div>
-    </header>
-    <div class="container">
-      <div class="column">
-        <h2>Fill out the information for the Swagger snippet</h2>
+		<script
+			async
+			src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+		></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="/Swagger Generator/style.css" />
+		<link rel="stylesheet" href="/fonts.css" />
+		<script></script>
+	</head>
+	<body>
+		<header>
+			<div class="header one-edge-shadow">
+				<h1 style="float: left">Swagger Generator (Alpha)</h1>
+				<h1 class="brand-logo" style="float: right; padding-right: 20px">
+					<a href="/index.html"
+						><img
+							src="/Deployment Doc Generator/images/logo-permutive.svg"
+							alt="Permutive Logo"
+					/></a>
+				</h1>
+				<div class="header-right"></div>
+			</div>
+		</header>
+		<div class="container">
+			<div class="column">
+				<h2>Fill out the information for the Swagger snippet</h2>
 
-        <h3>What custom properties are needed?</h3>
-        <input type="checkbox" value="Type" id="type" /> Type<br />
-        <input type="checkbox" value="Content" id="content" /> Content<br />
-        <input type="checkbox" value="Article" id="article" /> Article<br />
-        <input type="checkbox" value="User" id="user" /> User<br />
-        <!-- <input type="checkbox" value="Watson" id="watson" /> Watson<br /> -->
-        <input type="checkbox" value="Client" id="client" /> Client<br />
-        <input type="checkbox" value="ISP" id="isp" /> ISP<br />
-        <input type="checkbox" value="Geo" id="geo" /> Geo<br />
-        
-        <button class="submit" id="submit-btn">Submit</button>
-        <button style="margin-left: 20px;" class="submit" id="copy-btn">
-          Copy JSON
-        </button>
-        <button style="margin-left: 20px;" class="submit" id="dwnld-btn">
-          Download JSON
-        </button>
-        <a id="copyfunc" style="display: none;"></a>
-        <div class="custom-input" style="display: block; margin-top: 60px;">
-          <h2 style="margin-bottom: 20px; height: 30px;">
-            Swagger Output
-          </h2>
-          <textarea
-            id="json-input-swagger"
-            class="code-input"
-            placeholder="Output of Swagger JSON"
-          ></textarea>
-        </div>
-        <div class="custom-input" style="display: block; margin-top: 60px;">
-          <h2 style="margin-bottom: 20px; height: 30px;">
-            Load in an existing project
-          </h2>
-          <textarea
-            id="json-input"
-            class="code-input"
-            placeholder="Output of project JSON"
-          ></textarea>
-        </div>
-        <input
-          type="file"
-          class="custom-file-input"
-          id="files"
-          name="files[]"
-          multiple
-        />
-        <output id="list"></output>
-      </div>
-      <div class="column">
-        <h2>Extra custom data points</h2>
-        <h3>Event Schema</h3>
-        <ul id="properties-propertyData"></ul>
-        <button class="add-property" id="add-property">+ Add property</button>
-      </div>
-    </div>
-    <div id="myModal" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
+				<h3>What custom properties are needed?</h3>
+				<input type="checkbox" value="Type" id="type" /> Type<br />
+				<input type="checkbox" value="Content" id="content" /> Content<br />
+				<input type="checkbox" value="Article" id="article" /> Article<br />
+				<input type="checkbox" value="User" id="user" /> User<br />
+				<!-- <input type="checkbox" value="Watson" id="watson" /> Watson<br /> -->
+				<input type="checkbox" value="Client" id="client" /> Client<br />
+				<input type="checkbox" value="ISP" id="isp" /> ISP<br />
+				<input type="checkbox" value="Geo" id="geo" /> Geo<br />
 
-        <img
-          src=""
-          id="giphy"
-          style="
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: auto;
-            max-height: 230px;
-          "
-        />
-        <!-- <img src="https://thumbs.gfycat.com/AggressiveWebbedCormorant-small.gif" id="giphy" style="display: block; margin-left: auto; margin-right: auto; width: 50%;"> -->
-        <h2
-          style="
-            vertical-align: middle;
-            margin-left: auto;
-            margin-right: auto;
-            width: 60%;
-            display: block;
-            height: 30px;
-          "
-        >
-          Successfully copied to clipboard!
-        </h2>
-      </div>
-    </div>
-  </body>
-  <script src="/Swagger Generator/main.js"></script>
-  <!-- <script src="/permutive.js"></script> -->
+				<button class="submit" id="submit-btn">Submit</button>
+				<button style="margin-left: 20px" class="submit" id="copy-btn">
+					Copy JSON
+				</button>
+				<button style="margin-left: 20px" class="submit" id="dwnld-btn">
+					Download JSON
+				</button>
+				<a id="copyfunc" style="display: none"></a>
+				<div class="custom-input" style="display: block; margin-top: 60px">
+					<h2 style="margin-bottom: 20px; height: 30px">Swagger Output</h2>
+					<textarea
+						id="json-input-swagger"
+						class="code-input"
+						placeholder="Output of Swagger JSON"
+					></textarea>
+				</div>
+				<div class="custom-input" style="display: block; margin-top: 60px">
+					<h2 style="margin-bottom: 20px; height: 30px">
+						Load in an existing project
+					</h2>
+					<textarea
+						id="json-input"
+						class="code-input"
+						placeholder="Output of project JSON"
+					></textarea>
+				</div>
+				<input
+					type="file"
+					class="custom-file-input"
+					id="files"
+					name="files[]"
+					multiple
+				/>
+				<output id="list"></output>
+			</div>
+			<div class="column">
+				<h2>Extra custom data points</h2>
+				<h3>Event Schema</h3>
+				<ul id="properties-propertyData"></ul>
+				<button class="add-property" id="add-property">+ Add property</button>
+			</div>
+		</div>
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close">&times;</span>
+
+				<img
+					src=""
+					id="giphy"
+					style="
+						display: block;
+						margin-left: auto;
+						margin-right: auto;
+						width: auto;
+						max-height: 230px;
+					"
+				/>
+				<!-- <img src="https://thumbs.gfycat.com/AggressiveWebbedCormorant-small.gif" id="giphy" style="display: block; margin-left: auto; margin-right: auto; width: 50%;"> -->
+				<h2
+					style="
+						vertical-align: middle;
+						margin-left: auto;
+						margin-right: auto;
+						width: 60%;
+						display: block;
+						height: 30px;
+					"
+				>
+					Successfully copied to clipboard!
+				</h2>
+			</div>
+		</div>
+	</body>
+	<script src="/Swagger Generator/main.js"></script>
+	<!-- <script src="/permutive.js"></script> -->
 </html>
