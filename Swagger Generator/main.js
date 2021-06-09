@@ -535,10 +535,14 @@ document
 	.addEventListener('change', handleFileSelect, false);
 
 var camelize = function (str) {
-	return str;
-	.replace(/\s(.)/g, function ($1) { return $1.toUpperCase(); })
-	.replace(/\s/g, '')
-	.replace(/^(.)/, function ($1) { return $1.toLowerCase(); });
+	return str
+		.replace(/\s(.)/g, function ($1) {
+			return $1.toUpperCase();
+		})
+		.replace(/\s/g, '')
+		.replace(/^(.)/, function ($1) {
+			return $1.toLowerCase();
+		});
 };
 
 function variableType(objType) {
@@ -795,13 +799,11 @@ function populateObject(list, obj) {
 			for (var y = 0; y < subListArr.length; y++) {
 				if (subListArr[y].localName == 'select') {
 					if (subListArr[y].value !== 'object') {
-						obj[
-							`${camelize(subListArr[y - 1].textContent.split('\n')[0])}`
-						] = typeOutput(subListArr[y].value);
+						obj[`${camelize(subListArr[y - 1].textContent.split('\n')[0])}`] =
+							typeOutput(subListArr[y].value);
 					} else {
-						obj[
-							`${camelize(subListArr[y - 1].textContent.split('\n')[0])}`
-						] = {};
+						obj[`${camelize(subListArr[y - 1].textContent.split('\n')[0])}`] =
+							{};
 						var string = camelize(subListArr[y - 1].textContent.split('\n')[0]);
 						var propNodes = subListArr[y].parentNode.childNodes;
 						var propListArr = Array.prototype.slice.call(propNodes);
