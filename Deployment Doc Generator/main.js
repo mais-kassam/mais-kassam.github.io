@@ -28,9 +28,10 @@ var trashSvg = function (string) {
 };
 
 var saArr = [
+	'Declan Healey (declan@permutive.com)',
+	'Léo Benoist (leo@permutive.com)',
 	'Mais Kassam (maisam@permutive.com)',
 	'Mitch Welzen (mitch@permutive.com)',
-	'Michal Kucharz (michal@permutive.com)',
 	'Scott Tsai (scott.tsai@permutive.com)',
 ];
 
@@ -46,6 +47,7 @@ var csmArr = [
 	'Brett Goverman (brett.goverman@permutive.com)',
 	'Brendan Farrell (brendan@permutive.com)',
 	'Lauren Kroll (lauren.kroll@permutive.com)',
+	'Loren Moschkowitsch (loren@permutive.com)',
 ];
 
 var optionsString = function (selected) {
