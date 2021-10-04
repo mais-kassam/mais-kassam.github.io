@@ -518,11 +518,11 @@ do {
         let context = Context(title: "<STRING>",
                               url: URL(string: "<URL STRING>"),
                               referrer: URL(string: "<REFERRER STRING>"))
-        let pageTracker = try Permutive.shared.createPageTracker(context: context)
+        let pageTracker = try Permutive.shared.createPageTracker(properties: properties, context: context)
 
-				// depending on your configuration, you can track the properties on start of page tracker
-        try pageTracker.start(properties: properties)
-				// or you can track the properties at any point during the pageTracker lifecycle
+				// depending on your configuration, you can track Pageview properties on ressume of page tracker
+        try pageTracker.resume()
+				// or you can track custom event properties at any point during the pageTracker lifecycle
         try pageTracker.track(event: "event name", properties: properties)
     }
     catch {
