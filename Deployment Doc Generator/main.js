@@ -28,11 +28,12 @@ var trashSvg = function (string) {
 };
 
 var saArr = [
-	'Declan Healey (declan@permutive.com)',
-	'Léo Benoist (leo@permutive.com)',
-	'Mais Kassam (maisam@permutive.com)',
-	'Mitch Welzen (mitch@permutive.com)',
-	'Scott Tsai (scott.tsai@permutive.com)',
+  'Declan Healey (declan@permutive.com)',
+  'Elaine Anderson (elaine@permutive.com)',
+  'Léo Benoist (leo@permutive.com)',
+  'Mais Kassam (maisam@permutive.com)',
+  'Mitch Welzen (mitch@permutive.com)',
+  'Scott Tsai (scott.tsai@permutive.com)',
 ];
 
 var csmArr = [
@@ -262,8 +263,8 @@ var strings = {
   Our main JavaScript tag should be deployed on every page in your web environment:
   \`\`\`javascript
     <script>  
-    !function(n,e,i){if(!n){n=n||{},window.permutive=n,n.q=[],n.config=i||{},n.config.apiKey=e,n.config.environment=n.config.environment||"production";for(var o=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],r=0;r<o.length;r++){var t=o[r];n[t]=function(e){return function(){var i=Array.prototype.slice.call(arguments,0);n.q.push({functionName:e,arguments:i})}}(t)}}}(window.permutive,"<WORKSPACE_API_KEY>",{});  ${returnWebAdserver()}
-    permutive.addon('web', { 
+    !function(e,o,n,i){if(!e){e=e||{},window.permutive=e,e.q=[];var t=function(){return([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(e){return(e^(window.crypto||window.msCrypto).getRandomValues(new Uint8Array(1))[0]&15>>e/4).toString(16)})};e.config=i||{},e.config.apiKey=o,e.config.workspaceId=n,e.config.environment=e.config.environment||"production",(window.crypto||window.msCrypto)&&(e.config.viewId=t());for(var g=["addon","identify","track","trigger","query","segment","segments","ready","on","once","user","consent"],r=0;r<g.length;r++){var w=g[r];e[w]=function(o){return function(){var n=Array.prototype.slice.call(arguments,0);e.q.push({functionName:o,arguments:n})}}(w)}}}(window.permutive,"<WORKSPACE_API_KEY>","<WORKSPACE_ID>",{});
+    permutive.addon('web', { 
       page: ${returnJson(propertyData)}
     });
     </script>
@@ -610,20 +611,20 @@ function returnWebAdserver() {
 	) {
 		return `
     window.apntag=window.apntag||{};window.apntag.anq=window.apntag.anq||[];window.__permutive=window.__permutive||{};window.__permutive.appnexusEvents=window.__permutive.appnexusEvents||[];['adRequested','adAvailable','adBadRequest','adLoaded','adNoBid','adError','adCollapse'].forEach(function(eventType){window.apntag.anq.push(function(){window.apntag.onEvent(eventType,function(arg){window.__permutive.appnexusEvents.push({eventType:eventType,arg:arg})})})});window.apntag.anq.push(function(){var original=window.apntag.defineTag;window.apntag.defineTag=function(arg){original(arg);try{if(arg.targetId){var kvs=window.localStorage.getItem('_papns');window.apntag.setKeywords(arg.targetId,{"permutive":kvs?JSON.parse(kvs):[]},{overrideKeyValue:!0})}}catch(e){}}})`;
-	} else if (
-		document.getElementById('googleas').checked == true &&
-		document.getElementById('appnexusas').checked == true
-	) {
-		return `
-    window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}});
+  } else if (
+    document.getElementById('googleas').checked == true &&
+    document.getElementById('appnexusas').checked == true
+  ) {
+    return `
+    window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var e=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",e?JSON.parse(e):[]);var o=window.localStorage.getItem("permutive-id");o&&(window.googletag.pubads().setTargeting("puid",o),window.googletag.pubads().setTargeting("ptime",Date.now().toString())),window.permutive.config.viewId&&window.googletag.pubads().setTargeting("prmtvvid",window.permutive.config.viewId),window.permutive.config.workspaceId&&window.googletag.pubads().setTargeting("prmtvwid",window.permutive.config.workspaceId)}});
     window.apntag=window.apntag||{};window.apntag.anq=window.apntag.anq||[];window.__permutive=window.__permutive||{};window.__permutive.appnexusEvents=window.__permutive.appnexusEvents||[];['adRequested','adAvailable','adBadRequest','adLoaded','adNoBid','adError','adCollapse'].forEach(function(eventType){window.apntag.anq.push(function(){window.apntag.onEvent(eventType,function(arg){window.__permutive.appnexusEvents.push({eventType:eventType,arg:arg})})})});window.apntag.anq.push(function(){var original=window.apntag.defineTag;window.apntag.defineTag=function(arg){original(arg);try{if(arg.targetId){var kvs=window.localStorage.getItem('_papns');window.apntag.setKeywords(arg.targetId,{"permutive":kvs?JSON.parse(kvs):[]},{overrideKeyValue:!0})}}catch(e){}}})`;
-	} else if (
-		document.getElementById('googleas').checked == true &&
-		document.getElementById('appnexusas').checked == false
-	) {
-		return `
-    window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var g=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",g?JSON.parse(g):[])}});`;
-	} else return '';
+  } else if (
+    document.getElementById('googleas').checked == true &&
+    document.getElementById('appnexusas').checked == false
+  ) {
+    return `
+    window.googletag=window.googletag||{},window.googletag.cmd=window.googletag.cmd||[],window.googletag.cmd.push(function(){if(0===window.googletag.pubads().getTargeting("permutive").length){var e=window.localStorage.getItem("_pdfps");window.googletag.pubads().setTargeting("permutive",e?JSON.parse(e):[]);var o=window.localStorage.getItem("permutive-id");o&&(window.googletag.pubads().setTargeting("puid",o),window.googletag.pubads().setTargeting("ptime",Date.now().toString())),window.permutive.config.viewId&&window.googletag.pubads().setTargeting("prmtvvid",window.permutive.config.viewId),window.permutive.config.workspaceId&&window.googletag.pubads().setTargeting("prmtvwid",window.permutive.config.workspaceId)}});`;
+  } else return '';
 }
 
 function returnAndroidAdserver() {
