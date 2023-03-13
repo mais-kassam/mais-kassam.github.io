@@ -203,10 +203,8 @@ var strings = {
 		return `## Deployment Tools
 
   - Install our [Chrome Extension](https://chrome.google.com/webstore/detail/permutive-extension/jbkoldmncaepofapfinnlbjmfmnabfpj) to validate events.
-  - You can use our [documentation](https://support.permutive.com/hc/en-us/articles/360010090520-Deployment-testing-and-verification) here to test your deployment.
-  - You can use [this dashboard](${
-		document.querySelector('#dashboard-input').value
-	}) to see any schema rejections`;
+  - You can use our verification [documentation](https://support.permutive.com/hc/en-us/articles/4780141565084-Web-Deployment-Verification) here to test your deployment.
+  - You can use this dashboard to see any schema rejections (in the real documentation, this will link to your Permutive Workspace event rejections)`;
 	},
 
 	keys: function () {
@@ -315,7 +313,7 @@ var strings = {
       
   Please find detailed instructions for AMP targeting on our docs page:
   
-  - **Segmentation**: [https://developer.permutive.com/docs/amp#section-segmentation](https://developer.permutive.com/docs/amp#section-segmentation)
+  - **Segmentation**: [https://developer.permutive.com/docs/amp-v2#segmentation](https://developer.permutive.com/docs/amp-v2#segmentation)
   - **DFP Targeting**: [https://developer.permutive.com/docs/ad-manager-dfp#section-setup-amp](https://developer.permutive.com/docs/ad-manager-dfp#section-setup-amp)
   \n`;
 	},
@@ -408,7 +406,7 @@ var strings = {
 	appNexus: function () {
 		return `# AppNexus Access
   
-  In order to activate our AppNexus integration via our dashboard, you'll need to please give us permissions. Please ensure that the following prerequisits have been made:
+  In order to activate our AppNexus integration via our dashboard, you'll need to please give us permissions. Please ensure that the following prerequisites have been made:
   
   - **AppNexus Installation**
   You must already have the AppNexus Seller Tag installed on your site and configured to serve your advertising campaigns.
