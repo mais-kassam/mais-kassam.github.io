@@ -5,11 +5,19 @@
 This package contains everything you need to deploy a professional landing page for your commerce media demos on GitHub Pages.
 
 ### ✅ Files Ready to Deploy:
-1. `index.html` - Main landing page with PubMatic-themed design
-2. `tvnordef-regular-webfont.woff2` - Font file (Regular)
-3. `tvnordef-bold.woff` - Font file (Bold)
-4. `tvnordef-black-webfont.woff2` - Font file (Black)
-5. `tvnordef-blackcon-webfont.woff2` - Font file (Black Condensed)
+
+**CRITICAL Configuration (Required for GitHub Pages):**
+1. `_config.yml` - Jekyll configuration that prevents build errors
+2. `.gitignore` - Prevents committing node_modules and build files
+
+**Landing Page:**
+3. `index.html` - Main landing page with PubMatic-themed design
+
+**Fonts:**
+4. `tvnordef-regular-webfont.woff2` - Font file (Regular)
+5. `tvnordef-bold.woff` - Font file (Bold)
+6. `tvnordef-black-webfont.woff2` - Font file (Black)
+7. `tvnordef-blackcon-webfont.woff2` - Font file (Black Condensed)
 
 ### 📚 Documentation:
 - `DEPLOYMENT_GUIDE.md` - Comprehensive deployment instructions
@@ -35,7 +43,8 @@ cd your-username.github.io
 ### Step 2: Copy Files & Run Setup
 ```bash
 # Copy all provided files to repository root
-cp index.html tvnordef-*.woff* ./
+# CRITICAL: Include _config.yml and .gitignore
+cp index.html _config.yml .gitignore tvnordef-*.woff* ./
 
 # Run setup script to create folder structure
 bash setup.sh
@@ -69,6 +78,8 @@ git push origin main
 ```
 your-username.github.io/
 ├── index.html (✅ provided)
+├── _config.yml (✅ provided - CRITICAL)
+├── .gitignore (✅ provided - CRITICAL)
 ├── pubmatic-logo-white.svg (❌ you add this)
 ├── tvnordef-*.woff* (✅ provided - 4 files)
 ├── albertsons-demo/ (❌ you add your project here)

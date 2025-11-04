@@ -4,6 +4,8 @@ GITHUB.IO FILE STRUCTURE
 📁 your-username.github.io/
 │
 ├── 📄 index.html                           ✅ PROVIDED
+├── ⚙️ _config.yml                          ✅ PROVIDED (CRITICAL!)
+├── 🚫 .gitignore                           ✅ PROVIDED (CRITICAL!)
 ├── 🖼️ pubmatic-logo-white.svg              ❌ YOU NEED TO ADD THIS
 │
 ├── 📝 tvnordef-regular-webfont.woff2       ✅ PROVIDED
@@ -48,8 +50,11 @@ QUICK START CHECKLIST
 =====================
 
 Step 1: Create/Clone your-username.github.io repository
-Step 2: Copy these 5 files to ROOT:
+
+Step 2: Copy these 7 files to ROOT:
    ✅ index.html
+   ✅ _config.yml (CRITICAL - prevents Jekyll build errors!)
+   ✅ .gitignore (CRITICAL - prevents committing node_modules!)
    ✅ tvnordef-regular-webfont.woff2
    ✅ tvnordef-bold.woff
    ✅ tvnordef-black-webfont.woff2
@@ -106,3 +111,22 @@ IMPORTANT NOTES
 ✓ All files go in ROOT except demo projects (which go in their folders)
 ✓ Logo must be white/light for dark background
 ✓ Font files must be in root directory (same level as index.html)
+✓ _config.yml is CRITICAL - without it, GitHub Pages will fail to build
+✓ .gitignore prevents committing huge node_modules folders (saves time & space)
+
+⚠️ CRITICAL: Why _config.yml is Required
+==========================================
+GitHub Pages uses Jekyll to build your site. Without _config.yml,
+Jekyll will try to process EVERY file in your demo projects, including:
+- All node_modules folders (thousands of files!)
+- Package files, documentation, etc.
+
+This causes:
+✗ Build failures
+✗ Extremely slow deployments (10+ minutes)
+✗ Possible timeout errors
+
+The _config.yml file tells Jekyll: "Skip these folders!"
+Result: Fast builds (30 seconds) and no errors.
+
+ALWAYS include _config.yml in your root directory!

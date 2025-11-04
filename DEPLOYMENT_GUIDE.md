@@ -1,5 +1,13 @@
 # GitHub Pages Deployment Guide - Commerce Media Demos
 
+## CRITICAL: Jekyll Configuration Required
+
+**⚠️ IMPORTANT:** GitHub Pages uses Jekyll to build your site. Without proper configuration, Jekyll will try to process all files in your demo projects (including node_modules), causing build failures.
+
+**You MUST include these files in your repository root:**
+- `_config.yml` - Jekyll configuration (provided)
+- `.gitignore` - Prevents committing node_modules (provided)
+
 ## Complete File Structure
 
 Your GitHub.io repository should have the following structure:
@@ -8,6 +16,8 @@ Your GitHub.io repository should have the following structure:
 your-username.github.io/
 │
 ├── index.html                              # Main landing page (provided)
+├── _config.yml                             # Jekyll config (REQUIRED - provided)
+├── .gitignore                              # Git ignore file (REQUIRED - provided)
 ├── pubmatic-logo-white.svg                 # PubMatic logo (you need to add this)
 │
 ├── tvnordef-regular-webfont.woff2         # Font files (provided)
@@ -56,8 +66,16 @@ your-username.github.io/
 
 ### 2. Add Files to Root Directory
 Place these files directly in the root of your repository:
+
+**CRITICAL FILES (required for GitHub Pages to work):**
+- `_config.yml` (Jekyll configuration - prevents build errors)
+- `.gitignore` (prevents committing node_modules)
+
+**Landing Page Files:**
 - `index.html` (the landing page I created)
 - `pubmatic-logo-white.svg` (you need to provide this)
+
+**Font Files:**
 - `tvnordef-regular-webfont.woff2`
 - `tvnordef-bold.woff`
 - `tvnordef-black-webfont.woff2`
@@ -147,6 +165,12 @@ Your site will be live at:
 
 ## Troubleshooting
 
+**GitHub Pages build failing or taking too long:**
+- **CRITICAL**: Ensure `_config.yml` is in your root directory
+- This file tells Jekyll to ignore node_modules folders
+- Without it, Jekyll tries to process all dependency files (thousands of files!)
+- Check the Actions/Pages tab in GitHub to see build logs
+
 **Landing page works but demos show 404:**
 - Check folder names match exactly (case-sensitive)
 - Ensure each demo has an `index.html` file
@@ -168,10 +192,24 @@ Your site will be live at:
 ## Files Provided to You
 
 Located in your outputs:
-1. `index.html` - Main landing page
-2. `tvnordef-regular-webfont.woff2` - Regular font
-3. `tvnordef-bold.woff` - Bold font
-4. `tvnordef-black-webfont.woff2` - Black font
-5. `tvnordef-blackcon-webfont.woff2` - Black condensed font
+
+**Critical Configuration:**
+1. `_config.yml` - Jekyll configuration (REQUIRED)
+2. `.gitignore` - Git ignore rules (REQUIRED)
+
+**Landing Page:**
+3. `index.html` - Main landing page
+
+**Fonts:**
+4. `tvnordef-regular-webfont.woff2` - Regular font
+5. `tvnordef-bold.woff` - Bold font
+6. `tvnordef-black-webfont.woff2` - Black font
+7. `tvnordef-blackcon-webfont.woff2` - Black condensed font
+
+**Documentation:**
+8. `DEPLOYMENT_GUIDE.md` - This guide
+9. `FILE_STRUCTURE.txt` - Visual reference
+10. `README.md` - Overview
+11. `setup.sh` - Setup script
 
 All ready to upload to your GitHub repository root!

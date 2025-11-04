@@ -1,0 +1,42 @@
+# Jekyll Configuration for GitHub Pages
+# This prevents Jekyll from processing demo project dependencies
+
+# Exclude these directories and files from processing
+exclude:
+  - node_modules/
+  - vendor/
+  - albertsons-demo/node_modules/
+  - coop-demo/node_modules/
+  - grocery-site/node_modules/
+  - pubmatic-demo/node_modules/
+  - pubmatic-video-demo/node_modules/
+  - tesco-demo/node_modules/
+  - uber-demo/node_modules/
+  - walmart-demo/node_modules/
+  - "*/node_modules/"
+  - "**/.git"
+  - "**/.gitignore"
+  - "**/package.json"
+  - "**/package-lock.json"
+  - "**/README.md"
+  - DEPLOYMENT_GUIDE.md
+  - FILE_STRUCTURE.txt
+  - setup.sh
+  - .DS_Store
+  - Gemfile
+  - Gemfile.lock
+
+# Process markdown with GitHub Flavored Markdown
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+
+# Site settings (optional)
+title: Commerce Media Demos
+description: Digital Advertising Solutions
