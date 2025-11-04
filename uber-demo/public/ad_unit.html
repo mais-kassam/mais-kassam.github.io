@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uber - Suggestions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Prebid Ad Container styling */
+    #2329_Uber_Styled {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: block;
+      background: #f6f6f6;
+      border-radius: 8px;
+      border: 1px solid #e5e5e5;
+    }
+
+    /* Target dynamically injected iframe */
+    #2329_Uber_Styled iframe {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      border: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      vertical-align: bottom !important;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background-color: #fff;
+    }
+
+    /* Header Navigation */
+    .header {
+      background-color: #000;
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .logo {
+      height: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .help-btn,
+    .login-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .signup-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .signup-btn:hover {
+      background: #f0f0f0;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 48px;
+    }
+
+    h1 {
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 48px;
+      color: #000;
+    }
+
+    /* Tile Grid */
+    .suggestions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* Individual Tile Styling */
+    .tile {
+      background: #f6f6f6;
+      border-radius: 8px;
+      padding: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      overflow: hidden;
+      border: 1px solid #e5e5e5;
+      transition: box-shadow 0.2s;
+    }
+
+    .tile:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .tile-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tile-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    .tile-description {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #545454;
+      margin-bottom: 12px;
+    }
+
+    .details-btn {
+      background: none;
+      border: none;
+      color: #000;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      text-decoration: underline;
+    }
+
+    .details-btn:hover {
+      opacity: 0.7;
+    }
+
+    .tile-icon {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      margin-left: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .suggestions-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .container {
+        padding: 40px 24px;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin-bottom: 32px;
+      }
+
+      .suggestions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tile {
+        padding: 24px;
+      }
+
+      .tile-icon {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="nav-left">
+      <img src="uber-logo.png" alt="Uber" class="logo">
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#">Ride</a></li>
+          <li><a href="#">Earn</a></li>
+          <li><a href="#">Business</a></li>
+          <li><a href="#">Uber Eats</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn">🌐 EN</button>
+      <button class="help-btn">Help</button>
+      <button class="login-btn">Log in</button>
+      <button class="signup-btn">Sign up</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <h1>Suggestions</h1>
+
+    <div class="suggestions-grid">
+      <!-- Ride Tile -->
+      <div class="tile">
+        <div class="tile-content">
+          <h2 class="tile-title">Ride</h2>
+          <p class="tile-description">Go anywhere with Uber. Request a trip, hop in and go.</p>
+          <button class="details-btn">Details</button>
+        </div>
+        <img src="top_bar_rides_3d.png" alt="Ride" class="tile-icon">
+      </div>
+
+      <!-- Reserve Tile -->
+      <div class="tile">
+        <div class="tile-content">
+          <h2 class="tile-title">Reserve</h2>
+          <p class="tile-description">Reserve your ride in advance so you can relax on the day of your trip.</p>
+          <button class="details-btn">Details</button>
+        </div>
+        <img src="reserve_clock.png" alt="Reserve" class="tile-icon">
+      </div>
+
+      <!-- Train & Coach Tile -->
+      <div class="tile">
+        <div class="tile-content">
+          <h2 class="tile-title">Train & Coach</h2>
+          <p class="tile-description">Book train, coach and Eurostar tickets in the Uber app.</p>
+          <button class="details-btn">Details</button>
+        </div>
+        <img src="uber_train_coach.png" alt="Train & Coach" class="tile-icon">
+      </div>
+
+      <!-- Car Hire Tile -->
+      <div class="tile">
+        <div class="tile-content">
+          <h2 class="tile-title">Car Hire</h2>
+          <p class="tile-description">Your perfect rental car is a few clicks away. Learn more about Uber Car...</p>
+          <button class="details-btn">Details</button>
+        </div>
+        <img src="car-rentals.png" alt="Car Hire" class="tile-icon">
+      </div>
+
+      <!-- Flights Tile -->
+      <div class="tile">
+        <div class="tile-content">
+          <h2 class="tile-title">Flights</h2>
+          <p class="tile-description">Book your next plane flight through the Uber app.</p>
+          <button class="details-btn">Details</button>
+        </div>
+        <img src="uber_flight.png" alt="Flights" class="tile-icon">
+      </div>
+
+      <!-- Food Tile - REPLACED WITH AD -->
+      <div id="2329_Uber_Styled"></div>
+    </div>
+  </main>
+
+  <!-- Prebid scripts -->
+  <script async src="https://commercecdn.pubmatic.com/convert/js/prebid/latest/prebid.js"></script>
+  <iframe src="https://commercecdn.pubmatic.com/convert/js/v1/latest/cookieSync.html?p=23" width="0" height="0"
+    style="display:none;"></iframe>
+
+  <script>
+    var cnvrtpbjs = cnvrtpbjs || {};
+    cnvrtpbjs.que = cnvrtpbjs.que || [];
+
+    var customkeys = { TargetingParams: {} };
+
+    cnvrtpbjs.que.push(function () {
+      var CNVRTPWT = window.CNVRTPWT || {};
+      var obj = {
+        adUnits: [{
+          code: '2329_Uber_Styled',
+          ortb2Imp: {
+            tagid: '2329',
+            ext: {}
+          },
+          mediaTypes: {
+            banner: {
+              sizes: [[300, 180], [300, 250]]
+            }
+          }
+        }],
+        publisherId: '23',
+        accountId: '23',
+        timeout: 1000,
+        adapter: 'prebidServer',
+        endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+        extPrebid: customkeys
+      };
+
+      CNVRTPWT.requestConvertServer(obj);
+
+      cnvrtpbjs.requestBids({
+        timeout: 2000,
+        bidsBackHandler: function () {
+          CNVRTPWT.renderAllAdUnits();
+
+          // Debug: log if iframe was created
+          var iframe = document.getElementById('prebid_ads_iframe_2329_Uber_Styled');
+          if (iframe) {
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.display = 'block';
+          }
+
+          if (iframe) console.log("Iframe created:", iframe);
+          else console.log("No iframe rendered yet.");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,411 @@
+<!-- 
+  STICKY VIDEO AD - VAST CREATIVE TEMPLATE
+  
+  AD SERVER SETUP INSTRUCTIONS:
+  1. Replace [VAST_URL] with your ad server's VAST tag macro
+  2. Optionally replace [CLICKTHROUGH_URL] for click tracking
+  3. Configure width/height if needed (default: 380x200)
+  4. Test in your ad server's preview environment first
+  
+  Common Ad Server Macros:
+  - Google Ad Manager: %%PATTERN:url%%
+  - Xandr/AppNexus: ${VAST_URL}
+  - Pubmatic: [VAST_TAG_URL]
+-->
+
+<!-- Video.js CSS -->
+<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+
+<style>
+  /* Sticky Video Ad Unit */
+  .sticky-video-ad {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 380px;
+    background: #000000;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 9999;
+    animation: slideIn 0.5s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(150%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .sticky-video-ad.closed {
+    animation: slideOut 0.3s ease-out forwards;
+  }
+
+  @keyframes slideOut {
+    to {
+      transform: translateY(150%);
+      opacity: 0;
+    }
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .video-js {
+    width: 100%;
+    height: 200px;
+    cursor: default;
+  }
+
+  .video-js .vjs-tech {
+    object-fit: cover;
+  }
+
+  .video-js .vjs-control-bar,
+  .video-js .vjs-big-play-button,
+  .video-js .vjs-loading-spinner {
+    display: none;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.2s;
+  }
+
+  .close-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  @media (max-width: 768px) {
+    .sticky-video-ad {
+      width: calc(100% - 40px);
+      max-width: 380px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sticky-video-ad {
+      bottom: 10px;
+      right: 10px;
+      width: calc(100% - 20px);
+    }
+  }
+</style>
+
+<div class="sticky-video-ad" id="stickyAd">
+  <button class="close-btn" id="closeBtn" aria-label="Close ad">&times;</button>
+  <div class="video-container">
+    <video id="adVideo" class="video-js vjs-default-skin" playsinline preload="auto">
+      <source id="videoSource" src="" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+<script>
+  (function () {
+    'use strict';
+
+    // ============================================
+    // CONFIGURATION - UPDATE THESE FOR YOUR AD SERVER
+    // ============================================
+    var CONFIG = {
+      // REPLACE WITH YOUR AD SERVER'S VAST TAG MACRO
+      vastTagUrl: '[VAST_URL]', // Examples: %%PATTERN:url%%, ${VAST_URL}, [VAST_TAG_URL]
+
+      // Optional: Custom click-through URL (leave empty to use VAST click-through)
+      customClickThrough: '[TRACKING_LINK]', // Optional override
+
+      // Video dimensions
+      videoWidth: 380,
+      videoHeight: 200,
+
+      // Auto-close when video ends
+      autoCloseOnEnd: true,
+
+      // Debug mode (set to false in production)
+      debug: false
+    };
+
+    // ============================================
+    // VAST PARSER
+    // ============================================
+    function VASTParser(vastUrl) {
+      this.vastUrl = vastUrl;
+      this.videoUrl = null;
+      this.clickThroughUrl = null;
+      this.trackingEvents = {};
+    }
+
+    VASTParser.prototype.parse = function () {
+      var self = this;
+      return fetch(this.vastUrl)
+        .then(function (response) {
+          if (!response.ok) throw new Error('VAST fetch failed');
+          return response.text();
+        })
+        .then(function (xmlText) {
+          var parser = new DOMParser();
+          var xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+          var parserError = xmlDoc.querySelector('parsererror');
+          if (parserError) {
+            throw new Error('XML parsing error');
+          }
+
+          // Extract video URL
+          var mediaFiles = xmlDoc.querySelectorAll('MediaFile');
+          if (mediaFiles.length > 0) {
+            var selectedMedia = null;
+            for (var i = 0; i < mediaFiles.length; i++) {
+              var type = mediaFiles[i].getAttribute('type');
+              if (type && type.indexOf('mp4') > -1) {
+                selectedMedia = mediaFiles[i];
+                break;
+              }
+            }
+            if (!selectedMedia) selectedMedia = mediaFiles[0];
+            self.videoUrl = selectedMedia.textContent.trim();
+          }
+
+          // Extract click-through
+          var clickThrough = xmlDoc.querySelector('ClickThrough');
+          if (clickThrough) {
+            self.clickThroughUrl = clickThrough.textContent.trim();
+          }
+
+          // Extract tracking events
+          var trackingElements = xmlDoc.querySelectorAll('Tracking');
+          for (var i = 0; i < trackingElements.length; i++) {
+            var event = trackingElements[i].getAttribute('event');
+            var url = trackingElements[i].textContent.trim();
+            if (!self.trackingEvents[event]) {
+              self.trackingEvents[event] = [];
+            }
+            self.trackingEvents[event].push(url);
+          }
+
+          // Extract impressions
+          var impressions = xmlDoc.querySelectorAll('Impression');
+          self.trackingEvents['impression'] = [];
+          for (var i = 0; i < impressions.length; i++) {
+            self.trackingEvents['impression'].push(impressions[i].textContent.trim());
+          }
+
+          // Extract click tracking
+          var clickTrackings = xmlDoc.querySelectorAll('ClickTracking');
+          self.trackingEvents['clickTracking'] = [];
+          for (var i = 0; i < clickTrackings.length; i++) {
+            self.trackingEvents['clickTracking'].push(clickTrackings[i].textContent.trim());
+          }
+
+          if (CONFIG.debug) {
+            console.log('VAST parsed:', {
+              videoUrl: self.videoUrl,
+              trackingEvents: Object.keys(self.trackingEvents)
+            });
+          }
+
+          return {
+            videoUrl: self.videoUrl,
+            clickThroughUrl: self.clickThroughUrl,
+            trackingEvents: self.trackingEvents
+          };
+        });
+    };
+
+    VASTParser.prototype.fireTrackingPixels = function (eventName) {
+      if (this.trackingEvents[eventName]) {
+        for (var i = 0; i < this.trackingEvents[eventName].length; i++) {
+          var img = new Image();
+          img.src = this.trackingEvents[eventName][i];
+          if (CONFIG.debug) {
+            console.log('Fired ' + eventName + ' pixel:', this.trackingEvents[eventName][i]);
+          }
+        }
+      }
+    };
+
+    // ============================================
+    // AD UNIT LOGIC
+    // ============================================
+    var stickyAd = document.getElementById('stickyAd');
+    var closeBtn = document.getElementById('closeBtn');
+    var player;
+    var vastParser;
+    var trackingFired = {
+      start: false,
+      firstQuartile: false,
+      midpoint: false,
+      thirdQuartile: false,
+      complete: false
+    };
+
+    function validateVastUrl(url) {
+      // Check if URL is a valid macro or actual URL
+      if (!url || url === '[VAST_URL]' || url === '%%PATTERN:url%%' || url === '${VAST_URL}') {
+        console.error('VAST URL macro not replaced. Check ad server configuration.');
+        return false;
+      }
+      return true;
+    }
+
+    function initializeAd() {
+      // Validate VAST URL
+      if (!validateVastUrl(CONFIG.vastTagUrl)) {
+        console.error('Invalid VAST URL configuration');
+        closeAd();
+        return;
+      }
+
+      vastParser = new VASTParser(CONFIG.vastTagUrl);
+
+      vastParser.parse()
+        .then(function (vastData) {
+          if (!vastData.videoUrl) {
+            throw new Error('No video URL found in VAST');
+          }
+
+          document.getElementById('videoSource').src = vastData.videoUrl;
+
+          player = videojs('adVideo', {
+            controls: false,
+            autoplay: true,
+            preload: 'auto',
+            muted: true,
+            fluid: false,
+            width: CONFIG.videoWidth,
+            height: CONFIG.videoHeight
+          });
+
+          player.ready(function () {
+            vastParser.fireTrackingPixels('impression');
+            player.load();
+            player.muted(true);
+
+            var playPromise = player.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(function (error) {
+                if (CONFIG.debug) console.log('Autoplay prevented:', error);
+              });
+            }
+          });
+
+          player.on('play', function () {
+            if (!trackingFired.start) {
+              vastParser.fireTrackingPixels('start');
+              trackingFired.start = true;
+            }
+          });
+
+          player.on('timeupdate', function () {
+            var currentTime = player.currentTime();
+            var duration = player.duration();
+
+            if (duration > 0) {
+              var progress = currentTime / duration;
+
+              if (progress >= 0.25 && !trackingFired.firstQuartile) {
+                vastParser.fireTrackingPixels('firstQuartile');
+                trackingFired.firstQuartile = true;
+              }
+              if (progress >= 0.5 && !trackingFired.midpoint) {
+                vastParser.fireTrackingPixels('midpoint');
+                trackingFired.midpoint = true;
+              }
+              if (progress >= 0.75 && !trackingFired.thirdQuartile) {
+                vastParser.fireTrackingPixels('thirdQuartile');
+                trackingFired.thirdQuartile = true;
+              }
+            }
+          });
+
+          player.on('ended', function () {
+            if (!trackingFired.complete) {
+              vastParser.fireTrackingPixels('complete');
+              trackingFired.complete = true;
+            }
+            if (CONFIG.autoCloseOnEnd) {
+              closeAd();
+            }
+          });
+
+          player.on('error', function () {
+            if (CONFIG.debug) console.error('Video error:', player.error());
+            vastParser.fireTrackingPixels('error');
+          });
+
+          // Handle click-through
+          if (vastData.clickThroughUrl || CONFIG.customClickThrough !== '[CLICKTHROUGH_URL]') {
+            var clickUrl = CONFIG.customClickThrough !== '[CLICKTHROUGH_URL]'
+              ? CONFIG.customClickThrough
+              : vastData.clickThroughUrl;
+
+            if (clickUrl) {
+              document.getElementById('adVideo').style.cursor = 'pointer';
+              document.getElementById('adVideo').addEventListener('click', function () {
+                vastParser.fireTrackingPixels('clickTracking');
+                window.open(clickUrl, '_blank');
+              });
+            }
+          }
+        })
+        .catch(function (error) {
+          console.error('Failed to load VAST ad:', error);
+          closeAd();
+        });
+    }
+
+    function closeAd() {
+      if (vastParser) {
+        vastParser.fireTrackingPixels('close');
+      }
+      stickyAd.classList.add('closed');
+      if (player) {
+        player.pause();
+      }
+      setTimeout(function () {
+        stickyAd.style.display = 'none';
+        if (player) {
+          player.dispose();
+        }
+      }, 300);
+    }
+
+    closeBtn.addEventListener('click', closeAd);
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeAd);
+    } else {
+      initializeAd();
+    }
+  })();
+</script>

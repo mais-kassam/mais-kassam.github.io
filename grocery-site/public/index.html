@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PubMatic Sponsored Product Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .demo-section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    button.secondary {
+      background: #6c757d;
+    }
+
+    button.secondary:hover {
+      background: #5a6268;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .status.loading {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .status.hidden {
+      display: none;
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .sponsored-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #ff6b6b;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 280px;
+      object-fit: contain;
+      background: #f8f9fa;
+      padding: 20px;
+    }
+
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 12px;
+    }
+
+    .product-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      flex: 1;
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+    }
+
+    .response-viewer {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .response-viewer h3 {
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+
+    .response-viewer pre {
+      background: #2c3e50;
+      color: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .tracking-info {
+      margin-top: 15px;
+      padding: 15px;
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      border-radius: 4px;
+    }
+
+    .tracking-info h4 {
+      margin-bottom: 10px;
+      color: #1976D2;
+    }
+
+    .tracking-info p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .tracking-log {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .tracking-log h3 {
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+
+    .log-entry {
+      background: white;
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      border-left: 4px solid #28a745;
+      font-size: 0.9rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .log-entry.click {
+      border-left-color: #007bff;
+    }
+
+    .log-entry.impression {
+      border-left-color: #28a745;
+    }
+
+    .server-info {
+      background: #d4edda;
+      border-left: 4px solid #28a745;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .server-info h4 {
+      margin-bottom: 10px;
+      color: #155724;
+    }
+
+    .server-info p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #155724;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>PubMatic Sponsored Product Demo</h1>
+      <p>Connected to Node.js backend - No CORS issues!</p>
+    </div>
+
+    <div class="demo-section">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Request Sponsored Products</h2>
+
+      <div class="server-info">
+        <h4>✅ Using Backend Server</h4>
+        <p>This demo connects to your Node.js backend server, which proxies requests to the PubMatic API.</p>
+        <p>API Endpoint: <strong>/api/sponsored-products</strong></p>
+      </div>
+
+      <div class="button-group">
+        <button id="fetchBtn" onclick="fetchSponsoredProducts()">Fetch Sponsored Products</button>
+        <button onclick="clearProducts()" class="secondary">Clear Products</button>
+      </div>
+      <div id="status" class="status hidden"></div>
+    </div>
+
+    <div class="demo-section">
+      <h2 style="margin-bottom: 20px; color: #2c3e50;">Products Display</h2>
+      <div id="productContainer" class="product-container"></div>
+    </div>
+
+    <div class="demo-section tracking-log">
+      <h3>Tracking Events Log</h3>
+      <div id="trackingLog">
+        <p style="color: #666;">No tracking events yet. Fetch products to see tracking in action.</p>
+      </div>
+    </div>
+
+    <div class="demo-section response-viewer">
+      <h3>API Response</h3>
+      <pre id="responseViewer">No response yet. Click "Fetch Sponsored Products" to make a real API call.</pre>
+    </div>
+  </div>
+
+  <script>
+    let currentBidResponse = null;
+    const trackingEvents = [];
+
+    // Configuration - change this if your server runs on a different port
+    const API_BASE_URL = window.location.origin;
+    const API_ENDPOINT = `${API_BASE_URL}/api/sponsored-products`;
+
+    const requestPayload = {
+      "id": "BidRequestIDd_01_00234",
+      "site": {
+        "id": "commercepartner_abc",
+        "domain": "www.commercepartner_abc.com",
+        "publisher": {
+          "id": "161"
+        },
+        "ext": {
+          "page_name": ""
+        }
+      },
+      "tmax": 50000,
+      "device": {},
+      "user": {
+        "id": "eedww123qed121212413321unique"
+      },
+      "imp": [
+        {
+          "id": "ImpID1331",
+          "bidfloor": 0.1,
+          "ext": {
+            "commerce": {
+              "slots_requested": 1,
+              "preferred": [
+                {
+                  "pid": "18"
+                }
+              ],
+              "targeting": []
+            }
+          }
+        }
+      ]
+    };
+
+    async function fetchSponsoredProducts() {
+      const statusEl = document.getElementById('status');
+      const fetchBtn = document.getElementById('fetchBtn');
+      const responseViewer = document.getElementById('responseViewer');
+
+      statusEl.className = 'status loading';
+      statusEl.textContent = 'Fetching sponsored products from PubMatic API via backend...';
+      fetchBtn.disabled = true;
+
+      try {
+        console.log('Calling backend API:', API_ENDPOINT);
+
+        const response = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestPayload)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        currentBidResponse = data;
+
+        statusEl.className = 'status success';
+        statusEl.textContent = '✅ Successfully fetched sponsored products from PubMatic API!';
+
+        responseViewer.textContent = JSON.stringify(data, null, 2);
+
+        renderProducts(data);
+
+      } catch (error) {
+        statusEl.className = 'status error';
+        statusEl.innerHTML = `<strong>Error:</strong> ${error.message}<br><br>
+                    Make sure your Node.js backend server is running on port 3000.`;
+        responseViewer.textContent = `Error: ${error.message}`;
+        console.error('Error fetching sponsored products:', error);
+      } finally {
+        fetchBtn.disabled = false;
+      }
+    }
+
+    function renderProducts(bidResponse) {
+      const container = document.getElementById('productContainer');
+      container.innerHTML = '';
+
+      if (!bidResponse.seatbid || bidResponse.seatbid.length === 0) {
+        container.innerHTML = '<p style="color: #666;">No sponsored products available.</p>';
+        return;
+      }
+
+      bidResponse.seatbid.forEach(seatbid => {
+        seatbid.bid.forEach(bid => {
+          if (bid.ext && bid.ext.productid === "18") {
+            const productCard = createProductCard(bid);
+            container.appendChild(productCard);
+
+            // Fire impression tracking
+            fireImpressionTracking(bid.nurl, bid.id);
+          }
+        });
+      });
+    }
+
+    function createProductCard(bid) {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+
+      card.innerHTML = `
+                <div class="sponsored-badge">Sponsored</div>
+                <img src="https://assets.sainsburys-groceries.co.uk/gol/7455488/1/640x640.jpg" 
+                     alt="Kinder Bueno" 
+                     class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Kinder Bueno</div>
+                    <div class="product-price">$1.00</div>
+                    <div class="product-actions">
+                        <button class="btn-primary" onclick='handleProductClick(${JSON.stringify(bid)})'>
+                            View Product
+                        </button>
+                    </div>
+                    <div class="tracking-info">
+                        <h4>Tracking Info</h4>
+                        <p><strong>Bid ID:</strong> ${bid.id}</p>
+                        <p><strong>Price:</strong> $${bid.price}</p>
+                        <p><strong>Click Price:</strong> $${bid.ext.clickprice}</p>
+                        <p><strong>Product ID:</strong> ${bid.ext.productid}</p>
+                    </div>
+                </div>
+            `;
+
+      return card;
+    }
+
+    function fireImpressionTracking(nurl, bidId) {
+      if (!nurl) return;
+
+      // Log the impression event
+      addTrackingLog('impression', `Impression fired for bid ${bidId}`, nurl);
+
+      // Fire the tracking pixel
+      const img = new Image();
+      img.src = nurl;
+
+      console.log('Impression tracked:', nurl);
+    }
+
+    function handleProductClick(bid) {
+      const clickUrl = bid.ext.curl;
+
+      if (clickUrl) {
+        // Log the click event
+        addTrackingLog('click', `Click tracked for bid ${bid.id} (Price: $${bid.ext.clickprice})`, clickUrl);
+
+        // Fire the tracking pixel
+        const img = new Image();
+        img.src = clickUrl;
+
+        console.log('Click tracked:', clickUrl);
+
+        // Show alert for demo purposes
+        alert(`Product clicked! Click tracking fired.\n\nBid ID: ${bid.id}\nClick Price: $${bid.ext.clickprice}\n\nTracking URL has been fired to PubMatic.`);
+      }
+    }
+
+    function addTrackingLog(type, message, url) {
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = {
+        type,
+        message,
+        url,
+        timestamp
+      };
+
+      trackingEvents.push(logEntry);
+      updateTrackingLog();
+    }
+
+    function updateTrackingLog() {
+      const logContainer = document.getElementById('trackingLog');
+
+      if (trackingEvents.length === 0) {
+        logContainer.innerHTML = '<p style="color: #666;">No tracking events yet. Fetch products to see tracking in action.</p>';
+        return;
+      }
+
+      logContainer.innerHTML = trackingEvents.map(event => `
+                <div class="log-entry ${event.type}">
+                    <strong>[${event.timestamp}] ${event.type.toUpperCase()}:</strong> ${event.message}<br>
+                    <span style="color: #666; font-size: 0.85rem;">URL: ${event.url.substring(0, 80)}...</span>
+                </div>
+            `).reverse().join('');
+    }
+
+    function clearProducts() {
+      document.getElementById('productContainer').innerHTML = '';
+      document.getElementById('responseViewer').textContent = 'No response yet. Click "Fetch Sponsored Products" to make a real API call.';
+      document.getElementById('status').className = 'status hidden';
+      document.getElementById('trackingLog').innerHTML = '<p style="color: #666;">No tracking events yet. Fetch products to see tracking in action.</p>';
+      currentBidResponse = null;
+      trackingEvents.length = 0;
+    }
+  </script>
+</body>
+
+</html>

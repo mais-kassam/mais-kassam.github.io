@@ -1,181 +1,171 @@
-# PubMatic Sponsored Products Demo
+# Commerce Media Demos - Landing Page Package
 
-A complete demo application showing how to integrate PubMatic's sponsored products API with a Node.js backend and frontend.
+## 📦 What's Included
 
-## 📁 Project Structure
+This package contains everything you need to deploy a professional landing page for your commerce media demos on GitHub Pages.
 
-```
-pubmatic-demo/
-├── server.js           # Node.js Express backend
-├── package.json        # NPM dependencies
-├── public/
-│   └── index.html     # Frontend application
-└── README.md          # This file
-```
+### ✅ Files Ready to Deploy:
+1. `index.html` - Main landing page with PubMatic-themed design
+2. `tvnordef-regular-webfont.woff2` - Font file (Regular)
+3. `tvnordef-bold.woff` - Font file (Bold)
+4. `tvnordef-black-webfont.woff2` - Font file (Black)
+5. `tvnordef-blackcon-webfont.woff2` - Font file (Black Condensed)
 
-## 🚀 Quick Start
+### 📚 Documentation:
+- `DEPLOYMENT_GUIDE.md` - Comprehensive deployment instructions
+- `FILE_STRUCTURE.txt` - Visual folder structure reference
+- `setup.sh` - Automated setup script
+- `README.md` - This file
 
-### Prerequisites
+### ❌ What You Need to Add:
+- `pubmatic-logo-white.svg` - PubMatic white logo for dark background
+- Your 8 demo projects (albertsons-demo, coop-demo, grocery-site, pubmatic-demo, pubmatic-video-demo, tesco-demo, uber-demo, walmart-demo)
 
-- Node.js (v14 or higher)
-- npm or yarn
+---
 
-### Installation
+## 🚀 Quick Start (3 Easy Steps)
 
-1. **Create the project directory:**
+### Step 1: Setup Repository
 ```bash
-mkdir pubmatic-demo
-cd pubmatic-demo
+# Clone or create your GitHub Pages repository
+git clone https://github.com/your-username/your-username.github.io.git
+cd your-username.github.io
 ```
 
-2. **Create the files:**
-
-Create `server.js` (the backend code I provided)
-
-Create `package.json` (the package.json I provided)
-
-Create a `public` folder and put `index.html` inside it:
+### Step 2: Copy Files & Run Setup
 ```bash
-mkdir public
+# Copy all provided files to repository root
+cp index.html tvnordef-*.woff* ./
+
+# Run setup script to create folder structure
+bash setup.sh
+
+# Add your PubMatic logo
+cp /path/to/pubmatic-logo-white.svg ./
 ```
 
-3. **Install dependencies:**
+### Step 3: Add Demo Projects
 ```bash
-npm install
+# Copy each demo project into its folder
+# Example:
+cp -r /path/to/your-albertsons-project/* albertsons-demo/
+cp -r /path/to/your-grocery-site-project/* grocery-site/
+# ... repeat for all 8 demos
+
+# Each demo folder MUST have index.html as entry point
 ```
 
-### Running the Application
-
-1. **Start the server:**
+### Step 4: Deploy
 ```bash
-cd /Users/maisamkassam/PubMatic/pubmatic-demo
-npm start
+git add .
+git commit -m "Add commerce media demo landing page"
+git push origin main
 ```
 
-Or for development with auto-restart:
-```bash
-npm run dev
+---
+
+## 📁 Required Folder Structure
+
+```
+your-username.github.io/
+├── index.html (✅ provided)
+├── pubmatic-logo-white.svg (❌ you add this)
+├── tvnordef-*.woff* (✅ provided - 4 files)
+├── albertsons-demo/ (❌ you add your project here)
+├── coop-demo/ (❌ you add your project here)
+├── grocery-site/ (❌ you add your project here)
+├── pubmatic-demo/ (❌ you add your project here)
+├── pubmatic-video-demo/ (❌ you add your project here)
+├── tesco-demo/ (❌ you add your project here)
+├── uber-demo/ (❌ you add your project here)
+└── walmart-demo/ (❌ you add your project here)
 ```
 
-2. **Open your browser:**
-Navigate to `http://localhost:3000`
+---
 
-3. **Test the integration:**
-Click "Fetch Sponsored Products" to make a real API call to PubMatic via your backend server.
+## 🌐 Your Live URLs
 
-## 🔧 Configuration
+Once deployed, your demos will be accessible at:
 
-### Change Server Port
+- **Landing Page**: `https://your-username.github.io/`
+- **Albertsons**: `https://your-username.github.io/albertsons-demo/`
+- **Co-op**: `https://your-username.github.io/coop-demo/`
+- **Grocery Site**: `https://your-username.github.io/grocery-site/`
+- **PubMatic**: `https://your-username.github.io/pubmatic-demo/`
+- **PubMatic Video**: `https://your-username.github.io/pubmatic-video-demo/`
+- **Tesco**: `https://your-username.github.io/tesco-demo/`
+- **Uber**: `https://your-username.github.io/uber-demo/`
+- **Walmart**: `https://your-username.github.io/walmart-demo/`
 
-Edit `server.js` and modify the PORT constant:
-```javascript
-const PORT = process.env.PORT || 3000;
-```
+---
 
-Or set an environment variable:
-```bash
-PORT=8080 npm start
-```
+## 🎨 Landing Page Features
 
-### Customize Request Payload
+- **PubMatic-themed design** with dark navy background (#0a2540)
+- **Custom TV Nord fonts** for professional typography
+- **Responsive layout** works on all devices
+- **Organized sections**:
+  - For Grocery Retail (5 demos: Albertsons, Grocery Site, Tesco, Walmart, Co-op)
+  - For Platform Solutions (2 demos: PubMatic, PubMatic Video)
+  - For Mobility & Delivery (1 demo: Uber)
+- **Professional stats section** highlighting your demo portfolio
+- **Smooth hover effects** and modern UI
 
-Edit the `requestPayload` object in `public/index.html` to customize:
-- User ID
-- Site information
-- Bid floor
-- Product preferences
-- Targeting parameters
+---
 
-## 📡 API Endpoints
+## ⚠️ Critical Requirements
 
-### Backend Server
+### Each Demo Folder Must:
+1. Have an `index.html` file as the entry point
+2. Use lowercase folder names with hyphens (no spaces or underscores)
+3. Match the exact folder names: `albertsons-demo`, `coop-demo`, etc.
 
-- `GET /` - Serves the frontend application
-- `GET /api/health` - Health check endpoint
-- `POST /api/sponsored-products` - Proxies requests to PubMatic API
+### Logo Requirements:
+- Must be white or light-colored (for dark background)
+- Must be named `pubmatic-logo-white.svg`
+- Must be placed in root directory
 
-### Request Format
+### Font Files:
+- All 4 font files must be in root directory
+- Must have the exact names provided
 
-```json
-{
-  "id": "BidRequestIDd_01_00234",
-  "site": {
-    "id": "commercepartner_abc",
-    "domain": "www.commercepartner_abc.com",
-    "publisher": {
-      "id": "161"
-    }
-  },
-  "user": {
-    "id": "eedww123qed121212413321unique"
-  },
-  "imp": [{
-    "id": "ImpID1331",
-    "bidfloor": 0.1,
-    "ext": {
-      "commerce": {
-        "slots_requested": 1,
-        "preferred": [{"pid": "18"}]
-      }
-    }
-  }]
-}
-```
+---
 
-## 🎯 Features
+## 🔧 Troubleshooting
 
-- ✅ **No CORS Issues**: Backend server proxies API calls
-- ✅ **Real-time Tracking**: Impression and click tracking
-- ✅ **Product Display**: Renders sponsored products with badges
-- ✅ **Tracking Log**: Visual log of all tracking events
-- ✅ **Error Handling**: Comprehensive error messages
-- ✅ **Response Viewer**: View full API responses
+**Landing page shows but demos return 404:**
+- Verify folder names match exactly (case-sensitive)
+- Ensure each demo has an `index.html` file
+- Check GitHub Pages is enabled in repository settings
 
-## 🔍 How It Works
+**Fonts not loading:**
+- Confirm all 4 .woff/.woff2 files are in root
+- Clear browser cache
 
-1. **Frontend** makes a request to `/api/sponsored-products`
-2. **Backend** receives the request and forwards it to PubMatic's API
-3. **PubMatic** returns sponsored product bids
-4. **Backend** returns the response to the frontend
-5. **Frontend** renders products with productid "18" as Kinder Bueno
-6. **Tracking pixels** fire on impression and click events
+**Logo not appearing:**
+- Add `pubmatic-logo-white.svg` to root directory
+- Ensure logo is light-colored for visibility on dark background
 
-## 🐛 Troubleshooting
+**Styling issues:**
+- Clear browser cache (Ctrl+Shift+R or Cmd+Shift+R)
+- Check that index.html wasn't modified
 
-### Server won't start
-- Make sure port 3000 is not already in use
-- Check that all dependencies are installed: `npm install`
+---
 
-### API calls failing
-- Verify your PubMatic credentials are correct
-- Check server logs for detailed error messages
-- Ensure you have internet connectivity
+## 📖 Need More Help?
 
-### Products not displaying
-- Check browser console for errors
-- Verify the API response contains productid "18"
-- Check the tracking log for events
+Refer to:
+- `DEPLOYMENT_GUIDE.md` - Detailed deployment instructions
+- `FILE_STRUCTURE.txt` - Visual reference for folder organization
+- Run `setup.sh` - Automated folder structure creation
 
-## 📝 Production Deployment
+---
 
-For production deployment:
+## ✨ Credits
 
-1. Set environment variables:
-```bash
-export NODE_ENV=production
-export PORT=80
-```
+Built with PubMatic branding and TV Nord custom fonts.
+Designed for GitHub Pages hosting.
 
-2. Use a process manager like PM2:
-```bash
-npm install -g pm2
-pm2 start server.js --name pubmatic-demo
-```
+---
 
-3. Set up a reverse proxy (nginx) for SSL/HTTPS
-
-4. Add proper authentication and rate limiting
-
-## 📄 License
-
-ISC
+**Ready to deploy? Follow the Quick Start steps above!** 🚀

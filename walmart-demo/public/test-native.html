@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Native Ad Test</title>
+</head>
+
+<body>
+    <h1>Testing Native Ad Unit 2078</h1>
+
+    <script async src="https://commercecdn.pubmatic.com/convert/js/prebid/latest/prebid.js"></script>
+    <iframe src="https://commercecdn.pubmatic.com/convert/js/v1/latest/cookieSync.html?p=161" width="1000" height="1000"
+        style="display:none;"></iframe>
+    <script>
+        var cnvrtpbjs = cnvrtpbjs || {};
+        cnvrtpbjs.que = cnvrtpbjs.que || [];
+
+        var customkeys = { TargetingParams: {} };
+
+        cnvrtpbjs.que.push(function () {
+            var CNVRTPWT = window.CNVRTPWT || {};
+            var obj = {
+                adUnits: [{
+                    code: '2126_Sponsored_Product_Native_Grid_2x1',
+                    ortb2Imp: {
+                        tagid: '2126',
+                        ext: {}
+                    },
+                    mediaTypes: {
+                        banner: {
+                            sizes: [
+                                [0, 0]
+                            ]
+                        }
+                    }
+                }],
+                publisherId: '161',
+                accountId: '161',
+                timeout: 1000,
+                adapter: 'prebidServer',
+                endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+                extPrebid: customkeys
+            }
+            CNVRTPWT.requestConvertServer(obj);
+            cnvrtpbjs.requestBids({
+                timeout: 2000,
+                bidsBackHandler: CNVRTPWT.renderAllAdUnits
+            });
+        });
+    </script>
+    <div id=2126_Sponsored_Product_Native_Grid_2x1>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uber - Suggestions (Server-Side)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background-color: #fff;
+    }
+
+    /* Header Navigation */
+    .header {
+      background-color: #000;
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .logo {
+      height: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .icon-btn,
+    .help-btn,
+    .login-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .signup-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .signup-btn:hover {
+      background: #f0f0f0;
+    }
+
+    /* Demo Control Panel */
+    .demo-controls {
+      background: #000;
+      padding: 20px 48px;
+      border-top: 1px solid #333;
+    }
+
+    .demo-controls h2 {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .control-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .demo-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .demo-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .demo-btn:disabled {
+      background: #666;
+      color: #999;
+      cursor: not-allowed;
+    }
+
+    .demo-output {
+      display: none;
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .demo-output.visible {
+      display: block;
+    }
+
+    .demo-output h3 {
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .demo-output pre {
+      background: #0a0a0a;
+      color: #0f0;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 12px;
+      font-family: 'Courier New', monospace;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .response-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #1a1a1a;
+      border-radius: 8px;
+      border-left: 3px solid #4caf50;
+    }
+
+    .response-section h4 {
+      color: #4caf50;
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .field-row {
+      display: flex;
+      margin: 8px 0;
+      padding: 8px;
+      background: #0a0a0a;
+      border-radius: 4px;
+    }
+
+    .field-label {
+      color: #888;
+      font-weight: 600;
+      min-width: 140px;
+      font-size: 12px;
+    }
+
+    .field-value {
+      color: #fff;
+      flex: 1;
+      font-size: 12px;
+      word-break: break-word;
+    }
+
+    .field-value.url {
+      color: #64b5f6;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .field-value.price {
+      color: #4caf50;
+      font-weight: 600;
+    }
+
+    .raw-json-toggle {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .raw-json-toggle:hover {
+      background: #444;
+    }
+
+    .raw-json {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .raw-json.visible {
+      display: block;
+    }
+
+    .status-message {
+      color: #fff;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .status-message.success {
+      color: #4caf50;
+    }
+
+    .status-message.error {
+      color: #f44336;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 48px;
+    }
+
+    h1 {
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 48px;
+      color: #000;
+    }
+
+    /* Tile Grid */
+    .suggestions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Match Ad Template */
+    .css-fDiKdE {
+      position: relative;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f3f3f3;
+      overflow: hidden;
+      margin-bottom: 0;
+      transition: box-shadow 0.2s ease;
+      padding-top: 28px;
+      width: 400px;
+    }
+
+    .css-fDiKdE:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-sponsored-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background-color: #000;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      letter-spacing: 0.5px;
+      z-index: 3;
+      opacity: 0.85;
+    }
+
+    .css-iwCxLf {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .css-cNKDE {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: calc(100% - 128px);
+    }
+
+    .css-tNnWB {
+      font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      min-height: 20px;
+    }
+
+    .css-gJabUe {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 8px 0;
+      min-height: 40px;
+      padding-right: 8px;
+      font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .css-fMOzGw {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16px;
+      border-radius: 999px;
+      padding: 10px 12px;
+      color: #000000;
+      background-color: #FFFFFF;
+      width: fit-content;
+      transition: background 0.2s cubic-bezier(0, 0, 1, 1);
+    }
+
+    .css-fMOzGw:hover {
+      background-color: #f0f0f0;
+    }
+
+    .css-zsjOj {
+      background-color: #F3F3F3;
+      border-radius: 4px;
+      height: 128px;
+      width: 128px;
+      object-fit: contain;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .css-zsjOj img {
+      border-radius: 4px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Ad Tile - Hidden by default */
+    #ad-tile {
+      display: none;
+    }
+
+    #ad-tile.visible {
+      display: block;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1300px) {
+      .suggestions-grid {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .css-fDiKdE {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .header,
+      .demo-controls {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .container {
+        padding: 40px 24px;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin-bottom: 32px;
+      }
+
+      .css-iwCxLf {
+        padding: 12px;
+      }
+
+      .css-zsjOj {
+        width: 96px;
+        height: 96px;
+      }
+
+      .css-cNKDE {
+        width: calc(100% - 96px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="nav-left">
+      <img src="uber-logo.png" alt="Uber" class="logo">
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#">Ride</a></li>
+          <li><a href="#">Earn</a></li>
+          <li><a href="#">Business</a></li>
+          <li><a href="#">Uber Eats</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn">🌐 EN</button>
+      <button class="help-btn">Help</button>
+      <button class="login-btn">Log in</button>
+      <button class="signup-btn">Sign up</button>
+    </div>
+  </header>
+
+  <!-- Demo Control Panel -->
+  <div class="demo-controls">
+    <h2>Demo Controls - Server-Side Ad Integration</h2>
+    <div class="control-buttons">
+      <button class="demo-btn" id="loadAdBtn">Load Ad</button>
+      <button class="demo-btn" id="toggleRequestBtn">View Request</button>
+      <button class="demo-btn" id="toggleResponseBtn">View Response</button>
+      <button class="demo-btn" id="clearAdBtn">Clear Ad</button>
+    </div>
+    <div id="statusMessage" class="status-message"></div>
+    <div id="requestOutput" class="demo-output">
+      <h3>Request:</h3>
+      <div id="requestFormatted"></div>
+      <button class="raw-json-toggle" id="toggleRawRequest">Show Raw JSON</button>
+      <div id="requestRaw" class="raw-json">
+        <pre id="requestData"></pre>
+      </div>
+    </div>
+    <div id="responseOutput" class="demo-output">
+      <h3>Response:</h3>
+      <div id="responseFormatted"></div>
+      <button class="raw-json-toggle" id="toggleRawJson">Show Raw JSON</button>
+      <div id="responseRaw" class="raw-json">
+        <pre id="responseData"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container">
+    <h1>Suggestions</h1>
+
+    <div class="suggestions-grid">
+      <!-- Ride Tile -->
+      <div class="css-fDiKdE">
+        <div class="css-iwCxLf">
+          <div class="css-cNKDE">
+            <div>
+              <div class="css-tNnWB">Ride</div>
+              <div class="css-gJabUe">Go anywhere with Uber. Request a trip, hop in and go.</div>
+            </div>
+            <button class="css-fMOzGw">Details</button>
+          </div>
+          <div class="css-zsjOj">
+            <img src="top_bar_rides_3d.png" alt="Ride">
+          </div>
+        </div>
+      </div>
+
+      <!-- Reserve Tile -->
+      <div class="css-fDiKdE">
+        <div class="css-iwCxLf">
+          <div class="css-cNKDE">
+            <div>
+              <div class="css-tNnWB">Reserve</div>
+              <div class="css-gJabUe">Reserve your ride in advance so you can relax on the day of your trip.</div>
+            </div>
+            <button class="css-fMOzGw">Details</button>
+          </div>
+          <div class="css-zsjOj">
+            <img src="reserve_clock.png" alt="Reserve">
+          </div>
+        </div>
+      </div>
+
+      <!-- Train & Coach Tile -->
+      <div class="css-fDiKdE">
+        <div class="css-iwCxLf">
+          <div class="css-cNKDE">
+            <div>
+              <div class="css-tNnWB">Train & Coach</div>
+              <div class="css-gJabUe">Book train, coach and Eurostar tickets in the Uber app.</div>
+            </div>
+            <button class="css-fMOzGw">Details</button>
+          </div>
+          <div class="css-zsjOj">
+            <img src="uber_train_coach.png" alt="Train & Coach">
+          </div>
+        </div>
+      </div>
+
+      <!-- Car Hire Tile -->
+      <div class="css-fDiKdE">
+        <div class="css-iwCxLf">
+          <div class="css-cNKDE">
+            <div>
+              <div class="css-tNnWB">Car Hire</div>
+              <div class="css-gJabUe">Your perfect rental car is a few clicks away. Learn more about Uber Car...</div>
+            </div>
+            <button class="css-fMOzGw">Details</button>
+          </div>
+          <div class="css-zsjOj">
+            <img src="car-rentals.png" alt="Car Hire">
+          </div>
+        </div>
+      </div>
+
+      <!-- Flights Tile -->
+      <div class="css-fDiKdE">
+        <div class="css-iwCxLf">
+          <div class="css-cNKDE">
+            <div>
+              <div class="css-tNnWB">Flights</div>
+              <div class="css-gJabUe">Book your next plane flight through the Uber app.</div>
+            </div>
+            <button class="css-fMOzGw">Details</button>
+          </div>
+          <div class="css-zsjOj">
+            <img src="uber_flight.png" alt="Flights">
+          </div>
+        </div>
+      </div>
+
+      <!-- Server-Side Ad Tile (Hidden by default) -->
+      <div id="ad-tile" class="css-fDiKdE">
+        <div class="card-sponsored-badge">Sponsored</div>
+        <a id="ad-link" class="css-iwCxLf" href="#" target="_blank">
+          <div class="css-cNKDE">
+            <div>
+              <div id="ad-title" class="css-tNnWB"></div>
+              <div id="ad-subtitle" class="css-gJabUe"></div>
+            </div>
+            <button id="ad-cta" class="css-fMOzGw"></button>
+          </div>
+          <div class="css-zsjOj">
+            <img id="ad-image" src="" alt="Sponsored">
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // API Configuration
+    const API_URL = 'http://localhost:3002/api/onsite-bid';
+
+    // Bid Request Payload with Enhanced Metadata
+    const bidRequest = {
+      "id": "Bid_Request_234324",
+      "site": {
+        "domain": "www.uber.com",
+        "publisher": {
+          "id": "23"
+        },
+        "page": "www.uber.com/page1"
+      },
+      "tmax": 1000,
+      "device": {
+        "devicetype": 1,
+        "geo": {
+          "country": "US"
+        }
+      },
+      "user": {
+        "id": "PM234234234"
+      },
+      "imp": [
+        {
+          "id": "2330_UberPlainJSON",
+          "tagid": "2330",
+          "banner": {
+            "format": [
+              {
+                "w": 0,
+                "h": 0
+              }
+            ]
+          }
+        }
+      ],
+      "ext": {
+        "prebid": {
+          "TargetingParams": {
+            "audience": "123ride",
+            "adSequence": "rideRequested"
+          }
+        }
+      }
+    };
+
+    // State
+    let lastResponse = null;
+
+    // DOM Elements
+    const loadAdBtn = document.getElementById('loadAdBtn');
+    const toggleRequestBtn = document.getElementById('toggleRequestBtn');
+    const toggleResponseBtn = document.getElementById('toggleResponseBtn');
+    const clearAdBtn = document.getElementById('clearAdBtn');
+    const statusMessage = document.getElementById('statusMessage');
+    const requestOutput = document.getElementById('requestOutput');
+    const responseOutput = document.getElementById('responseOutput');
+    const requestData = document.getElementById('requestData');
+    const requestFormatted = document.getElementById('requestFormatted');
+    const requestRaw = document.getElementById('requestRaw');
+    const toggleRawRequest = document.getElementById('toggleRawRequest');
+    const responseData = document.getElementById('responseData');
+    const responseFormatted = document.getElementById('responseFormatted');
+    const responseRaw = document.getElementById('responseRaw');
+    const toggleRawJson = document.getElementById('toggleRawJson');
+    const adTile = document.getElementById('ad-tile');
+
+    // Display request data on load
+    requestData.textContent = JSON.stringify(bidRequest, null, 2);
+    requestFormatted.innerHTML = formatRequest(bidRequest);
+
+    // Format Request Function
+    function formatRequest(data) {
+      let html = '';
+
+      // Basic Request Info Section
+      html += '<div class="response-section">';
+      html += '<h4>📋 Request Information</h4>';
+      html += `<div class="field-row"><div class="field-label">Request ID:</div><div class="field-value">${data.id || 'N/A'}</div></div>`;
+      html += `<div class="field-row"><div class="field-label">Timeout:</div><div class="field-value">${data.tmax || 'N/A'} ms</div></div>`;
+      html += '</div>';
+
+      // Site Information Section
+      if (data.site) {
+        html += '<div class="response-section">';
+        html += '<h4>🌐 Site Information</h4>';
+        html += `<div class="field-row"><div class="field-label">Domain:</div><div class="field-value">${data.site.domain || 'N/A'}</div></div>`;
+        html += `<div class="field-row"><div class="field-label">Page:</div><div class="field-value">${data.site.page || 'N/A'}</div></div>`;
+        if (data.site.publisher) {
+          html += `<div class="field-row"><div class="field-label">Publisher ID:</div><div class="field-value">${data.site.publisher.id || 'N/A'}</div></div>`;
+        }
+        html += '</div>';
+      }
+
+      // User & Device Section
+      html += '<div class="response-section">';
+      html += '<h4>👤 User & Device</h4>';
+      if (data.user && data.user.id) {
+        html += `<div class="field-row"><div class="field-label">User ID:</div><div class="field-value">${data.user.id}</div></div>`;
+      }
+      if (data.device) {
+        const deviceTypes = { 1: 'Mobile/Tablet', 2: 'Personal Computer', 3: 'Connected TV', 4: 'Phone', 5: 'Tablet', 6: 'Connected Device', 7: 'Set Top Box' };
+        html += `<div class="field-row"><div class="field-label">Device Type:</div><div class="field-value">${deviceTypes[data.device.devicetype] || data.device.devicetype || 'N/A'}</div></div>`;
+        if (data.device.geo) {
+          html += `<div class="field-row"><div class="field-label">Country:</div><div class="field-value">${data.device.geo.country || 'N/A'}</div></div>`;
+        }
+      }
+      html += '</div>';
+
+      // Ad Placement Section
+      if (data.imp && data.imp.length > 0) {
+        html += '<div class="response-section">';
+        html += '<h4>📺 Ad Placement</h4>';
+        const imp = data.imp[0];
+        html += `<div class="field-row"><div class="field-label">Impression ID:</div><div class="field-value">${imp.id || 'N/A'}</div></div>`;
+        html += `<div class="field-row"><div class="field-label">Tag ID:</div><div class="field-value">${imp.tagid || 'N/A'}</div></div>`;
+        if (imp.banner && imp.banner.format && imp.banner.format.length > 0) {
+          const format = imp.banner.format[0];
+          html += `<div class="field-row"><div class="field-label">Banner Size:</div><div class="field-value">${format.w || 0}x${format.h || 0}</div></div>`;
+        }
+        html += '</div>';
+      }
+
+      // Targeting Parameters Section
+      if (data.ext && data.ext.prebid && data.ext.prebid.TargetingParams) {
+        html += '<div class="response-section">';
+        html += '<h4>🎯 Targeting Parameters</h4>';
+        const params = data.ext.prebid.TargetingParams;
+        Object.keys(params).forEach(key => {
+          html += `<div class="field-row"><div class="field-label">${key}:</div><div class="field-value">${params[key]}</div></div>`;
+        });
+        html += '</div>';
+      }
+
+      return html;
+    }
+
+    // Format Response Function
+    function formatResponse(data) {
+      let html = '';
+
+      // Bid Information Section
+      if (data.seatbid && data.seatbid.length > 0 && data.seatbid[0].bid && data.seatbid[0].bid.length > 0) {
+        const bid = data.seatbid[0].bid[0];
+
+        html += '<div class="response-section">';
+        html += '<h4>📊 Bid Information</h4>';
+        html += `<div class="field-row"><div class="field-label">Bid ID:</div><div class="field-value">${bid.id || 'N/A'}</div></div>`;
+        html += `<div class="field-row"><div class="field-label">Impression ID:</div><div class="field-value">${bid.impid || 'N/A'}</div></div>`;
+        html += `<div class="field-row"><div class="field-label">Price:</div><div class="field-value price">$${bid.price || '0.00'} ${data.cur || 'USD'}</div></div>`;
+        html += `<div class="field-row"><div class="field-label">Creative ID:</div><div class="field-value">${bid.crid || 'N/A'}</div></div>`;
+        html += `<div class="field-row"><div class="field-label">Seat:</div><div class="field-value">${data.seatbid[0].seat || 'N/A'}</div></div>`;
+        html += '</div>';
+
+        // Ad Creative Section (Parse adm)
+        try {
+          const adm = JSON.parse(bid.adm);
+          html += '<div class="response-section">';
+          html += '<h4>🎨 Ad Creative (Parsed from adm)</h4>';
+          html += `<div class="field-row"><div class="field-label">Title:</div><div class="field-value">${adm.Title || 'N/A'}</div></div>`;
+          html += `<div class="field-row"><div class="field-label">Subtitle:</div><div class="field-value">${adm.Subtitle || 'N/A'}</div></div>`;
+          html += `<div class="field-row"><div class="field-label">CTA Button:</div><div class="field-value">${adm.CTAButton || 'N/A'}</div></div>`;
+          html += `<div class="field-row"><div class="field-label">Image URL:</div><div class="field-value url" onclick="window.open('${adm.ImageURL}', '_blank')">${adm.ImageURL || 'N/A'}</div></div>`;
+          html += `<div class="field-row"><div class="field-label">Click URL:</div><div class="field-value url" onclick="window.open('${adm.adClickURL}', '_blank')">${adm.adClickURL ? adm.adClickURL.substring(0, 80) + '...' : 'N/A'}</div></div>`;
+          html += '</div>';
+        } catch (e) {
+          html += '<div class="response-section">';
+          html += '<h4>🎨 Ad Creative (Raw adm)</h4>';
+          html += `<div class="field-row"><div class="field-value">${bid.adm}</div></div>`;
+          html += '</div>';
+        }
+
+        // Tracking URLs Section
+        html += '<div class="response-section">';
+        html += '<h4>📈 Tracking URLs</h4>';
+        html += `<div class="field-row"><div class="field-label">Billing URL (burl):</div><div class="field-value url" onclick="window.open('${bid.burl}', '_blank')">${bid.burl ? bid.burl.substring(0, 80) + '...' : 'N/A'}</div></div>`;
+        if (bid.ext && bid.ext.vurl) {
+          html += `<div class="field-row"><div class="field-label">View URL (vurl):</div><div class="field-value url" onclick="window.open('${bid.ext.vurl}', '_blank')">${bid.ext.vurl.substring(0, 80) + '...'}</div></div>`;
+        }
+        html += '</div>';
+
+      } else {
+        html += '<div class="response-section">';
+        html += '<h4>⚠️ No Bid</h4>';
+        html += '<div class="field-row"><div class="field-value">No ad returned in response</div></div>';
+        html += '</div>';
+      }
+
+      return html;
+    }
+
+    // Load Ad Function
+    async function loadAd() {
+      try {
+        loadAdBtn.disabled = true;
+        showStatus('Loading ad...', '');
+
+        // Make API request
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bidRequest),
+        });
+
+        if (!response.ok) {
+          throw new Error(`API returned status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        lastResponse = data;
+
+        // Display formatted response
+        responseFormatted.innerHTML = formatResponse(data);
+
+        // Display raw JSON with parsed adm field
+        const prettyData = JSON.parse(JSON.stringify(data)); // Deep clone
+        if (prettyData.seatbid && prettyData.seatbid.length > 0 &&
+          prettyData.seatbid[0].bid && prettyData.seatbid[0].bid.length > 0) {
+          const bid = prettyData.seatbid[0].bid[0];
+          if (bid.adm) {
+            try {
+              // Parse the adm string into an object for pretty display
+              bid.adm = JSON.parse(bid.adm);
+            } catch (e) {
+              // If adm is not valid JSON, leave it as-is
+            }
+          }
+        }
+        responseData.textContent = JSON.stringify(prettyData, null, 2);
+
+        // Parse and render ad
+        if (data.seatbid && data.seatbid.length > 0 && data.seatbid[0].bid && data.seatbid[0].bid.length > 0) {
+          const bid = data.seatbid[0].bid[0];
+          const adm = JSON.parse(bid.adm);
+
+          renderAd(adm);
+          showStatus('Ad loaded successfully! 🎉', 'success');
+        } else {
+          showStatus('No ad returned in response', 'error');
+        }
+
+      } catch (error) {
+        console.error('Error loading ad:', error);
+        showStatus(`Error: ${error.message}`, 'error');
+      } finally {
+        loadAdBtn.disabled = false;
+      }
+    }
+
+    // Render Ad Function
+    function renderAd(adData) {
+      document.getElementById('ad-title').textContent = adData.Title || '';
+      document.getElementById('ad-subtitle').textContent = adData.Subtitle || '';
+      document.getElementById('ad-cta').textContent = adData.CTAButton || 'Shop';
+      document.getElementById('ad-image').src = adData.ImageURL || '';
+      document.getElementById('ad-link').href = adData.adClickURL || '#';
+
+      adTile.classList.add('visible');
+    }
+
+    // Clear Ad Function
+    function clearAd() {
+      adTile.classList.remove('visible');
+      showStatus('Ad cleared', '');
+    }
+
+    // Show Status Message
+    function showStatus(message, type) {
+      statusMessage.textContent = message;
+      statusMessage.className = `status-message ${type}`;
+    }
+
+    // Toggle Request/Response Views
+    function toggleView(element) {
+      element.classList.toggle('visible');
+    }
+
+    // Event Listeners
+    loadAdBtn.addEventListener('click', loadAd);
+    clearAdBtn.addEventListener('click', clearAd);
+    toggleRequestBtn.addEventListener('click', () => toggleView(requestOutput));
+    toggleResponseBtn.addEventListener('click', () => toggleView(responseOutput));
+    toggleRawRequest.addEventListener('click', () => {
+      requestRaw.classList.toggle('visible');
+      toggleRawRequest.textContent = requestRaw.classList.contains('visible') ? 'Hide Raw JSON' : 'Show Raw JSON';
+    });
+    toggleRawJson.addEventListener('click', () => {
+      responseRaw.classList.toggle('visible');
+      toggleRawJson.textContent = responseRaw.classList.contains('visible') ? 'Hide Raw JSON' : 'Show Raw JSON';
+    });
+  </script>
+</body>
+
+</html>

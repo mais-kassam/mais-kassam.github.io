@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chocolate - Albertsons</title>
+  <script async src="https://commercecdn.pubmatic.com/convert/js/prebid/latest/prebid.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #fff;
+      color: #2e2f32;
+    }
+
+    .top-bar {
+      background: #f5f5f5;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 8px 0;
+    }
+
+    .top-bar-content {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .top-nav-link {
+      color: #666;
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    .top-nav-link:hover {
+      color: #007a8b;
+    }
+
+    .header {
+      background: white;
+      color: #2e2f32;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .sticky-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+    }
+
+    .header-main {
+      background: white;
+      padding: 12px 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      margin-right: 16px;
+    }
+
+    .search-container {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .search-wrapper {
+      display: flex;
+      background: white;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #ccc;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    .search-btn {
+      background: white;
+      border: none;
+      padding: 0 16px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #666;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .header-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #2e2f32;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .header-link:hover {
+      color: #007a8b;
+    }
+
+    .nav {
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 0;
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-item {
+      padding: 14px 16px;
+      color: #2e2f32;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: background 0.2s;
+      border-radius: 0;
+      background: white;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: #f8f8f8;
+      border-bottom: 3px solid #007a8b;
+    }
+
+    .nav-link {
+      color: #2e2f32;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+
+    .promo-banner {
+      background: #2d5f2e;
+      color: white;
+      padding: 12px 0;
+      font-size: 14px;
+    }
+
+    .promo-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .banner-ad-container {
+      background: #f4f4f4;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      position: relative;
+      min-height: 250px;
+      padding: 20px 0;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    div[id="2150_Sponsored_Leaderboard_(3_products)"] {
+      width: 100%;
+      max-width: 1400px;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    div[id="2150_Sponsored_Leaderboard_(3_products)"] iframe {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 300px !important;
+      display: block;
+      border: none;
+      overflow: visible;
+    }
+
+    .breadcrumb {
+      padding: 16px 0;
+      font-size: 14px;
+      color: #74767c;
+    }
+
+    .breadcrumb a {
+      color: #007a8b;
+      text-decoration: none;
+    }
+
+    .main-content {
+      padding: 24px 0;
+      display: flex;
+      gap: 24px;
+    }
+
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    .selected-filters {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #e6e6e6;
+    }
+
+    .selected-filters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .selected-filters-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2e2f32;
+    }
+
+    .clear-all-btn {
+      background: none;
+      border: none;
+      color: #007a8b;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .clear-all-btn:hover {
+      text-decoration: underline;
+    }
+
+    .filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #e0f2f1;
+      border: 1px solid #007a8b;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 14px;
+      color: #2e2f32;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .filter-tag-close {
+      background: none;
+      border: none;
+      color: #007a8b;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .filter-tag-close:hover {
+      color: #005f6b;
+    }
+
+    .filters-container {
+      background: white;
+      border: 1px solid #e6e6e6;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .content-area {
+      flex: 1;
+    }
+
+    .filter-group {
+      margin-bottom: 0;
+      border-bottom: 1px solid #e6e6e6;
+      padding: 0;
+      background: white;
+    }
+
+    .filter-group:last-child {
+      border-bottom: none;
+    }
+
+    .filter-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2e2f32;
+      cursor: pointer;
+      padding: 16px 16px;
+      margin: 0;
+      transition: background 0.2s;
+    }
+
+    .filter-title:hover {
+      background: #f8f8f8;
+    }
+
+    .filter-arrow {
+      font-size: 10px;
+      transition: transform 0.2s;
+      color: #74767c;
+    }
+
+    .filter-options {
+      padding: 0 16px 16px 16px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .filter-options.active {
+      max-height: 500px;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 14px;
+      color: #2e2f32;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin: 0 -4px;
+      padding-left: 4px;
+      border-radius: 4px;
+    }
+
+    .filter-option:hover {
+      background: #f8f8f8;
+    }
+
+    .filter-checkbox {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      cursor: pointer;
+      accent-color: #007a8b;
+    }
+
+    .page-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e6e6e6;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2e2f32;
+      margin-bottom: 8px;
+    }
+
+    .results-info {
+      color: #74767c;
+      font-size: 14px;
+    }
+
+    .filter-section {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: white;
+      border: 1px solid #c4c4c4;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #007a8b;
+      background: #f4f4f4;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .product-card {
+      background: white;
+      border: none;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner-ad-wrapper {
+      grid-column: 1 / -1;
+      background: #f4f4f4;
+      padding: 0;
+      border-radius: 12px;
+      display: block;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #2151_InContent_AdUnit {
+      width: 100% !important;
+      height: 180px !important;
+      overflow: hidden !important;
+      position: relative !important;
+      display: block !important;
+      line-height: 0 !important;
+    }
+
+    #2151_InContent_AdUnit iframe {
+      width: 100% !important;
+      height: 180px !important;
+      display: block !important;
+      border: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      vertical-align: bottom !important;
+    }
+
+    .rollback-badge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #d32f2f;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 0 0 8px 0;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      z-index: 5;
+    }
+
+    .favorite-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      background: white;
+      border: 1px solid #e6e6e6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 16px;
+    }
+
+    .favorite-btn:hover {
+      background: #f8f8f8;
+    }
+
+    .product-image-container {
+      position: relative;
+      background: white;
+      padding: 20px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .product-info {
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .options-btn {
+      width: auto;
+      background: #005a9c;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+    }
+
+    .options-btn:hover {
+      background: #004173;
+    }
+
+    .sponsored-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #74767c;
+      padding: 0;
+      margin-bottom: 4px;
+    }
+
+    .info-icon {
+      font-size: 12px;
+      cursor: pointer;
+      color: #74767c;
+    }
+
+    .product-price-row {
+      display: block;
+      margin-bottom: 6px;
+      line-height: 1.2;
+      width: 100%;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2e2f32;
+      display: inline;
+      line-height: 1;
+    }
+
+    .price-dollars {
+      font-size: 12px;
+      line-height: 1;
+      vertical-align: top;
+    }
+
+    .price-whole {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    sup.price-cents {
+      font-size: 12px;
+      top: 0;
+      line-height: 1;
+    }
+
+    .price-strikethrough {
+      font-size: 11px;
+      color: #999;
+      text-decoration: line-through;
+      font-weight: 400;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .product-unit-price {
+      font-size: 11px;
+      color: #74767c;
+      font-weight: 400;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .product-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: #2e2f32;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      min-height: 2.6em;
+      margin-top: 4px;
+    }
+
+    .snap-badge {
+      display: inline-block;
+      background: #fff9c4;
+      border: 1px solid #f9a825;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      color: #2e2f32;
+      margin-right: 4px;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .add-btn {
+      width: auto;
+      background: #005a9c;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+    }
+
+    .add-btn:hover {
+      background: #004173;
+    }
+
+    .footer {
+      background: #f4f4f4;
+      padding: 40px 0 20px;
+      margin-top: 60px;
+      border-top: 1px solid #e6e6e6;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2e2f32;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+
+    .footer-section a {
+      color: #74767c;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #e6e6e6;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #74767c;
+    }
+
+    .dev-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      min-width: 280px;
+      border: 2px solid #007a8b;
+    }
+
+    .dev-controls h3 {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #007a8b;
+      border-bottom: 2px solid #ff6b35;
+      padding-bottom: 8px;
+    }
+
+    .dev-controls button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px 16px;
+      background: #005a9c;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .dev-controls button:hover {
+      background: #004173;
+    }
+
+    .dev-controls button.danger {
+      background: #d32f2f;
+    }
+
+    .dev-controls button.secondary {
+      background: #74767c;
+    }
+
+    #devStatus {
+      margin-top: 12px;
+      font-size: 13px;
+      padding: 10px;
+      border-radius: 4px;
+      background: #f4f4f4;
+    }
+
+    .tracking-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      max-width: 400px;
+      border-left: 4px solid #007a8b;
+    }
+
+    .tracking-notification h4 {
+      margin-bottom: 10px;
+      color: #2e2f32;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .tracking-notification p {
+      margin: 5px 0;
+      font-size: 13px;
+      color: #74767c;
+    }
+
+    .tracking-notification .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #74767c;
+      cursor: pointer;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 8px;
+      max-width: 900px;
+      width: 90%;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      background: #005a9c;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-section {
+      margin-bottom: 30px;
+    }
+
+    .modal-section h3 {
+      color: #007a8b;
+      margin-bottom: 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .modal-section pre {
+      background: #2e2f32;
+      color: #f4f4f4;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      max-height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <iframe src="https://commercecdn.pubmatic.com/convert/js/v1/latest/cookieSync.html?p=161" width="0" height="0"
+    style="display:none;"></iframe>
+
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-content">
+        <a href="#" class="top-nav-link">Grocery</a>
+        <a href="#" class="top-nav-link">Health</a>
+        <a href="#" class="top-nav-link">Pharmacy</a>
+        <a href="#" class="top-nav-link">For Business</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky-wrapper">
+    <header class="header">
+      <div class="header-main">
+        <div class="container">
+          <div class="header-content">
+            <a href="#" class="logo">
+              <img src="albertsons-logo.png" alt="Albertsons" style="height: 28px; width: auto;"
+                onerror="this.style.display='none'">
+            </a>
+            <div class="search-container">
+              <div class="search-wrapper">
+                <input type="text" class="search-input" placeholder="Search products">
+                <button class="search-btn">🔍</button>
+              </div>
+            </div>
+            <div class="header-actions">
+              <a href="#" class="header-link">Sign in 👤</a>
+              <a href="#" class="header-link">🛒</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <div class="container">
+        <div class="nav-content">
+          <a href="#" class="nav-item">Fresh</a>
+          <a href="#" class="nav-item">Pantry</a>
+          <a href="#" class="nav-item">Beverages</a>
+          <a href="#" class="nav-item">Frozen</a>
+          <a href="#" class="nav-item">Household</a>
+          <a href="#" class="nav-item">Recipes</a>
+          <a href="#" class="nav-item">Shop more</a>
+          <a href="#" class="nav-item">Halloween 🎃</a>
+        </div>
+        <div class="nav-right">
+          <a href="#" class="nav-link">Albertsons for U</a>
+          <a href="#" class="nav-link" style="color: #0066cc;">Weekly Ad</a>
+          <a href="#" class="nav-link">Meals Hub</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="promo-banner">
+      <div class="container">
+        <div class="promo-content">
+          <span>Introducing for U™ Travel powered by Expedia</span>
+          <span style="margin: 0 20px;">Book with for U Travel and earn up to 5% cashback to spend on groceries.</span>
+          <a href="#" style="color: white; text-decoration: underline;">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner-ad-container">
+    <script async src="https://commercecdn.pubmatic.com/convert/js/prebid/latest/prebid.js"></script>
+    <iframe src="https://commercecdn.pubmatic.com/convert/js/v1/latest/cookieSync.html?p=161" width="1600" height="200"
+      style="display:none;"></iframe>
+    <script>
+      var cnvrtpbjs = cnvrtpbjs || {};
+      cnvrtpbjs.que = cnvrtpbjs.que || [];
+
+      var customkeys = { TargetingParams: {} };
+
+      cnvrtpbjs.que.push(function () {
+        var CNVRTPWT = window.CNVRTPWT || {};
+        var obj = {
+          adUnits: [{
+            code: '2150_Sponsored_Leaderboard_(3_products)',
+            ortb2Imp: {
+              tagid: '2150',
+              ext: {}
+            },
+            mediaTypes: {
+              banner: {
+                sizes: [
+                  [0, 0]
+                ]
+              }
+            }
+          }],
+          publisherId: '161',
+          accountId: '161',
+          timeout: 1000,
+          adapter: 'prebidServer',
+          endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+          extPrebid: customkeys
+        }
+        CNVRTPWT.requestConvertServer(obj);
+        cnvrtpbjs.requestBids({
+          timeout: 2000,
+          bidsBackHandler: CNVRTPWT.renderAllAdUnits
+        });
+      });
+    </script>
+    <div id=2150_Sponsored_Leaderboard_(3_products)>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="#">Home</a> / <a href="#">Food</a> / <span>Chocolate</span>
+    </div>
+
+    <main class="main-content">
+      <aside class="sidebar">
+        <div class="selected-filters">
+          <div class="selected-filters-header">
+            <h3 class="selected-filters-title">Selected filters</h3>
+            <button class="clear-all-btn">Clear all</button>
+          </div>
+          <div class="filter-tag">
+            Rollback
+            <button class="filter-tag-close">×</button>
+          </div>
+        </div>
+
+        <div class="filters-container">
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Price <span class="filter-arrow">▼</span></div>
+            <div class="filter-options">
+              <label class="filter-option"><input type="checkbox" class="filter-checkbox"><span>$0 - $5</span></label>
+              <label class="filter-option"><input type="checkbox" class="filter-checkbox"><span>$5 - $10</span></label>
+              <label class="filter-option"><input type="checkbox" class="filter-checkbox"><span>$10+</span></label>
+            </div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Brand <span class="filter-arrow">▼</span></div>
+            <div class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Fulfillment Speed <span class="filter-arrow">▼</span>
+            </div>
+            <div class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Customer Rating <span class="filter-arrow">▼</span>
+            </div>
+            <div class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Color <span class="filter-arrow">▼</span></div>
+            <div class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Special Offers <span class="filter-arrow">▼</span>
+            </div>
+            <div class="filter-options">
+              <label class="filter-option"><input type="checkbox" class="filter-checkbox"
+                  checked><span>Rollback</span></label>
+            </div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Availability <span class="filter-arrow">▼</span>
+            </div>
+            <div class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Departments <span class="filter-arrow">▼</span></div>
+            <div class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Retailer <span class="filter-arrow">▼</span></div>
+            <div class="filter-options"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title" onclick="toggleFilter(this)">Benefit Programs <span class="filter-arrow">▼</span>
+            </div>
+            <div class="filter-options"></div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="content-area">
+        <div class="page-header">
+          <h1 class="page-title">Chocolate</h1>
+          <p class="results-info" id="resultsInfo">Loading...</p>
+        </div>
+
+        <div class="filter-section">
+          <button class="filter-btn">⚙️ Filter</button>
+          <button class="filter-btn">Sort by: Best match ▾</button>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Get to Know Us</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2025 Albertsons Companies, Inc. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <div class="dev-controls">
+    <h3>Demo Controls</h3>
+    <button onclick="loadAllSponsoredAds()">⭐ Load All Sponsored Ads</button>
+    <button onclick="removeAllSponsoredAds()" class="danger">❌ Remove Sponsored Ads</button>
+    <button onclick="showApiModal()" class="secondary">📊 View API Data</button>
+    <div id="devStatus"></div>
+  </div>
+
+  <div class="modal-overlay" id="apiModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>API Request & Response</h2>
+        <button class="modal-close" onclick="closeApiModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Request</h3>
+          <pre id="requestPayloadDisplay"></pre>
+        </div>
+        <div class="modal-section">
+          <h3>Response</h3>
+          <pre id="responsePayloadDisplay"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var cnvrtpbjs = cnvrtpbjs || {};
+    cnvrtpbjs.que = cnvrtpbjs.que || [];
+    var customkeys = { TargetingParams: {} };
+
+    var API_BASE_URL = 'http://localhost:3000';
+    var API_ENDPOINT = API_BASE_URL + '/api/sponsored-products';
+
+    var regularProducts = [
+      { name: "Cadbury Dairy Milk", weight: "180g", price: 2.00, unitPrice: "£1.11/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/3bd7f6c1-5a5e-4398-9e61-b36e9cf4613f/69e6cf05-0e0c-4982-b832-cf4478363a27_1886886017.jpeg?h=225&w=225" },
+      { name: "Haribo Starmix", weight: "160g", price: 1.00, unitPrice: "62.5p/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/412e4969-d453-4df1-9092-f06eea52c22e/f23e202e-cfef-49b3-9769-143702e23484_1851323003.jpeg?h=225&w=225", offer: "Rollback" },
+      { name: "Mars Bar Multipack", weight: "4 pack", price: 1.25, unitPrice: "31.3p/bar", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/5df26560-b735-492b-9cc7-e581c8fa7fa4/fbd67564-4613-4e13-91c0-43e7dff5bf7b_1547154140.jpeg?h=225&w=225" },
+      { name: "Maltesers", weight: "175g", price: 2.00, unitPrice: "£1.14/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/d6dfce56-3107-4f8a-82c3-a53923b0bee0/e822c7c5-1832-4007-8a00-7b7110aaa350_1465237953.jpeg?h=225&w=225" },
+      { name: "Skittles Original", weight: "152g", price: 1.00, unitPrice: "65.8p/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/5f1b0e11-e4a4-48a1-b318-0ac655ce0f17/6979be20-0102-46cd-a366-f7da0083c748_827477553.jpeg?h=225&w=225", offer: "Popular Pick" },
+      { name: "Galaxy Smooth Milk", weight: "200g", price: 2.50, unitPrice: "£1.25/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/d2441e20-a3cf-433b-a711-6fe15daa9018/c59fdc20-b0da-40d0-a14b-fdeb904a4d6e_138061775.jpeg?h=225&w=225" },
+      { name: "Lindt Lindor Milk", weight: "200g", price: 5.00, unitPrice: "£2.50/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/6579c98a-0a25-44a9-94d2-f7c2aba0ac9e/4ad6efdf-beb7-4300-941e-06babe60ab4d_443898002.jpeg?h=225&w=225" },
+      { name: "Terry's Chocolate Orange", weight: "147g", price: 2.00, unitPrice: "£1.36/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/3d32ef92-c707-4823-9e67-373665eca6d3/3a233ba1-53a9-4a89-afe0-f351b94d8974_2125721967.jpeg?h=225&w=225" },
+      { name: "Galaxy Minstrels Milk Chocolate", weight: "147g", price: 1.70, unitPrice: "£1.01/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/a7f2e650-665c-478f-a7fe-f3290548f996/312e2ffd-6b65-42b1-8140-ae7955970908_512112746.jpeg?h=960&w=960" }
+    ];
+
+    var requestPayload = {
+      id: "BidRequestIDd_01_00234",
+      site: { id: "commercepartner_abc", domain: "www.commercepartner_abc.com", publisher: { id: "161" }, ext: { page_name: "" } },
+      tmax: 50000,
+      device: {},
+      user: { id: "eedww123qed121212413321unique" },
+      imp: [{ id: "ImpID1331", bidfloor: 0.01, ext: { commerce: { slots_requested: 1, preferred: [{ pid: "18" }], targeting: [{ name: "keyword", value: "chocolate" }] } } }]
+    };
+
+    var sponsoredProduct = null;
+    var bannerAdLoaded = false;
+    var apiResponse = null;
+
+    window.addEventListener('DOMContentLoaded', function () {
+      loadStandardProducts();
+
+      var filterGroups = document.querySelectorAll('.filter-group');
+      filterGroups.forEach(function (group) {
+        var title = group.querySelector('.filter-title');
+        if (title && title.textContent.includes('Special Offers')) {
+          var options = title.nextElementSibling;
+          options.classList.add('active');
+          title.querySelector('.filter-arrow').textContent = '▲';
+        }
+      });
+    });
+
+    function loadStandardProducts() {
+      var grid = document.getElementById('productGrid');
+      var resultsInfo = document.getElementById('resultsInfo');
+      var devStatus = document.getElementById('devStatus');
+
+      grid.innerHTML = '';
+
+      for (var i = 0; i < regularProducts.length; i++) {
+        grid.appendChild(createProductCard(regularProducts[i]));
+      }
+
+      resultsInfo.textContent = regularProducts.length + ' results';
+      devStatus.innerHTML = '✅ Standard products loaded';
+      devStatus.style.color = '#007a8b';
+    }
+
+    function loadAllSponsoredAds() {
+      var devStatus = document.getElementById('devStatus');
+      devStatus.innerHTML = '⏳ Loading sponsored ads...';
+      devStatus.style.color = '#ff9800';
+
+      fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestPayload)
+      })
+        .then(function (response) {
+          if (response.ok) return response.json();
+          throw new Error('HTTP error ' + response.status);
+        })
+        .then(function (data) {
+          apiResponse = data;
+          if (data.seatbid && data.seatbid.length > 0) {
+            for (var i = 0; i < data.seatbid.length; i++) {
+              var seatbid = data.seatbid[i];
+              for (var j = 0; j < seatbid.bid.length; j++) {
+                var bid = seatbid.bid[j];
+                if (bid.ext && bid.ext.productid === "18") {
+                  sponsoredProduct = {
+                    name: "Kinder Bueno Milk Chocolate & Hazelnut",
+                    weight: "1.5 oz, 6 pack",
+                    price: 4.98,
+                    unitPrice: "55.3¢/oz",
+                    image: "https://assets.sainsburys-groceries.co.uk/gol/7455488/1/640x640.jpg",
+                    isSponsored: true,
+                    bid: bid
+                  };
+
+                  bannerAdLoaded = true;
+                  loadInContentBannerAd();
+
+                  renderProducts();
+                  fireImpressionTracking(bid.nurl, bid.id);
+                  devStatus.innerHTML = '✅ All sponsored ads loaded!';
+                  devStatus.style.color = '#007a8b';
+                }
+              }
+            }
+          }
+        })
+        .catch(function (error) {
+          devStatus.innerHTML = '❌ Error: ' + error.message;
+          devStatus.style.color = '#d32f2f';
+        });
+    }
+
+    function loadInContentBannerAd() {
+      cnvrtpbjs.que.push(function () {
+        var CNVRTPWT = window.CNVRTPWT || {};
+        var obj = {
+          adUnits: [{
+            code: '2151_InContent_AdUnit',
+            ortb2Imp: {
+              tagid: '2151',
+              ext: {}
+            },
+            mediaTypes: {
+              banner: {
+                sizes: [[0, 0]]
+              }
+            }
+          }],
+          publisherId: '161',
+          accountId: '161',
+          timeout: 1000,
+          adapter: 'prebidServer',
+          endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+          extPrebid: customkeys
+        }
+        CNVRTPWT.requestConvertServer(obj);
+        cnvrtpbjs.requestBids({
+          timeout: 2000,
+          bidsBackHandler: CNVRTPWT.renderAllAdUnits
+        });
+      });
+
+      setTimeout(function () {
+        var adContainer = document.getElementById('2151_InContent_AdUnit');
+        if (adContainer) {
+          var observer = new MutationObserver(function () {
+            var iframe = adContainer.querySelector('iframe');
+            if (iframe) {
+              iframe.style.width = '100%';
+              iframe.style.height = '180px';
+              iframe.style.display = 'block';
+              iframe.style.verticalAlign = 'bottom';
+            }
+          });
+          observer.observe(adContainer, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+        }
+      }, 100);
+    }
+
+    function removeAllSponsoredAds() {
+      var devStatus = document.getElementById('devStatus');
+      sponsoredProduct = null;
+      bannerAdLoaded = false;
+      renderProducts();
+      devStatus.innerHTML = '🗑️ Sponsored ads removed';
+      devStatus.style.color = '#74767c';
+    }
+
+    function renderProducts() {
+      var grid = document.getElementById('productGrid');
+      var resultsInfo = document.getElementById('resultsInfo');
+
+      grid.innerHTML = '';
+
+      if (sponsoredProduct) {
+        grid.appendChild(createProductCard(sponsoredProduct));
+
+        for (var i = 0; i < 3; i++) {
+          grid.appendChild(createProductCard(regularProducts[i]));
+        }
+
+        if (bannerAdLoaded) {
+          var bannerWrapper = document.createElement('div');
+          bannerWrapper.className = 'banner-ad-wrapper';
+          bannerWrapper.innerHTML = '<div id="2151_InContent_AdUnit"></div>';
+          grid.appendChild(bannerWrapper);
+        }
+
+        for (var i = 3; i < regularProducts.length; i++) {
+          grid.appendChild(createProductCard(regularProducts[i]));
+        }
+      } else {
+        for (var i = 0; i < regularProducts.length; i++) {
+          grid.appendChild(createProductCard(regularProducts[i]));
+        }
+      }
+
+      var totalProducts = regularProducts.length + (sponsoredProduct ? 1 : 0);
+      resultsInfo.textContent = totalProducts + ' results';
+    }
+
+    function createProductCard(product) {
+      var card = document.createElement('div');
+      card.className = 'product-card';
+
+      var rollbackBadge = product.offer === 'Rollback' ? '<div class="rollback-badge">⬇ Rollback</div>' : '';
+
+      var priceWhole = Math.floor(product.price);
+      var priceCents = Math.round((product.price - priceWhole) * 100);
+
+      var strikethrough = product.offer === 'Rollback' ? '<span class="price-strikethrough">$' + (product.price + 3.5).toFixed(2) + '</span>' : '';
+
+      card.innerHTML = rollbackBadge +
+        '<button class="favorite-btn">♡</button>' +
+        '<div class="product-image-container"><img src="' + product.image + '" alt="' + product.name + '" class="product-image"></div>' +
+        '<div class="product-info">' +
+        (!product.isSponsored ? '<button class="add-btn">Add</button>' : '') +
+        (product.isSponsored ? '<button class="options-btn">Options</button>' : '') +
+        (product.isSponsored ? '<div class="sponsored-label">Sponsored <span class="info-icon">ⓘ</span></div>' : '') +
+        '<div class="product-price-row">' +
+        '<span class="product-price"><span class="price-dollars">$</span><span class="price-whole">' + priceWhole + '</span><sup class="price-cents">' + (priceCents < 10 ? '0' : '') + priceCents + '</sup></span><br>' +
+        strikethrough +
+        '<span class="product-unit-price">' + product.unitPrice + '</span>' +
+        '</div>' +
+        '<div class="product-name">' + product.name + '</div>' +
+        (product.offer === 'Rollback' ? '<span class="snap-badge">1 of 2 chosen</span>' : '') +
+        (product.offer === 'Rollback' ? '<span class="snap-badge">1 of 2 chosen</span>' : '') +
+        '</div>';
+
+      if (product.isSponsored) {
+        card.dataset.bid = JSON.stringify(product.bid);
+      }
+
+      return card;
+    }
+
+    function handleAddToBasket(productName, isSponsored) {
+      if (isSponsored && sponsoredProduct && sponsoredProduct.bid) {
+        fireClickTracking(sponsoredProduct.bid.ext.curl, sponsoredProduct.bid.id, sponsoredProduct.bid.ext.clickprice);
+      }
+      alert('Added ' + productName + ' to your cart!');
+    }
+
+    function fireImpressionTracking(nurl, bidId) {
+      if (!nurl) return;
+      var img = new Image();
+      img.src = nurl;
+      showTrackingNotification('impression', bidId, nurl);
+    }
+
+    function fireClickTracking(curl, bidId, clickPrice) {
+      if (!curl) return;
+      var img = new Image();
+      img.src = curl;
+      showTrackingNotification('click', bidId, curl, clickPrice);
+    }
+
+    function showTrackingNotification(type, bidId, url, price) {
+      var existing = document.querySelectorAll('.tracking-notification');
+      for (var i = 0; i < existing.length; i++) {
+        existing[i].remove();
+      }
+
+      var notification = document.createElement('div');
+      notification.className = 'tracking-notification';
+
+      var title = type === 'impression' ? '👁️ Impression Tracked' : '🖱️ Click Tracked';
+      var priceInfo = price ? '<p><strong>Click Price:</strong> ' + price + '</p>' : '';
+
+      notification.innerHTML = '<button class="close-btn" onclick="this.parentElement.remove()">×</button>' +
+        '<h4>' + title + '</h4>' +
+        '<p><strong>Bid ID:</strong> ' + bidId + '</p>' + priceInfo +
+        '<p><strong>Tracking URL:</strong></p>' +
+        '<p style="font-size: 11px; word-break: break-all; color: #999;">' + url.substring(0, 100) + '...</p>';
+
+      document.body.appendChild(notification);
+
+      setTimeout(function () {
+        notification.style.opacity = '0';
+        setTimeout(function () { notification.remove(); }, 300);
+      }, 5000);
+    }
+
+    function showApiModal() {
+      var modal = document.getElementById('apiModal');
+      var requestDisplay = document.getElementById('requestPayloadDisplay');
+      var responseDisplay = document.getElementById('responsePayloadDisplay');
+
+      requestDisplay.textContent = JSON.stringify(requestPayload, null, 2);
+
+      if (apiResponse) {
+        responseDisplay.textContent = JSON.stringify(apiResponse, null, 2);
+      } else {
+        responseDisplay.textContent = 'No response yet. Load sponsored ads first.';
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeApiModal() {
+      document.getElementById('apiModal').classList.remove('active');
+    }
+
+    document.getElementById('apiModal').addEventListener('click', function (e) {
+      if (e.target === this) closeApiModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeApiModal();
+    });
+
+    function toggleFilter(element) {
+      var options = element.nextElementSibling;
+      var arrow = element.querySelector('.filter-arrow');
+      if (options.classList.contains('active')) {
+        options.classList.remove('active');
+        arrow.textContent = '▼';
+      } else {
+        options.classList.add('active');
+        arrow.textContent = '▲';
+      }
+    }
+  </script>
+</body>
+
+</html>

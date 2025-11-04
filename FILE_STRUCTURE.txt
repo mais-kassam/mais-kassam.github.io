@@ -1,0 +1,108 @@
+GITHUB.IO FILE STRUCTURE
+========================
+
+📁 your-username.github.io/
+│
+├── 📄 index.html                           ✅ PROVIDED
+├── 🖼️ pubmatic-logo-white.svg              ❌ YOU NEED TO ADD THIS
+│
+├── 📝 tvnordef-regular-webfont.woff2       ✅ PROVIDED
+├── 📝 tvnordef-bold.woff                   ✅ PROVIDED
+├── 📝 tvnordef-black-webfont.woff2         ✅ PROVIDED
+├── 📝 tvnordef-blackcon-webfont.woff2      ✅ PROVIDED
+│
+├── 📁 albertsons-demo/                     ⬅️ DROP YOUR ALBERTSONS PROJECT HERE
+│   ├── 📄 index.html                       (must have this)
+│   └── [all project files]
+│
+├── 📁 coop-demo/                           ⬅️ DROP YOUR CO-OP PROJECT HERE
+│   ├── 📄 index.html                       (must have this)
+│   └── [all project files]
+│
+├── 📁 grocery-site/                        ⬅️ DROP YOUR GROCERY SITE PROJECT HERE
+│   ├── 📄 index.html                       (must have this)
+│   └── [all project files]
+│
+├── 📁 pubmatic-demo/                       ⬅️ DROP YOUR PUBMATIC PROJECT HERE
+│   ├── 📄 index.html                       (must have this)
+│   └── [all project files]
+│
+├── 📁 pubmatic-video-demo/                 ⬅️ DROP YOUR PUBMATIC VIDEO PROJECT HERE
+│   ├── 📄 index.html                       (must have this)
+│   └── [all project files]
+│
+├── 📁 tesco-demo/                          ⬅️ DROP YOUR TESCO PROJECT HERE
+│   ├── 📄 index.html                       (must have this)
+│   └── [all project files]
+│
+├── 📁 uber-demo/                           ⬅️ DROP YOUR UBER PROJECT HERE
+│   ├── 📄 index.html                       (must have this)
+│   └── [all project files]
+│
+└── 📁 walmart-demo/                        ⬅️ DROP YOUR WALMART PROJECT HERE
+    ├── 📄 index.html                       (must have this)
+    └── [all project files]
+
+
+QUICK START CHECKLIST
+=====================
+
+Step 1: Create/Clone your-username.github.io repository
+Step 2: Copy these 5 files to ROOT:
+   ✅ index.html
+   ✅ tvnordef-regular-webfont.woff2
+   ✅ tvnordef-bold.woff
+   ✅ tvnordef-black-webfont.woff2
+   ✅ tvnordef-blackcon-webfont.woff2
+
+Step 3: Add PubMatic logo to ROOT:
+   ❌ pubmatic-logo-white.svg (you need this)
+
+Step 4: Create 8 folders in ROOT:
+   📁 albertsons-demo/
+   📁 coop-demo/
+   📁 grocery-site/
+   📁 pubmatic-demo/
+   📁 pubmatic-video-demo/
+   📁 tesco-demo/
+   📁 uber-demo/
+   📁 walmart-demo/
+
+Step 5: Copy each demo project INTO its corresponding folder
+   - Make sure each folder has index.html as entry point
+   - Keep all demo files together in their folder
+
+Step 6: Push to GitHub
+   git add .
+   git commit -m "Add commerce media demos"
+   git push origin main
+
+Step 7: Visit your site!
+   https://your-username.github.io/
+
+
+URL STRUCTURE
+=============
+
+Main landing page:
+https://your-username.github.io/
+
+Individual demos:
+https://your-username.github.io/albertsons-demo/
+https://your-username.github.io/coop-demo/
+https://your-username.github.io/grocery-site/
+https://your-username.github.io/pubmatic-demo/
+https://your-username.github.io/pubmatic-video-demo/
+https://your-username.github.io/tesco-demo/
+https://your-username.github.io/uber-demo/
+https://your-username.github.io/walmart-demo/
+
+
+IMPORTANT NOTES
+===============
+
+✓ All folder names MUST match exactly (lowercase, with hyphens)
+✓ Each demo folder MUST have index.html as entry point
+✓ All files go in ROOT except demo projects (which go in their folders)
+✓ Logo must be white/light for dark background
+✓ Font files must be in root directory (same level as index.html)

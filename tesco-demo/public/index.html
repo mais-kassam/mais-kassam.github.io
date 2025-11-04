@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tesco Online Groceries</title>
+  <script async src="https://commercecdn.pubmatic.com/convert/js/prebid/latest/prebid.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: white;
+      color: #333;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: #0050aa;
+      padding: 8px 0;
+      font-size: 0.875rem;
+    }
+
+    .top-bar-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+    }
+
+    .top-bar a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .top-bar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header */
+    .header {
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .logo {
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .logo img {
+      height: 110px;
+      width: auto;
+    }
+
+    .search-container {
+      flex: 1;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 50px 12px 16px;
+      border: 2px solid #ddd;
+      border-radius: 50px;
+      font-size: 1rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #00539F;
+    }
+
+    .search-btn {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #0050aa;
+      color: white;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .sign-in-btn {
+      background: white;
+      color: #0050aa;
+      border: 2px solid #0050aa;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .register-btn {
+      background: #0050aa;
+      color: white;
+      border: 2px solid #0050aa;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    /* Navigation */
+    .nav {
+      background: white;
+      border-bottom: 1px solid #e1e1e1;
+    }
+
+    .nav-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-item {
+      padding: 16px 20px;
+      color: #0073a8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-bottom: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      border-bottom-color: #0050aa;
+    }
+
+    .nav-item.active {
+      color: #0050aa;
+      border-bottom-color: #0050aa;
+    }
+
+    /* Sub Navigation */
+    .sub-nav {
+      background: #f0f0f0;
+      border-bottom: 1px solid #e1e1e1;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .sub-nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .sub-nav-item {
+      padding: 12px 16px;
+      color: #333;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+
+    .sub-nav-item:hover {
+      color: #0050aa;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .breadcrumb a {
+      color: #0073a8;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    /* Banner Ad */
+    .banner-ad {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding-right: 20px;
+      display: none;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .banner-ad.active {
+      display: block;
+    }
+
+    .banner-ad.visible {
+      opacity: 1;
+    }
+
+    #2215_Leaderboard_Header_Banner_Large {
+      width: 100% !important;
+      aspect-ratio: 8 / 1 !important;
+      display: block !important;
+      background: transparent;
+      border-radius: 8px;
+      overflow: hidden !important;
+      position: relative;
+    }
+
+    #2215_Leaderboard_Header_Banner_Large iframe {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+
+    /* Target the content inside the iframe */
+    #2215_Leaderboard_Header_Banner_Large iframe body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      overflow: hidden !important;
+    }
+
+    #2215_Leaderboard_Header_Banner_Large iframe img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+
+    #2215_Leaderboard_Header_Banner_Large iframe a {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    #2215_Leaderboard_Header_Banner_Large iframe div {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .page-header {
+      margin: 24px 0;
+    }
+
+    .page-title {
+      font-size: 1.75rem;
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .results-info {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    /* Category Pills */
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      transition: opacity 0.3s ease, max-height 0.3s ease;
+    }
+
+    .category-pills.hidden {
+      display: none;
+    }
+
+    .category-pill {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 10px 16px;
+      border-radius: 0;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-pill:hover {
+      border-color: #0050aa;
+      color: #0050aa;
+    }
+
+    /* Filters */
+    .filters-row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 16px 0;
+    }
+
+    .filter-btn {
+      background: #0050aa;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-select {
+      padding: 10px 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      background: white;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-bottom: 40px;
+      border-left: 1px solid #e1e1e1;
+      border-top: 1px solid #e1e1e1;
+    }
+
+    .product-card {
+      background: white;
+      border-right: 1px solid #e1e1e1;
+      border-bottom: 1px solid #e1e1e1;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Native Ad Wrapper - must be a proper grid item */
+    .native-ad-wrapper {
+      grid-column: 1 / -1;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border-bottom: 1px solid #e1e1e1;
+    }
+
+    /* The div that PubMatic injects into */
+    #2179_Sponsored_3x_product_-_Tesco_Test {
+      display: block !important;
+      width: 100% !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Target the iframe that PubMatic creates */
+    #2179_Sponsored_3x_product_-_Tesco_Test iframe,
+    iframe[id^="prebid_ads_iframe"] {
+      width: 100% !important;
+      height: 650px !important;
+      min-height: 650px !important;
+      display: block !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      max-width: none !important;
+    }
+
+    /* Force the native ad content to create its own subgrid (if directly injected) */
+    #2179_Sponsored_3x_product_-_Tesco_Test .tesco-native-ad {
+      display: grid !important;
+      grid-template-columns: 2fr 1fr 1fr 1fr !important;
+      gap: 0 !important;
+      width: 100% !important;
+      border-left: 1px solid #e1e1e1;
+      border-top: 1px solid #e1e1e1;
+    }
+
+    /* Native Ad Container from template (backup if not in iframe) */
+    .tesco-native-ad {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 0;
+      border-left: 1px solid #e1e1e1;
+      border-top: 1px solid #e1e1e1;
+    }
+
+    /* Ensure brand section spans correctly within the subgrid */
+    #2179_Sponsored_3x_product_-_Tesco_Test .tesco-brand-section {
+      grid-column: span 1 !important;
+      border-right: 1px solid #e1e1e1;
+      border-bottom: 1px solid #e1e1e1;
+    }
+
+    /* Ensure products span correctly */
+    #2179_Sponsored_3x_product_-_Tesco_Test .tesco-product-card {
+      grid-column: span 1 !important;
+      border-right: 1px solid #e1e1e1;
+      border-bottom: 1px solid #e1e1e1;
+    }
+
+    /* Brand Section from template */
+    .tesco-brand-section {
+      background: #f8f9fa;
+      border-right: 1px solid #e1e1e1;
+      border-bottom: 1px solid #e1e1e1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+    }
+
+    .sponsored-label {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: #0050aa;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-logo {
+      max-width: 140px;
+      height: auto;
+      margin-bottom: 24px;
+    }
+
+    .brand-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #2e2f32;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .brand-body {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      max-width: 400px;
+    }
+
+    .brand-cta {
+      display: inline-block;
+      background: #0050aa;
+      color: white;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .brand-cta:hover {
+      background: #003d80;
+      transform: translateY(-1px);
+    }
+
+    /* Product Cards in Native Ad */
+    .tesco-product-card {
+      background: white;
+      border-right: 1px solid #e1e1e1;
+      border-bottom: 1px solid #e1e1e1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .tesco-product-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    /* Sponsored Badge */
+    .sponsored-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #0050aa;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 10;
+    }
+
+    .product-image-container {
+      position: relative;
+      background: white;
+      padding: 24px;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .product-info {
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .product-name {
+      font-size: 0.95rem;
+      color: #0073a8;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      min-height: 2.8em;
+      font-weight: 400;
+      text-decoration: none;
+    }
+
+    .product-name:hover {
+      text-decoration: underline;
+    }
+
+    .product-weight {
+      font-size: 0.85rem;
+      color: #757575;
+      margin-bottom: 8px;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+    }
+
+    .stars {
+      color: #0073a8;
+      letter-spacing: -1px;
+    }
+
+    .rating-count {
+      color: #333;
+      font-weight: 500;
+    }
+
+    .rating-reviews {
+      color: #757575;
+    }
+
+    .more-like-this {
+      color: #0073a8;
+      text-decoration: none;
+      font-size: 0.875rem;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .more-like-this:hover {
+      text-decoration: underline;
+    }
+
+    .clubcard-price {
+      background: #0050aa;
+      color: white;
+      padding: 0;
+      display: flex;
+      align-items: stretch;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .clubcard-badge {
+      background: #0050aa;
+      color: white;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .clubcard-offer {
+      background: #ffdd00;
+      color: #000;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .clubcard-arrow {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .offer-validity {
+      font-size: 0.75rem;
+      color: #757575;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .product-price-section {
+      margin-top: auto;
+    }
+
+    .product-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .product-unit-price {
+      font-size: 0.8rem;
+      color: #757575;
+      margin-bottom: 16px;
+    }
+
+    .add-to-basket {
+      width: 100%;
+      background: #0073a8;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
+
+    .add-to-basket:hover {
+      background: #005a87;
+    }
+
+    .tesco-product-card .add-to-basket {
+      background: #0050aa;
+    }
+
+    .tesco-product-card .add-to-basket:hover {
+      background: #003d80;
+    }
+
+    /* Offer Badge */
+    .offer-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #E31F26;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 10;
+    }
+
+    /* Main Container Layout */
+    .main-layout {
+      display: flex;
+      gap: 0;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 200px);
+    }
+
+    .content-area {
+      flex: 1;
+      min-width: 0;
+      border-right: 1px solid #e1e1e1;
+    }
+
+    /* Basket Sidebar */
+    .basket-sidebar {
+      width: 280px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+
+    .basket-header {
+      padding: 20px;
+      border-bottom: 1px solid #e1e1e1;
+    }
+
+    .basket-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .basket-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .basket-guide {
+      font-size: 0.85rem;
+      color: #757575;
+    }
+
+    .checkout-btn {
+      background: #0050aa;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 16px 20px;
+    }
+
+    .basket-empty {
+      padding: 40px 20px;
+      text-align: center;
+      color: #757575;
+    }
+
+    /* Dev Controls */
+    .dev-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      min-width: 250px;
+      border: 2px solid #0050aa;
+    }
+
+    .dev-controls h3 {
+      margin-bottom: 16px;
+      font-size: 1rem;
+      color: #0050aa;
+      border-bottom: 2px solid #0050aa;
+      padding-bottom: 8px;
+    }
+
+    .dev-controls button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px 14px;
+      background: #0050aa;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+
+    .dev-controls button:hover {
+      background: #003d80;
+    }
+
+    .dev-controls button.danger {
+      background: #E31F26;
+    }
+
+    .dev-controls button.danger:hover {
+      background: #c71920;
+    }
+
+    .dev-controls button.secondary {
+      background: #6c757d;
+    }
+
+    .dev-controls button.secondary:hover {
+      background: #5a6268;
+    }
+
+    #devStatus {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      padding: 10px;
+      border-radius: 4px;
+      background: #f8f9fa;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 12px;
+      max-width: 900px;
+      width: 90%;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      background: #0050aa;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      line-height: 1;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-section {
+      margin-bottom: 30px;
+    }
+
+    .modal-section h3 {
+      color: #0050aa;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .modal-section pre {
+      background: #2c3e50;
+      color: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      max-height: 400px;
+    }
+
+    /* Tracking Notification */
+    .tracking-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      max-width: 400px;
+      animation: slideIn 0.3s ease;
+      border-left: 4px solid #28a745;
+    }
+
+    .tracking-notification.click {
+      border-left-color: #007bff;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .tracking-notification h4 {
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 1rem;
+    }
+
+    .tracking-notification p {
+      margin: 5px 0;
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .tracking-notification .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+    }
+
+    /* Responsive adjustments for native ad */
+    @media (max-width: 1200px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .tesco-native-ad {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .tesco-brand-section {
+        grid-column: span 3;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tesco-native-ad {
+        grid-template-columns: 1fr;
+      }
+
+      .tesco-brand-section {
+        grid-column: span 1;
+      }
+
+      .tesco-product-card {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <iframe src="https://commercecdn.pubmatic.com/convert/js/v1/latest/cookieSync.html?p=161" width="0" height="0"
+    style="display:none;"></iframe>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <a href="#">Tesco Bank</a>
+      <a href="#">Tesco Mobile</a>
+      <a href="#">Delivery Saver</a>
+      <a href="#">Store locator</a>
+      <a href="#">Help</a>
+      <a href="#">Feedback</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-main">
+      <a href="#" class="logo">
+        <img src="/tesco-logo.png" alt="Tesco"
+          onerror="this.parentElement.innerHTML='<div style=\'color:#00539F;font-size:2rem;font-weight:bold;\'>TESCO</div>'">
+      </a>
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search">
+        <button class="search-btn">🔍</button>
+      </div>
+      <div class="header-actions">
+        <button class="sign-in-btn">Sign in</button>
+        <button class="register-btn">Register</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-main">
+      <a href="#" class="nav-item">All Departments</a>
+      <a href="#" class="nav-item active">Groceries & Essentials</a>
+      <a href="#" class="nav-item">My Favourites</a>
+      <a href="#" class="nav-item">Special Offers</a>
+      <a href="#" class="nav-item">Tesco Clubcard</a>
+      <a href="#" class="nav-item">F&F Clothing</a>
+      <a href="#" class="nav-item">Price Cuts</a>
+      <a href="#" class="nav-item">Recipes</a>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="sub-nav">
+    <div class="sub-nav-content">
+      <a href="#" class="sub-nav-item">Marketplace</a>
+      <a href="#" class="sub-nav-item">Clothing & Accessories</a>
+      <a href="#" class="sub-nav-item">Halloween</a>
+      <a href="#" class="sub-nav-item">Fresh Food</a>
+      <a href="#" class="sub-nav-item">Bakery</a>
+      <a href="#" class="sub-nav-item">Frozen Food</a>
+      <a href="#" class="sub-nav-item">Treats & Snacks</a>
+      <a href="#" class="sub-nav-item">Food Cupboard</a>
+      <a href="#" class="sub-nav-item">Drinks</a>
+      <a href="#" class="sub-nav-item">Baby & Toddler</a>
+      <a href="#" class="sub-nav-item">Health & Beauty</a>
+      <a href="#" class="sub-nav-item">Pets</a>
+      <a href="#" class="sub-nav-item">More</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-layout">
+    <div class="content-area">
+      <!-- Banner Ad -->
+      <div class="banner-ad" id="bannerAdContainer">
+        <div id="2215_Leaderboard_Header_Banner_Large"></div>
+      </div>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title">Chocolate, Sweets, Mints & Chewing Gum</h1>
+        <p class="results-info" id="resultsInfo">Showing 1 to 24 of 838 items</p>
+      </div>
+
+      <!-- Category Pills -->
+      <div class="category-pills" id="categoryPills">
+        <div class="category-pill">📦 Chocolate, Sweets, Mints & Chewing Gum</div>
+        <div class="category-pill">🍫 Multipack Chocolate Bars</div>
+        <div class="category-pill">🎁 Chocolate Boxes & Gifts</div>
+        <div class="category-pill">🍫 Dark Chocolate</div>
+        <div class="category-pill">💼 Chocolate Pouches & Bags</div>
+        <div class="category-pill">🍬 Single Chocolate Bars & Sweets</div>
+        <div class="category-pill">🍫 Sharing Chocolate Bars</div>
+        <div class="category-pill">🍭 Traditional Sweets & Confectionery</div>
+      </div>
+
+      <!-- Filters Row -->
+      <div class="filters-row">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <button class="filter-btn">
+            <span>≡</span>
+            Filters
+          </button>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="color: #666; font-size: 0.95rem;">Sort by</span>
+            <select class="sort-select">
+              <option>Relevance</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Name: A to Z</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <div class="loading">Loading products...</div>
+      </div>
+    </div>
+
+    <!-- Basket Sidebar -->
+    <aside class="basket-sidebar">
+      <div class="basket-header">
+        <div class="basket-title">Basket</div>
+        <div class="basket-price">£0.00</div>
+        <div class="basket-guide">Guide price</div>
+      </div>
+      <button class="checkout-btn">Checkout</button>
+      <div style="padding: 20px; border-top: 1px solid #e1e1e1;">
+        <h3 style="font-size: 1rem; margin-bottom: 12px;">Groceries</h3>
+        <p style="color: #757575; font-size: 0.875rem; line-height: 1.5;">Reserve a slot for either home delivery or
+          collection</p>
+      </div>
+      <div class="basket-empty">
+        <div style="font-size: 3rem; margin-bottom: 16px;">🛒</div>
+        <h3 style="margin-bottom: 8px; font-size: 1.1rem;">Grocery basket empty</h3>
+        <p style="color: #757575; font-size: 0.875rem;">Products you add to your basket will appear here</p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Dev Controls -->
+  <div class="dev-controls">
+    <h3>🛠️ Demo Controls</h3>
+    <button onclick="loadBannerAd()">🎯 Load Banner Ad</button>
+    <button onclick="removeBannerAd()" class="danger">❌ Remove Banner</button>
+    <button onclick="loadSponsoredProduct()">⭐ Load Sponsored Product</button>
+    <button onclick="removeSponsoredProduct()" class="danger">❌ Remove Sponsored</button>
+    <button onclick="toggleNativeAd()" class="secondary">📰 Toggle Native Ad</button>
+    <button onclick="showApiModal()" class="secondary">📊 View API Data</button>
+    <div id="devStatus">Ready</div>
+  </div>
+
+  <!-- API Modal -->
+  <div class="modal-overlay" id="apiModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>API Request & Response</h2>
+        <button class="modal-close" onclick="closeApiModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Request Payload</h3>
+          <pre id="requestPayloadDisplay"></pre>
+        </div>
+        <div class="modal-section">
+          <h3>Response Data</h3>
+          <pre id="responsePayloadDisplay"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Native Ad Script -->
+  <script>
+    var cnvrtpbjs = cnvrtpbjs || {};
+    cnvrtpbjs.que = cnvrtpbjs.que || [];
+    var customkeys = { TargetingParams: {} };
+  </script>
+
+  <script>
+    const API_ENDPOINT = 'http://localhost:3000/api/sponsored-products';
+
+    const requestPayload = {
+      "id": "BidRequestIDd_01_00234",
+      "site": {
+        "id": "commercepartner_abc",
+        "domain": "www.commercepartner_abc.com",
+        "publisher": {
+          "id": "161"
+        }
+      },
+      "tmax": 50000,
+      "device": {},
+      "user": {
+        "id": "eedww123qed121212413321unique"
+      },
+      "imp": [{
+        "id": "ImpID1331",
+        "bidfloor": 0.01,
+        "ext": {
+          "commerce": {
+            "slots_requested": 1,
+            "preferred": [{
+              "pid": "18"
+            }],
+            "targeting": [{
+              "name": "keyword",
+              "value": "chocolate"
+            }]
+          }
+        }
+      }]
+    };
+
+    const regularProducts = [
+      { name: "Lindt Lindor Milk Chocolate Truffles Box", weight: "200g", price: 5.50, unitPrice: "£2.75/100g", rating: 4.8, reviews: 210, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/6579c98a-0a25-44a9-94d2-f7c2aba0ac9e/4ad6efdf-beb7-4300-941e-06babe60ab4d_443898002.jpeg?h=225&w=225" },
+      { name: "Lindt Lindor Assorted Chocolate Truffles", weight: "200G", price: 5.50, unitPrice: "£2.75/100g", rating: 4.1, reviews: 8, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/d6dfce56-3107-4f8a-82c3-a53923b0bee0/e822c7c5-1832-4007-8a00-7b7110aaa350_1465237953.jpeg?h=225&w=225" },
+      { name: "Maltesers Milk Chocolate Gift Box of Chocolates", weight: "310g", price: 4.00, unitPrice: "£1.29/100g", rating: 4.5, reviews: 106, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/5df26560-b735-492b-9cc7-e581c8fa7fa4/fbd67564-4613-4e13-91c0-43e7dff5bf7b_1547154140.jpeg?h=225&w=225" },
+      { name: "Ferrero Rocher Chocolate Pralines Gift Box 16 Pieces", weight: "200g", price: 5.50, unitPrice: "£2.75/100g", rating: 3.4, reviews: 7, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/d2441e20-a3cf-433b-a711-6fe15daa9018/c59fdc20-b0da-40d0-a14b-fdeb904a4d6e_138061775.jpeg?h=225&w=225" },
+      { name: "Ferrero Rocher Boxed Chocolates 24 Pieces", weight: "300g", price: 9.00, unitPrice: "£3.00/100g", rating: 4.4, reviews: 26, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/3bd7f6c1-5a5e-4398-9e61-b36e9cf4613f/69e6cf05-0e0c-4982-b832-cf4478363a27_1886886017.jpeg?h=225&w=225" },
+      { name: "Cadbury Dairy Milk Chocolate Bar", weight: "180g", price: 2.00, unitPrice: "£1.11/100g", rating: 4.7, reviews: 156, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/3bd7f6c1-5a5e-4398-9e61-b36e9cf4613f/69e6cf05-0e0c-4982-b832-cf4478363a27_1886886017.jpeg?h=225&w=225" },
+      { name: "Galaxy Smooth Milk Chocolate", weight: "200g", price: 2.50, unitPrice: "£1.25/100g", rating: 4.6, reviews: 89, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/d2441e20-a3cf-433b-a711-6fe15daa9018/c59fdc20-b0da-40d0-a14b-fdeb904a4d6e_138061775.jpeg?h=225&w=225" },
+      { name: "Terry's Chocolate Orange", weight: "147g", price: 2.00, unitPrice: "£1.36/100g", rating: 4.3, reviews: 72, image: "https://digitalcontent.api.tesco.com/v2/media/ghs/3d32ef92-c707-4823-9e67-373665eca6d3/3a233ba1-53a9-4a89-afe0-f351b94d8974_2125721967.jpeg?h=225&w=225" }
+    ];
+
+    let sponsoredProduct = null;
+    let apiResponse = null;
+    let showNativeAd = false;
+    let nativeAdInitialized = false;
+    let bannerAdLoaded = false;
+    let bannerEnforcing = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+    });
+
+    // Add resize handler to maintain banner aspect ratio
+    window.addEventListener('resize', () => {
+      if (bannerAdLoaded) {
+        enforceBannerDimensions();
+      }
+    });
+
+    function enforceBannerDimensions() {
+      // Prevent recursive calls
+      if (bannerEnforcing) return;
+      bannerEnforcing = true;
+
+      try {
+        const bannerDiv = document.getElementById('2215_Leaderboard_Header_Banner_Large');
+        const iframe = bannerDiv ? bannerDiv.querySelector('iframe') : null;
+
+        if (bannerDiv) {
+          // Calculate proper height based on 8:1 aspect ratio
+          const width = bannerDiv.offsetWidth;
+          const height = width / 8;
+
+          bannerDiv.style.cssText = `width: 100% !important; height: ${height}px !important; overflow: hidden !important; position: relative !important;`;
+        }
+
+        if (iframe) {
+          iframe.style.cssText = 'width: 100% !important; height: 100% !important; display: block !important; border: none !important; margin: 0 !important; padding: 0 !important; position: absolute !important; top: 0 !important; left: 0 !important;';
+
+          // Try to inject CSS into iframe to ensure proper scaling
+          try {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            if (iframeDoc && iframeDoc.body) {
+              // Remove any existing injected styles first
+              const existingStyle = iframeDoc.getElementById('banner-scale-style');
+              if (existingStyle) {
+                existingStyle.remove();
+              }
+
+              const style = iframeDoc.createElement('style');
+              style.id = 'banner-scale-style';
+              style.textContent = `
+                body { 
+                  margin: 0 !important; 
+                  padding: 0 !important; 
+                  width: 100% !important; 
+                  height: 100% !important; 
+                  overflow: hidden !important;
+                }
+                img { 
+                  width: 100% !important; 
+                  height: 100% !important; 
+                  object-fit: contain !important; 
+                  display: block !important;
+                }
+                a { 
+                  display: block !important; 
+                  width: 100% !important; 
+                  height: 100% !important;
+                }
+                div { 
+                  margin: 0 !important; 
+                  padding: 0 !important;
+                }
+              `;
+              iframeDoc.head.appendChild(style);
+            }
+          } catch (e) {
+            // Cross-origin, can't access
+            console.log('Cannot inject styles into banner iframe (cross-origin)');
+          }
+        }
+      } finally {
+        bannerEnforcing = false;
+      }
+    }
+
+    function loadBannerAd() {
+      const devStatus = document.getElementById('devStatus');
+      const bannerContainer = document.getElementById('bannerAdContainer');
+      const categoryPills = document.getElementById('categoryPills');
+
+      if (bannerAdLoaded) {
+        devStatus.innerHTML = '⚠️ Banner already loaded';
+        devStatus.style.color = '#ffc107';
+        return;
+      }
+
+      devStatus.innerHTML = '⏳ Loading banner...';
+      devStatus.style.color = '#ffc107';
+
+      // Show the banner container (but keep it invisible initially)
+      bannerContainer.classList.add('active');
+
+      // Pre-enforce dimensions BEFORE loading ad to prevent flash
+      const bannerDiv = document.getElementById('2215_Leaderboard_Header_Banner_Large');
+      if (bannerDiv) {
+        const width = bannerDiv.offsetWidth || bannerContainer.offsetWidth;
+        const height = width / 8;
+        bannerDiv.style.cssText = `width: 100% !important; height: ${height}px !important; overflow: hidden !important; position: relative !important;`;
+      }
+
+      // Small delay to ensure dimensions are set before ad loads
+      setTimeout(() => {
+        // Initialize PubMatic banner ad
+        cnvrtpbjs.que.push(function () {
+          var CNVRTPWT = window.CNVRTPWT || {};
+          var obj = {
+            adUnits: [{
+              code: '2215_Leaderboard_Header_Banner_Large',
+              ortb2Imp: {
+                tagid: '2215',
+                ext: {}
+              },
+              mediaTypes: {
+                banner: {
+                  sizes: [[2560, 320]]
+                }
+              }
+            }],
+            publisherId: '161',
+            accountId: '161',
+            timeout: 1000,
+            adapter: 'prebidServer',
+            endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+            extPrebid: customkeys
+          }
+
+          console.log('Requesting banner ad...');
+          CNVRTPWT.requestConvertServer(obj);
+
+          cnvrtpbjs.requestBids({
+            timeout: 2000,
+            bidsBackHandler: function (bids) {
+              console.log('Banner ad bids received:', bids);
+              CNVRTPWT.renderAllAdUnits(bids);
+
+              // Enforce dimensions immediately as ad renders
+              enforceBannerDimensions();
+
+              // Multiple enforcement calls during load
+              setTimeout(() => enforceBannerDimensions(), 100);
+              setTimeout(() => enforceBannerDimensions(), 300);
+
+              // Check if banner loaded and make visible
+              setTimeout(() => {
+                const bannerDiv = document.getElementById('2215_Leaderboard_Header_Banner_Large');
+                const iframe = bannerDiv ? bannerDiv.querySelector('iframe') : null;
+
+                if (iframe || (bannerDiv && bannerDiv.innerHTML.length > 50)) {
+                  enforceBannerDimensions();
+
+                  // Make banner visible now that it's properly sized
+                  bannerContainer.classList.add('visible');
+
+                  // Hide category pills when banner is loaded
+                  if (categoryPills) {
+                    categoryPills.classList.add('hidden');
+                  }
+
+                  devStatus.innerHTML = '✅ Banner ad loaded!';
+                  devStatus.style.color = '#28a745';
+                  bannerAdLoaded = true;
+
+                  // Final enforcement
+                  setTimeout(() => enforceBannerDimensions(), 500);
+                } else {
+                  devStatus.innerHTML = '⚠️ No banner ad returned';
+                  devStatus.style.color = '#E31F26';
+                  bannerContainer.classList.add('visible'); // Show even if no ad
+                }
+              }, 600);
+            }
+          });
+        });
+      }, 50);
+    }
+
+    function removeBannerAd() {
+      const devStatus = document.getElementById('devStatus');
+      const bannerContainer = document.getElementById('bannerAdContainer');
+      const bannerDiv = document.getElementById('2215_Leaderboard_Header_Banner_Large');
+      const categoryPills = document.getElementById('categoryPills');
+
+      // Hide container
+      bannerContainer.classList.remove('active', 'visible');
+
+      // Clear content
+      if (bannerDiv) {
+        bannerDiv.innerHTML = '';
+      }
+
+      // Show category pills again
+      if (categoryPills) {
+        categoryPills.classList.remove('hidden');
+      }
+
+      bannerAdLoaded = false;
+      devStatus.innerHTML = '🗑️ Banner removed';
+      devStatus.style.color = '#666';
+    }
+
+    async function loadSponsoredProduct() {
+      const devStatus = document.getElementById('devStatus');
+      devStatus.innerHTML = '⏳ Loading...';
+      devStatus.style.color = '#ffc107';
+
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestPayload)
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          apiResponse = data;
+          console.log('API Response:', data);
+
+          if (data.seatbid && data.seatbid.length > 0) {
+            data.seatbid.forEach(seatbid => {
+              seatbid.bid.forEach(bid => {
+                if (bid.ext && bid.ext.productid === "18") {
+                  sponsoredProduct = {
+                    name: "Kinder Bueno Milk Chocolate & Hazelnut Bar",
+                    weight: "43g x 6 pack",
+                    price: 3.50,
+                    unitPrice: "£1.36/100g",
+                    rating: 4.8,
+                    reviews: 234,
+                    image: "https://assets.sainsburys-groceries.co.uk/gol/7455488/1/640x640.jpg",
+                    isSponsored: true,
+                    bid: bid
+                  };
+
+                  renderProducts();
+                  fireImpressionTracking(bid.nurl, bid.id);
+
+                  devStatus.innerHTML = '✅ Sponsored product loaded!';
+                  devStatus.style.color = '#28a745';
+
+                  // Enforce banner dimensions after sponsored product loads
+                  if (bannerAdLoaded) {
+                    setTimeout(() => enforceBannerDimensions(), 100);
+                    setTimeout(() => enforceBannerDimensions(), 300);
+                  }
+                }
+              });
+            });
+
+            if (!sponsoredProduct) {
+              devStatus.innerHTML = '⚠️ No sponsored product';
+              devStatus.style.color = '#E31F26';
+            }
+          } else {
+            devStatus.innerHTML = '⚠️ No bids returned';
+            devStatus.style.color = '#E31F26';
+          }
+        } else {
+          throw new Error(`HTTP ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        devStatus.innerHTML = `❌ Error: ${error.message}`;
+        devStatus.style.color = '#E31F26';
+      }
+    }
+
+    function removeSponsoredProduct() {
+      const devStatus = document.getElementById('devStatus');
+      sponsoredProduct = null;
+      renderProducts();
+      devStatus.innerHTML = '🗑️ Sponsored removed';
+      devStatus.style.color = '#666';
+
+      // Enforce banner dimensions after sponsored product removed
+      if (bannerAdLoaded) {
+        setTimeout(() => enforceBannerDimensions(), 100);
+        setTimeout(() => enforceBannerDimensions(), 300);
+      }
+    }
+
+    function toggleNativeAd() {
+      showNativeAd = !showNativeAd;
+      const devStatus = document.getElementById('devStatus');
+
+      console.log('Toggle native ad:', showNativeAd);
+
+      renderProducts();
+
+      if (showNativeAd) {
+        devStatus.innerHTML = '⏳ Native ad loading...';
+        devStatus.style.color = '#ffc107';
+
+        if (!nativeAdInitialized) {
+          initNativeAd();
+          nativeAdInitialized = true;
+        } else {
+          setTimeout(() => {
+            const nativeAdDiv = document.getElementById('2179_Sponsored_3x_product_-_Tesco_Test');
+            if (nativeAdDiv && nativeAdDiv.innerHTML.length > 100) {
+              devStatus.innerHTML = '✅ Native ad displayed';
+              devStatus.style.color = '#28a745';
+            } else {
+              devStatus.innerHTML = '⚠️ Waiting for ad...';
+              devStatus.style.color = '#ffc107';
+            }
+
+            // Enforce banner dimensions after native ad check
+            if (bannerAdLoaded) {
+              setTimeout(() => enforceBannerDimensions(), 100);
+              setTimeout(() => enforceBannerDimensions(), 300);
+            }
+          }, 500);
+        }
+      } else {
+        devStatus.innerHTML = '🗑️ Native ad hidden';
+        devStatus.style.color = '#666';
+      }
+
+      // Enforce banner dimensions after toggle
+      if (bannerAdLoaded) {
+        setTimeout(() => enforceBannerDimensions(), 100);
+        setTimeout(() => enforceBannerDimensions(), 300);
+        setTimeout(() => enforceBannerDimensions(), 600);
+      }
+    }
+
+    function initNativeAd() {
+      console.log('Initializing native ad...');
+
+      // Wait a bit to ensure the DOM element exists
+      setTimeout(() => {
+        const adContainer = document.getElementById('2179_Sponsored_3x_product_-_Tesco_Test');
+        console.log('Ad container found:', adContainer);
+
+        if (!adContainer) {
+          console.error('Native ad container not found in DOM');
+          return;
+        }
+
+        cnvrtpbjs.que.push(function () {
+          console.log('PubMatic queue executing...');
+          var CNVRTPWT = window.CNVRTPWT || {};
+          var obj = {
+            adUnits: [{
+              code: '2179_Sponsored_3x_product_-_Tesco_Test',
+              ortb2Imp: {
+                tagid: '2179',
+                ext: {}
+              },
+              mediaTypes: {
+                banner: {
+                  sizes: [[0, 0]]
+                }
+              }
+            }],
+            publisherId: '161',
+            accountId: '161',
+            timeout: 1000,
+            adapter: 'prebidServer',
+            endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+            extPrebid: customkeys
+          }
+
+          console.log('Requesting Convert Server...');
+          CNVRTPWT.requestConvertServer(obj);
+
+          console.log('Requesting bids...');
+          cnvrtpbjs.requestBids({
+            timeout: 2000,
+            bidsBackHandler: function (bids) {
+              console.log('Native ad bids received:', bids);
+              CNVRTPWT.renderAllAdUnits(bids);
+
+              // Check multiple times as iframe content loads asynchronously
+              const checkInterval = setInterval(() => {
+                const nativeAdDiv = document.getElementById('2179_Sponsored_3x_product_-_Tesco_Test');
+                const iframe = nativeAdDiv ? nativeAdDiv.querySelector('iframe') : null;
+
+                if (iframe) {
+                  console.log('✅ Native ad iframe found!');
+                  console.log('Iframe current dimensions:', iframe.style.width, iframe.style.height);
+
+                  // Force iframe dimensions to show full content including Add button
+                  iframe.style.width = '100%';
+                  iframe.style.height = '650px';
+                  iframe.style.minHeight = '650px';
+                  iframe.style.display = 'block';
+                  iframe.style.border = 'none';
+                  iframe.style.maxWidth = 'none';
+
+                  // Set attributes too
+                  iframe.setAttribute('width', '100%');
+                  iframe.setAttribute('height', '650');
+
+                  console.log('Iframe dimensions set to:', iframe.style.width, iframe.style.height);
+
+                  const devStatus = document.getElementById('devStatus');
+                  if (devStatus) {
+                    devStatus.innerHTML = '✅ Native ad loaded!';
+                    devStatus.style.color = '#28a745';
+                  }
+
+                  // Enforce banner dimensions after native ad loads
+                  if (bannerAdLoaded) {
+                    setTimeout(() => enforceBannerDimensions(), 100);
+                    setTimeout(() => enforceBannerDimensions(), 300);
+                    setTimeout(() => enforceBannerDimensions(), 600);
+                  }
+
+                  clearInterval(checkInterval);
+                } else if (nativeAdDiv && nativeAdDiv.innerHTML.length > 100) {
+                  console.log('✅ Native ad rendered directly (no iframe)');
+                  const devStatus = document.getElementById('devStatus');
+                  if (devStatus) {
+                    devStatus.innerHTML = '✅ Native ad loaded!';
+                    devStatus.style.color = '#28a745';
+                  }
+
+                  // Enforce banner dimensions
+                  if (bannerAdLoaded) {
+                    setTimeout(() => enforceBannerDimensions(), 100);
+                    setTimeout(() => enforceBannerDimensions(), 300);
+                  }
+
+                  clearInterval(checkInterval);
+                }
+              }, 200);
+
+              // Stop checking after 10 seconds
+              setTimeout(() => {
+                clearInterval(checkInterval);
+              }, 10000);
+            }
+          });
+        });
+      }, 100);
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+
+      console.log('Rendering products - Sponsored:', !!sponsoredProduct, 'Native Ad:', showNativeAd);
+
+      // ========== ROW 1: Always exactly 5 items ==========
+      if (sponsoredProduct) {
+        grid.appendChild(createProductCard(sponsoredProduct));
+        regularProducts.slice(0, 4).forEach(product => {
+          grid.appendChild(createProductCard(product));
+        });
+      } else {
+        regularProducts.slice(0, 5).forEach(product => {
+          grid.appendChild(createProductCard(product));
+        });
+      }
+
+      // ========== NATIVE AD: Inserted after Row 1 (if enabled) ==========
+      if (showNativeAd) {
+        grid.appendChild(createNativeAdContainer());
+      }
+
+      // ========== ROW 2+: Remaining products ==========
+      const remainingStartIndex = sponsoredProduct ? 4 : 5;
+      regularProducts.slice(remainingStartIndex).forEach(product => {
+        grid.appendChild(createProductCard(product));
+      });
+
+      // Enforce banner dimensions after render completes
+      // Multiple attempts to ensure it takes effect during page reflow
+      if (bannerAdLoaded) {
+        setTimeout(() => enforceBannerDimensions(), 50);
+        setTimeout(() => enforceBannerDimensions(), 150);
+        setTimeout(() => enforceBannerDimensions(), 300);
+      }
+    }
+
+    function createNativeAdContainer() {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'native-ad-wrapper';
+      wrapper.id = 'nativeAdWrapper';
+      wrapper.innerHTML = '<div id="2179_Sponsored_3x_product_-_Tesco_Test"></div>';
+      console.log('Native ad container created');
+      return wrapper;
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+
+      const sponsoredBadge = product.isSponsored ? '<span class="sponsored-badge">Sponsored</span>' : '';
+      const fullStars = Math.floor(product.rating || 0);
+      const halfStar = (product.rating || 0) % 1 >= 0.5 ? 1 : 0;
+      const emptyStars = 5 - fullStars - halfStar;
+      const stars = '★'.repeat(fullStars) + (halfStar ? '½' : '') + '☆'.repeat(emptyStars);
+
+      const hasClubcardPrice = Math.random() > 0.5;
+      const clubcardPrice = hasClubcardPrice ? (product.price * 0.9).toFixed(2) : null;
+
+      card.innerHTML = `
+        ${sponsoredBadge}
+        <div class="product-image-container">
+          <img src="${product.image}" alt="${product.name}" class="product-image">
+        </div>
+        <div class="product-info">
+          <a href="#" class="product-name">${product.name}</a>
+          <div class="product-weight">${product.weight}</div>
+          ${product.rating ? `
+            <div class="product-rating">
+              <span class="stars">${stars}</span>
+              <span class="rating-count">${product.rating}</span>
+              <span class="rating-reviews">(${product.reviews})</span>
+            </div>
+          ` : ''}
+          <a href="#" class="more-like-this">More like this ></a>
+          ${clubcardPrice ? `
+            <div class="clubcard-price">
+              <span class="clubcard-badge">Clubcard<br>Price</span>
+              <span class="clubcard-offer">
+                <span>£${clubcardPrice} Clubc... <span style="font-size: 0.85rem;">(£${product.unitPrice.split('£')[1]})</span></span>
+                <span class="clubcard-arrow">›</span>
+              </span>
+            </div>
+            <div class="offer-validity">Offer valid for delivery from<br>10/09/2025 until 05/01/2026</div>
+          ` : ''}
+          <div class="product-price-section">
+            <div class="product-price">£${product.price.toFixed(2)}</div>
+            <div class="product-unit-price">${product.unitPrice}</div>
+            <button class="add-to-basket" onclick='handleAddToBasket(${JSON.stringify(product).replace(/'/g, "&#39;")})'>
+              Add
+            </button>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function handleAddToBasket(product) {
+      if (product.isSponsored && product.bid) {
+        fireClickTracking(product.bid.ext.curl, product.bid.id, product.bid.ext.clickprice);
+      }
+      alert(`Added ${product.name} to your basket!`);
+    }
+
+    function fireImpressionTracking(nurl, bidId) {
+      if (!nurl) return;
+      const img = new Image();
+      img.src = nurl;
+      console.log('Impression tracked:', bidId);
+      showTrackingNotification('impression', bidId, nurl);
+    }
+
+    function fireClickTracking(curl, bidId, clickPrice) {
+      if (!curl) return;
+      const img = new Image();
+      img.src = curl;
+      console.log('Click tracked:', bidId);
+      showTrackingNotification('click', bidId, curl, clickPrice);
+    }
+
+    function showTrackingNotification(type, bidId, url, price = null) {
+      const existing = document.querySelectorAll('.tracking-notification');
+      existing.forEach(el => el.remove());
+
+      const notification = document.createElement('div');
+      notification.className = `tracking-notification ${type}`;
+
+      const title = type === 'impression' ? '👁️ Impression Tracked' : '🖱️ Click Tracked';
+      const priceInfo = price ? `<p><strong>Click Price:</strong> ${price}</p>` : '';
+
+      notification.innerHTML = `
+        <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+        <h4>${title}</h4>
+        <p><strong>Bid ID:</strong> ${bidId}</p>
+        ${priceInfo}
+        <p><strong>URL:</strong></p>
+        <p style="font-size: 0.75rem; word-break: break-all; color: #999;">${url.substring(0, 80)}...</p>
+      `;
+
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 300);
+      }, 5000);
+    }
+
+    function showApiModal() {
+      const modal = document.getElementById('apiModal');
+      const requestDisplay = document.getElementById('requestPayloadDisplay');
+      const responseDisplay = document.getElementById('responsePayloadDisplay');
+
+      requestDisplay.textContent = JSON.stringify(requestPayload, null, 2);
+
+      if (apiResponse) {
+        let displayData = apiResponse;
+        if (apiResponse.responsebody) {
+          try {
+            displayData = typeof apiResponse.responsebody === 'string'
+              ? JSON.parse(apiResponse.responsebody)
+              : apiResponse.responsebody;
+          } catch (e) {
+            displayData = apiResponse;
+          }
+        }
+        responseDisplay.textContent = JSON.stringify(displayData, null, 2);
+      } else {
+        responseDisplay.textContent = 'No response yet. Load a sponsored product first.';
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeApiModal() {
+      document.getElementById('apiModal').classList.remove('active');
+    }
+
+    document.getElementById('apiModal').addEventListener('click', function (e) {
+      if (e.target === this) closeApiModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeApiModal();
+    });
+
+    console.log('Demo ready!');
+  </script>
+</body>
+
+</html>

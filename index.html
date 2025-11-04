@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commerce Media Demos | Digital Advertising Solutions</title>
+    <style>
+        @font-face {
+            font-family: 'TV Nord';
+            src: url('tvnordef-regular-webfont.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'TV Nord';
+            src: url('tvnordef-bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'TV Nord';
+            src: url('tvnordef-black-webfont.woff2') format('woff2');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'TV Nord Condensed';
+            src: url('tvnordef-blackcon-webfont.woff2') format('woff2');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'TV Nord', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #0a2540;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Decorative background waves */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: #0a2540;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+        }
+
+        /* Section Header */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .accent-line {
+            width: 60px;
+            height: 4px;
+            background: #fbbf24;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Demo Cards */
+        .demos-section {
+            margin-bottom: 4rem;
+        }
+
+        .demo-card {
+            background: #ffffff;
+            padding: 3rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #fbbf24;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #00bcd4;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .demo-card-description {
+            color: #0a2540;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .demo-link {
+            display: inline-block;
+            color: #0a2540;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #0a2540;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .demo-link:hover {
+            background: #0a2540;
+            color: #ffffff;
+        }
+
+        /* Grid Layout */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .demo-grid-two {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 3rem;
+            margin: 4rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fbbf24;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            background: #051829;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .demo-grid-two {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .header-content,
+            .hero-content,
+            .container {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-wrapper">
+        <header>
+            <div class="header-content">
+                <img src="pubmatic-logo-white.svg" alt="PubMatic" class="logo">
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Commerce Media Demos</h1>
+                <p>
+                    Experience cutting-edge solutions for retailers, platforms, and advertisers.
+                    Explore our comprehensive suite of digital advertising and commerce media demonstrations.
+                </p>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="section-header">
+                <div class="accent-line"></div>
+                <h2 class="section-title">Our Solutions</h2>
+            </div>
+
+            <!-- All sections with white background -->
+            <div class="demos-section">
+                <!-- Grocery Retail -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">For Grocery Retail</h3>
+                    <p class="demo-card-description">
+                        Maximize ad revenue with AI-powered yield optimization. Gain full control over data
+                        monetization,
+                        premium demand access, and transparent insights through powerful, end-to-end grocery retail
+                        platforms.
+                        Enterprise-scale retail media networks showcasing omnichannel advertising solutions, loyalty
+                        programs,
+                        and integrated commerce media capabilities.
+                    </p>
+                    <div class="demo-grid-two">
+                        <div>
+                            <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">Albertsons</strong>
+                            <a href="./albertsons-demo/public/index.html" class="demo-link">View Demo</a>
+                        </div>
+                        <div>
+                            <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">Grocery Site</strong>
+                            <a href="./grocery-site/public/index.html" class="demo-link">View Demo</a>
+                        </div>
+                    </div>
+                    <div class="demo-grid-two" style="margin-top: 1.5rem;">
+                        <div>
+                            <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">Tesco</strong>
+                            <a href="./tesco-demo/public/index.html" class="demo-link">View Demo</a>
+                        </div>
+                        <div>
+                            <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">Walmart</strong>
+                            <a href="./walmart-demo/public/index.html" class="demo-link">View Demo</a>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">Co-op</strong>
+                        <a href="./coop-demo/public/index.html" class="demo-link">View Demo</a>
+                    </div>
+                </div>
+
+                <!-- Mobility & Delivery -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">For Mobility & Delivery</h3>
+                    <p class="demo-card-description">
+                        Innovative commerce media solutions for mobility and food delivery platforms, featuring
+                        location-based
+                        advertising, journey-based targeting, and real-time customer acquisition strategies.
+                    </p>
+                    <div style="margin-top: 1.5rem;">
+                        <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">Uber</strong>
+                        <a href="./uber-demo/public/index.html" class="demo-link">View Demo</a>
+                    </div>
+                </div>
+
+                <!-- Platform Solutions -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">For Platform Solutions</h3>
+                    <p class="demo-card-description">
+                        Harness AI to unlock smarter media buying. Maximize ROI with real-time insights, programmatic
+                        advertising,
+                        and full transparency across video, CTV, OTT, and digital formats.
+                    </p>
+                    <div class="demo-grid-two">
+                        <div>
+                            <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">PubMatic</strong>
+                            <a href="./pubmatic-demo/public/index.html" class="demo-link">View Demo</a>
+                        </div>
+                        <div>
+                            <strong style="display: block; margin-bottom: 0.5rem; color: #0a2540;">PubMatic
+                                Video</strong>
+                            <a href="./pubmatic-video-demo/public/index.html" class="demo-link">View Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Live Demos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Solutions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Access</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Interactive</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Commerce Media Demos. Powered by PubMatic Technology.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
