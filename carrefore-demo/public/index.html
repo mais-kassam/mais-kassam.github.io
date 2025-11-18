@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chocolate & Confectionery - Carrefour</title>
+  <script async src="https://commercecdn.pubmatic.com/convert/js/prebid/latest/prebid.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+      background: #ffffff;
+      color: #2e2f32;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #9babbb 0%, #b2c4d6 50%, #ffffff 100%);
+      color: #2e2f32;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .sticky-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-combined {
+      padding: 16px 0 12px 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      margin-right: 8px;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0088CE;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-right: 8px;
+      position: relative;
+      font-weight: 700;
+      color: #0088CE;
+    }
+
+    .search-container {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .search-wrapper {
+      display: flex;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    .search-btn {
+      background: white;
+      border: none;
+      padding: 0 20px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #2e2f32;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .header-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      color: #2e2f32;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .header-icon-img {
+      font-size: 24px;
+    }
+
+    .cart-badge {
+      background: #FF4444;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+      position: absolute;
+      top: -4px;
+      right: -4px;
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-item {
+      padding: 8px 0;
+      color: #0056a6;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+      white-space: nowrap;
+      background: none;
+      border: none;
+    }
+
+    .nav-item:hover {
+      color: #003d7a;
+    }
+
+    .banner-ad-container {
+      background: #ffffff;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      position: relative;
+      min-height: 200px;
+      padding: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    div[id="2249_Walmart_Leaderboard"] {
+      width: 100%;
+      max-width: 1400px;
+      min-height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    div[id="2249_Walmart_Leaderboard"] iframe {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 250px !important;
+      display: block;
+      border: none;
+      overflow: visible;
+    }
+
+    .breadcrumb {
+      padding: 16px 0 8px 0;
+      font-size: 14px;
+      color: #74767c;
+    }
+
+    .breadcrumb a {
+      color: #0088CE;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .main-content {
+      padding: 0 0 24px 0;
+      display: flex;
+      gap: 24px;
+    }
+
+    .sidebar {
+      width: 320px;
+      flex-shrink: 0;
+    }
+
+    .page-header-left {
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2e2f32;
+      margin-bottom: 4px;
+    }
+
+    .sort-dropdown {
+      float: right;
+      margin-top: 8px;
+    }
+
+    .sort-btn {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0088CE;
+      transition: all 0.2s;
+    }
+
+    .sort-btn:hover {
+      border-color: #0088CE;
+    }
+
+    .selected-filters {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #e6e6e6;
+    }
+
+    .selected-filters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .selected-filters-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2e2f32;
+    }
+
+    .clear-all-btn {
+      background: none;
+      border: none;
+      color: #0088CE;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .clear-all-btn:hover {
+      text-decoration: underline;
+    }
+
+    .filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #e6f4ff;
+      border: 1px solid #0088CE;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 14px;
+      color: #2e2f32;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .filter-tag-close {
+      background: none;
+      border: none;
+      color: #0088CE;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .filter-tag-close:hover {
+      color: #006ba6;
+    }
+
+    .filters-container {
+      background: white;
+      border: 1px solid #e6e6e6;
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .content-area {
+      flex: 1;
+    }
+
+    .filter-group {
+      margin-bottom: 24px;
+      border-bottom: none;
+      padding: 0;
+      background: white;
+    }
+
+    .filter-group:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .filter-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2e2f32;
+      cursor: default;
+      padding: 0;
+      margin: 0 0 16px 0;
+      transition: none;
+    }
+
+    .filter-title:hover {
+      background: none;
+    }
+
+    .filter-arrow {
+      font-size: 10px;
+      transition: transform 0.2s;
+      color: #74767c;
+      display: none;
+    }
+
+    .filter-search {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 12px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>') no-repeat 12px center;
+      background-size: 16px;
+    }
+
+    .filter-options {
+      padding: 0;
+      max-height: none;
+      overflow: visible;
+    }
+
+    .filter-options.active {
+      max-height: none;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      font-size: 14px;
+      color: #2e2f32;
+      cursor: pointer;
+      transition: none;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .filter-option:hover {
+      background: none;
+    }
+
+    .filter-option-label {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .filter-count {
+      color: #999;
+      font-size: 14px;
+      margin-left: auto;
+    }
+
+    .filter-checkbox {
+      width: 18px;
+      height: 18px;
+      margin-right: 12px;
+      cursor: pointer;
+      accent-color: #0088CE;
+    }
+
+    .show-more-link {
+      color: #0088CE;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .show-more-link:hover {
+      text-decoration: underline;
+    }
+
+    .results-info {
+      color: #74767c;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .product-card {
+      background: white;
+      border: none;
+      border-radius: 0;
+      overflow: visible;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .product-card:hover {
+      box-shadow: none;
+    }
+
+    .product-card:hover .product-image-container {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner-ad-wrapper {
+      grid-column: 1 / -1;
+      background: #f4f4f4;
+      padding: 0;
+      border-radius: 8px;
+      display: block;
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #2151_InContent_AdUnit {
+      width: 100% !important;
+      height: 160px !important;
+      overflow: hidden !important;
+      position: relative !important;
+      display: block !important;
+      line-height: 0 !important;
+    }
+
+    #2151_InContent_AdUnit iframe {
+      width: 100% !important;
+      height: 160px !important;
+      display: block !important;
+      border: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      vertical-align: bottom !important;
+    }
+
+    .ad-label {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #666;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 600;
+      z-index: 5;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #d91c5c;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      z-index: 5;
+    }
+
+    .bestseller-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: #00a69c;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      z-index: 5;
+    }
+
+    .product-image-container {
+      position: relative;
+      background: white;
+      padding: 20px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e6e6e6;
+      border-radius: 16px;
+      margin-bottom: 12px;
+    }
+
+    .product-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .product-info {
+      padding: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .add-btn {
+      width: 32px;
+      height: 32px;
+      background: #0088CE;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      z-index: 10;
+    }
+
+    .add-btn:hover {
+      background: #006ba6;
+    }
+
+    .product-name {
+      font-size: 14px;
+      font-weight: 400;
+      color: #2e2f32;
+      margin-bottom: 4px;
+      line-height: 1.4;
+      min-height: 2.8em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+
+    .product-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2e2f32;
+    }
+
+    .price-currency {
+      font-size: 12px;
+      vertical-align: super;
+    }
+
+    .price-strikethrough {
+      font-size: 13px;
+      color: #999;
+      text-decoration: line-through;
+      font-weight: 400;
+    }
+
+    .product-unit-price {
+      font-size: 12px;
+      color: #999;
+      font-weight: 400;
+    }
+
+    .stock-info {
+      font-size: 12px;
+      color: #d91c5c;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .footer {
+      background: #f4f4f4;
+      padding: 40px 0 20px;
+      margin-top: 60px;
+      border-top: 1px solid #e6e6e6;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2e2f32;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+
+    .footer-section a {
+      color: #74767c;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #e6e6e6;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #74767c;
+    }
+
+    .dev-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      min-width: 280px;
+      border: 2px solid #0088CE;
+    }
+
+    .dev-controls h3 {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0088CE;
+      border-bottom: 2px solid #FF4444;
+      padding-bottom: 8px;
+    }
+
+    .dev-controls button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px 16px;
+      background: #0088CE;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .dev-controls button:hover {
+      background: #006ba6;
+    }
+
+    .dev-controls button.danger {
+      background: #FF4444;
+    }
+
+    .dev-controls button.secondary {
+      background: #74767c;
+    }
+
+    #devStatus {
+      margin-top: 12px;
+      font-size: 13px;
+      padding: 10px;
+      border-radius: 4px;
+      background: #f4f4f4;
+    }
+
+    .tracking-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      max-width: 400px;
+      border-left: 4px solid #0088CE;
+    }
+
+    .tracking-notification h4 {
+      margin-bottom: 10px;
+      color: #2e2f32;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .tracking-notification p {
+      margin: 5px 0;
+      font-size: 13px;
+      color: #74767c;
+    }
+
+    .tracking-notification .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #74767c;
+      cursor: pointer;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 8px;
+      max-width: 900px;
+      width: 90%;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      background: #0088CE;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-section {
+      margin-bottom: 30px;
+    }
+
+    .modal-section h3 {
+      color: #0088CE;
+      margin-bottom: 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .modal-section pre {
+      background: #2e2f32;
+      color: #f4f4f4;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      max-height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <iframe src="https://commercecdn.pubmatic.com/convert/js/v1/latest/cookieSync.html?p=161" width="0" height="0"
+    style="display:none;"></iframe>
+
+  <div class="sticky-wrapper">
+    <header class="header">
+      <div class="header-combined">
+        <div class="container">
+          <div class="header-content">
+            <a href="#" class="logo">
+              <img src="carrefour-logo.png" alt="Carrefour" style="height: 40px; width: auto;"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div style="display: none; align-items: center;">
+                <div class="logo-icon">C</div>
+                <span class="logo-text">Carrefour</span>
+              </div>
+            </a>
+            <div class="search-container">
+              <div class="search-wrapper">
+                <input type="text" class="search-input" placeholder="Search 50,000+ items">
+                <button class="search-btn">🔍</button>
+              </div>
+            </div>
+            <div class="header-actions">
+              <a href="#" class="header-icon">
+                <div class="header-icon-img">🇦🇪</div>
+                <span>UAE</span>
+              </a>
+              <a href="#" class="header-icon">
+                <div class="header-icon-img">👤</div>
+                <span>Login & Register</span>
+              </a>
+              <a href="#" class="header-icon" style="position: relative;">
+                <div class="header-icon-img">🛒</div>
+                <span>0</span>
+                <div class="cart-badge">0</div>
+              </a>
+            </div>
+          </div>
+          <div class="nav-content">
+            <a href="#" class="nav-item">All Categories</a>
+            <a href="#" class="nav-item">Fresh Food</a>
+            <a href="#" class="nav-item">Fruits & Veg</a>
+            <a href="#" class="nav-item">Food Cupboard</a>
+            <a href="#" class="nav-item">Beverages</a>
+            <a href="#" class="nav-item">Baby Products</a>
+            <a href="#" class="nav-item">Smartphones, Tablets & Wearables</a>
+            <a href="#" class="nav-item">Electronics & Appliances</a>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="banner-ad-container">
+    <script async src="https://commercecdn.pubmatic.com/convert/js/prebid/latest/prebid.js"></script>
+    <iframe src="https://commercecdn.pubmatic.com/convert/js/v1/latest/cookieSync.html?p=161" width="1600" height="200"
+      style="display:none;"></iframe>
+    <script>
+      var cnvrtpbjs = cnvrtpbjs || {};
+      cnvrtpbjs.que = cnvrtpbjs.que || [];
+
+      var customkeys = { TargetingParams: {} };
+
+      cnvrtpbjs.que.push(function () {
+        var CNVRTPWT = window.CNVRTPWT || {};
+        var obj = {
+          adUnits: [{
+            code: '2249_Walmart_Leaderboard',
+            ortb2Imp: {
+              tagid: '2249',
+              ext: {}
+            },
+            mediaTypes: {
+              banner: {
+                sizes: [
+                  [0, 0]
+                ]
+              }
+            }
+          }],
+          publisherId: '161',
+          accountId: '161',
+          timeout: 1000,
+          adapter: 'prebidServer',
+          endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+          extPrebid: customkeys
+        }
+        CNVRTPWT.requestConvertServer(obj);
+        cnvrtpbjs.requestBids({
+          timeout: 2000,
+          bidsBackHandler: CNVRTPWT.renderAllAdUnits
+        });
+      });
+    </script>
+    <div id=2249_Walmart_Leaderboard>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="#">Home</a> › <a href="#">Food Cupboard</a> › <span>Chocolate & Confectionery</span>
+    </div>
+
+    <main class="main-content">
+      <aside class="sidebar">
+        <div class="page-header-left">
+          <h1 class="page-title">Chocolate & Confectionery</h1>
+          <div class="sort-dropdown">
+            <button class="sort-btn">Sort by: Relevance ▾</button>
+          </div>
+        </div>
+
+        <div class="selected-filters">
+          <div class="selected-filters-header">
+            <h3 class="selected-filters-title">Deals</h3>
+          </div>
+          <div class="filter-tag">
+            Today's Deals
+            <button class="filter-tag-close">×</button>
+          </div>
+        </div>
+
+        <div class="filters-container">
+          <div class="filter-group">
+            <div class="filter-title">Brand</div>
+            <input type="text" class="filter-search" placeholder="Search Brand">
+            <div class="filter-options active">
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Carrefour</span>
+                </div>
+                <span class="filter-count">(136)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Galaxy</span>
+                </div>
+                <span class="filter-count">(57)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Wrigleys</span>
+                </div>
+                <span class="filter-count">(48)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Cadbury</span>
+                </div>
+                <span class="filter-count">(47)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Kitkat</span>
+                </div>
+                <span class="filter-count">(42)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Lindt</span>
+                </div>
+                <span class="filter-count">(31)</span>
+              </label>
+              <a href="#" class="show-more-link">Show more (80)</a>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title">Origin Country</div>
+            <div class="filter-options active">
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>United Arab Emirates</span>
+                </div>
+                <span class="filter-count">(215)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Egypt</span>
+                </div>
+                <span class="filter-count">(75)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>Saudi Arabia</span>
+                </div>
+                <span class="filter-count">(63)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>United States</span>
+                </div>
+                <span class="filter-count">(54)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>United Kingdom</span>
+                </div>
+                <span class="filter-count">(53)</span>
+              </label>
+              <label class="filter-option">
+                <div class="filter-option-label">
+                  <input type="checkbox" class="filter-checkbox">
+                  <span>France</span>
+                </div>
+                <span class="filter-count">(50)</span>
+              </label>
+              <a href="#" class="show-more-link">Show more (32)</a>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title">Size</div>
+            <div class="filter-options"></div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="content-area">
+        <p class="results-info" id="resultsInfo">Loading...</p>
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Carrefour</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2025 Carrefour. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <div class="dev-controls">
+    <h3>Demo Controls</h3>
+    <button onclick="loadAllSponsoredAds()">⭐ Load All Sponsored Ads</button>
+    <button onclick="removeAllSponsoredAds()" class="danger">❌ Remove Sponsored Ads</button>
+    <button onclick="showApiModal()" class="secondary">📊 View API Data</button>
+    <div id="devStatus"></div>
+  </div>
+
+  <div class="modal-overlay" id="apiModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>API Request & Response</h2>
+        <button class="modal-close" onclick="closeApiModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Request</h3>
+          <pre id="requestPayloadDisplay"></pre>
+        </div>
+        <div class="modal-section">
+          <h3>Response</h3>
+          <pre id="responsePayloadDisplay"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var cnvrtpbjs = cnvrtpbjs || {};
+    cnvrtpbjs.que = cnvrtpbjs.que || [];
+    var customkeys = { TargetingParams: {} };
+
+    var API_BASE_URL = 'https://pubmatic-proxy-server.fly.dev';
+    var API_ENDPOINT = API_BASE_URL + '/api/sponsored-products';
+
+    var regularProducts = [
+      { name: "Ovomaltine Crunchy Chocolate Bar", weight: "100g", price: 16.99, unitPrice: "16.99/100g", image: "https://cdn.mafrservices.com/pim-content/UAE/media/product/1922757/1756364404/1922757_main.jpg?im=Resize=400" },
+      { name: "Ovomaltine Crunchy Chocolate Bar", weight: "42g", price: 8.99, unitPrice: "21.40/100g", image: "https://cdn.mafrservices.com/pim-content/UAE/media/product/1922758/1756364404/1922758_main.jpg?im=Resize=400" },
+      { name: "Best of Minis Pouch 35 Chocolate Bars", weight: "710g", price: 52.99, unitPrice: "7.46/100g", image: "https://cdn.mafrservices.com/sys-master-root/h1a/h3b/61938922684446/467826_main.jpg?im=Resize=400", offer: "Save with SHARE", badge: "Bestseller" },
+      { name: "Venice Pistachio Kunafa Chocolate", weight: "130g", price: 20.00, unitPrice: "15.38/100g", image: "https://cdn.mafrservices.com/pim-content/UAE/media/product/2217608/1761624604/2217608_main.jpg?im=Resize=400" },
+      { name: "Mentos White Sugar Free Chewing Gum", weight: "87.5g", price: 8.75, unitPrice: "10.00/100g", image: "https://cdn.mafrservices.com/sys-master-root/hf2/h06/13185713209374/776389_main.jpg?im=Resize=400" },
+      { name: "Mentos Pure Fresh Spearmint", weight: "87.5g", price: 12.75, unitPrice: "14.57/100g", image: "https://cdn.mafrservices.com/sys-master-root/h48/hc8/12634735869982/1542543_main.jpg?im=Resize=400" },
+      { name: "Snickers Miniature Chocolate Bar", weight: "180g", price: 15.00, oldPrice: 30.00, unitPrice: "8.33/100g", image: "https://cdn.mafrservices.com/pim-content/UAE/media/product/1041971/1741919595/1041971_main.jpg?im=Resize=400", offer: "50% off", stock: "Only 5 left" },
+      { name: "Nestle KitKat 4 Finger Chocolate Wafer", weight: "36.5g", price: 3.75, unitPrice: "10.27/100g", image: "https://cdn.mafrservices.com/pim-content/UAE/media/product/657995/1730718004/657995_main.jpg?im=Resize=400", offer: "Save with SHARE" },
+      { name: "Galaxy Smooth Milk Chocolate", weight: "200g", price: 15.50, unitPrice: "7.75/100g", image: "https://digitalcontent.api.tesco.com/v2/media/ghs/d2441e20-a3cf-433b-a711-6fe15daa9018/c59fdc20-b0da-40d0-a14b-fdeb904a4d6e_138061775.jpeg?h=225&w=225" }
+    ];
+
+    var requestPayload = {
+      id: "BidRequestIDd_01_00234",
+      site: { id: "commercepartner_abc", domain: "www.commercepartner_abc.com", publisher: { id: "161" }, ext: { page_name: "" } },
+      tmax: 50000, device: {}, user: { id: "eedww123qed121212413321unique" },
+      imp: [{ id: "ImpID1331", bidfloor: 0.01, ext: { commerce: { slots_requested: 1, preferred: [{ pid: "18" }], targeting: [{ name: "keyword", value: "chocolate" }] } } }]
+    };
+
+    var sponsoredProduct = null;
+    var bannerAdLoaded = false;
+    var apiResponse = null;
+
+    window.addEventListener('DOMContentLoaded', function () {
+      loadStandardProducts();
+    });
+
+    function loadStandardProducts() {
+      var grid = document.getElementById('productGrid');
+      var resultsInfo = document.getElementById('resultsInfo');
+      var devStatus = document.getElementById('devStatus');
+
+      grid.innerHTML = '';
+
+      for (var i = 0; i < regularProducts.length; i++) {
+        grid.appendChild(createProductCard(regularProducts[i]));
+      }
+
+      resultsInfo.textContent = regularProducts.length + ' results';
+      devStatus.innerHTML = '✅ Standard products loaded';
+      devStatus.style.color = '#0088CE';
+    }
+
+    function loadAllSponsoredAds() {
+      var devStatus = document.getElementById('devStatus');
+      devStatus.innerHTML = '⏳ Loading sponsored ads...';
+      devStatus.style.color = '#FF4444';
+
+      fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestPayload)
+      })
+        .then(function (response) {
+          if (response.ok) return response.json();
+          throw new Error('HTTP error ' + response.status);
+        })
+        .then(function (data) {
+          apiResponse = data;
+          if (data.seatbid && data.seatbid.length > 0) {
+            for (var i = 0; i < data.seatbid.length; i++) {
+              var seatbid = data.seatbid[i];
+              for (var j = 0; j < seatbid.bid.length; j++) {
+                var bid = seatbid.bid[j];
+                if (bid.ext && bid.ext.productid === "18") {
+                  sponsoredProduct = {
+                    name: "Kinder Bueno Milk Chocolate & Hazelnut", weight: "43g, 6 pack", price: 18.50, unitPrice: "7.17/100g",
+                    image: "https://assets.sainsburys-groceries.co.uk/gol/7455488/1/640x640.jpg",
+                    isSponsored: true, bid: bid
+                  };
+
+                  bannerAdLoaded = true;
+                  loadInContentBannerAd();
+
+                  renderProducts();
+                  fireImpressionTracking(bid.nurl, bid.id);
+                  devStatus.innerHTML = '✅ All sponsored ads loaded!';
+                  devStatus.style.color = '#0088CE';
+                }
+              }
+            }
+          }
+        })
+        .catch(function (error) {
+          devStatus.innerHTML = '❌ Error: ' + error.message;
+          devStatus.style.color = '#FF4444';
+        });
+    }
+
+    function loadInContentBannerAd() {
+      cnvrtpbjs.que.push(function () {
+        var CNVRTPWT = window.CNVRTPWT || {};
+        var obj = {
+          adUnits: [{
+            code: '2151_InContent_AdUnit',
+            ortb2Imp: {
+              tagid: '2151',
+              ext: {}
+            },
+            mediaTypes: {
+              banner: {
+                sizes: [[0, 0]]
+              }
+            }
+          }],
+          publisherId: '161',
+          accountId: '161',
+          timeout: 1000,
+          adapter: 'prebidServer',
+          endpoint: 'https://cmpbid.pubmatic.com/convert/onsite/multi',
+          extPrebid: customkeys
+        }
+        CNVRTPWT.requestConvertServer(obj);
+        cnvrtpbjs.requestBids({
+          timeout: 2000,
+          bidsBackHandler: CNVRTPWT.renderAllAdUnits
+        });
+      });
+
+      setTimeout(function () {
+        var adContainer = document.getElementById('2151_InContent_AdUnit');
+        if (adContainer) {
+          var observer = new MutationObserver(function () {
+            var iframe = adContainer.querySelector('iframe');
+            if (iframe) {
+              iframe.style.width = '100%';
+              iframe.style.height = '160px';
+              iframe.style.display = 'block';
+              iframe.style.verticalAlign = 'bottom';
+            }
+          });
+          observer.observe(adContainer, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+        }
+      }, 100);
+    }
+
+    function removeAllSponsoredAds() {
+      var devStatus = document.getElementById('devStatus');
+      sponsoredProduct = null;
+      bannerAdLoaded = false;
+      renderProducts();
+      devStatus.innerHTML = '🗑️ Sponsored ads removed';
+      devStatus.style.color = '#74767c';
+    }
+
+    function renderProducts() {
+      var grid = document.getElementById('productGrid');
+      var resultsInfo = document.getElementById('resultsInfo');
+
+      grid.innerHTML = '';
+
+      if (sponsoredProduct) {
+        grid.appendChild(createProductCard(sponsoredProduct));
+
+        for (var i = 0; i < 3; i++) {
+          grid.appendChild(createProductCard(regularProducts[i]));
+        }
+
+        if (bannerAdLoaded) {
+          var bannerWrapper = document.createElement('div');
+          bannerWrapper.className = 'banner-ad-wrapper';
+          bannerWrapper.innerHTML = '<div id="2151_InContent_AdUnit"></div>';
+          grid.appendChild(bannerWrapper);
+        }
+
+        for (var i = 3; i < regularProducts.length; i++) {
+          grid.appendChild(createProductCard(regularProducts[i]));
+        }
+      } else {
+        for (var i = 0; i < regularProducts.length; i++) {
+          grid.appendChild(createProductCard(regularProducts[i]));
+        }
+      }
+
+      var totalProducts = regularProducts.length + (sponsoredProduct ? 1 : 0);
+      resultsInfo.textContent = totalProducts + ' results';
+    }
+
+    function createProductCard(product) {
+      var card = document.createElement('div');
+      card.className = 'product-card';
+
+      var adLabel = product.isSponsored ? '<div class="ad-label">Ad</div>' : '';
+      var offerBadge = product.offer && product.offer !== 'Ad' ? '<div class="offer-badge">' + product.offer + '</div>' : '';
+      var bestseller = product.badge === 'Bestseller' ? '<div class="bestseller-badge">Bestseller</div>' : '';
+      var stockInfo = product.stock ? '<div class="stock-info">' + product.stock + '</div>' : '';
+      var strikethrough = product.oldPrice ? '<span class="price-strikethrough">AED ' + product.oldPrice.toFixed(2) + '</span>' : '';
+
+      var priceWhole = Math.floor(product.price);
+      var priceDecimal = ((product.price - priceWhole) * 100).toFixed(0);
+      if (priceDecimal.length === 1) priceDecimal = priceDecimal + '0';
+
+      card.innerHTML =
+        '<div class="product-image-container">' +
+        adLabel +
+        offerBadge +
+        bestseller +
+        '<button class="add-btn" onclick="handleAddToBasket(\'' + product.name.replace(/'/g, "\\'") + '\', ' + (product.isSponsored ? 'true' : 'false') + ')">+</button>' +
+        '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' +
+        '</div>' +
+        '<div class="product-info">' +
+        '<div class="product-name">' + product.name + '</div>' +
+        '<div class="product-price-row">' +
+        '<span class="product-price">' + priceWhole + '<span class="price-currency">.' + priceDecimal + '</span></span> ' +
+        '<span class="price-currency">AED</span> ' +
+        strikethrough +
+        '</div>' +
+        '<span class="product-unit-price">' + product.unitPrice + '</span>' +
+        stockInfo +
+        '</div>';
+
+      if (product.isSponsored) {
+        card.dataset.bid = JSON.stringify(product.bid);
+      }
+
+      return card;
+    }
+
+    function handleAddToBasket(productName, isSponsored) {
+      if (isSponsored && sponsoredProduct && sponsoredProduct.bid) {
+        fireClickTracking(sponsoredProduct.bid.ext.curl, sponsoredProduct.bid.id, sponsoredProduct.bid.ext.clickprice);
+      }
+      alert('Added ' + productName + ' to your cart!');
+    }
+
+    function fireImpressionTracking(nurl, bidId) {
+      if (!nurl) return;
+      var img = new Image();
+      img.src = nurl;
+      showTrackingNotification('impression', bidId, nurl);
+    }
+
+    function fireClickTracking(curl, bidId, clickPrice) {
+      if (!curl) return;
+      var img = new Image();
+      img.src = curl;
+      showTrackingNotification('click', bidId, curl, clickPrice);
+    }
+
+    function showTrackingNotification(type, bidId, url, price) {
+      var existing = document.querySelectorAll('.tracking-notification');
+      for (var i = 0; i < existing.length; i++) {
+        existing[i].remove();
+      }
+
+      var notification = document.createElement('div');
+      notification.className = 'tracking-notification';
+
+      var title = type === 'impression' ? '👁️ Impression Tracked' : '🖱️ Click Tracked';
+      var priceInfo = price ? '<p><strong>Click Price:</strong> ' + price + '</p>' : '';
+
+      notification.innerHTML = '<button class="close-btn" onclick="this.parentElement.remove()">×</button>' +
+        '<h4>' + title + '</h4>' +
+        '<p><strong>Bid ID:</strong> ' + bidId + '</p>' + priceInfo +
+        '<p><strong>Tracking URL:</strong></p>' +
+        '<p style="font-size: 11px; word-break: break-all; color: #999;">' + url.substring(0, 100) + '...</p>';
+
+      document.body.appendChild(notification);
+
+      setTimeout(function () {
+        notification.style.opacity = '0';
+        setTimeout(function () { notification.remove(); }, 300);
+      }, 5000);
+    }
+
+    function showApiModal() {
+      var modal = document.getElementById('apiModal');
+      var requestDisplay = document.getElementById('requestPayloadDisplay');
+      var responseDisplay = document.getElementById('responsePayloadDisplay');
+
+      requestDisplay.textContent = JSON.stringify(requestPayload, null, 2);
+
+      if (apiResponse) {
+        responseDisplay.textContent = JSON.stringify(apiResponse, null, 2);
+      } else {
+        responseDisplay.textContent = 'No response yet. Load sponsored ads first.';
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeApiModal() {
+      document.getElementById('apiModal').classList.remove('active');
+    }
+
+    document.getElementById('apiModal').addEventListener('click', function (e) {
+      if (e.target === this) closeApiModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeApiModal();
+    });
+  </script>
+</body>
+
+</html>
