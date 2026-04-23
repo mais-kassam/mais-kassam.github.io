@@ -377,15 +377,13 @@
         await this.processUpload(mediaId, file.name, file.type);
 
         onStage('Analyzing emotions...', 72, mediaId);
-        await this.pollMediaStatus(mediaId, APP_CONFIG.maxPollAttempts, APP_CONFIG.pollIntervalMs, ({ attempt, status }) => {
+        const mediaBody = await this.pollMediaStatus(mediaId, APP_CONFIG.maxPollAttempts, APP_CONFIG.pollIntervalMs, ({ attempt, status }) => {
           const ratio = Math.min(92, 72 + attempt * 2.5);
           onStage(`Analyzing emotions... Attempt ${attempt} · ${status}`, ratio, mediaId);
         });
 
-        onStage('Fetching emotion results...', 96, mediaId);
-        const results = await this.getResults(mediaId);
         onStage('Analysis complete!', 100, mediaId);
-        return { mediaId, results: results.body };
+        return { mediaId, results: mediaBody };
       }
 
       async request({ step, method, url, headers = {}, body, rawBody, logBody }) {
