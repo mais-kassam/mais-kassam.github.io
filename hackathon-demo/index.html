@@ -353,7 +353,7 @@
           const body = response?.body;
           const status = body?.status || body?.data?.status || 'UNKNOWN';
           const runs = body?.analysis_model_runs || [];
-          const analysisComplete = runs.length === 0 || runs.every(r => String(r.status).toUpperCase() !== 'IN_PROGRESS');
+          const analysisComplete = runs.length === 0 || runs.every(r => !['IN_PROGRESS', 'PENDING'].includes(String(r.status).toUpperCase()));
           onProgress({ attempt, status, response });
           if (String(status).toUpperCase() === 'SUCCESS' && analysisComplete) return body;
           if (['FAILED', 'ERROR'].includes(String(status).toUpperCase())) {
