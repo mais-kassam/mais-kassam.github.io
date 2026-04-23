@@ -9,7 +9,7 @@ const DAIVID_BASE = 'api.daivid.co';
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, daivid-api-key');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, daivid-api-key, x-target-url');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
