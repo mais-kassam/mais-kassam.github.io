@@ -666,40 +666,31 @@
     }
 
     function pushApiLog(log) {
-      state.apiLogs = [...state.apiLogs, {
-        ...log,
-        shortUrl: shortenUrl(log.url)
-      }];
+      const isPolling = log.step.startsWith('Step 4:');
+      const entry = { ...log, shortUrl: shortenUrl(log.url) };
+      state.apiLogs = isPolling
+        ? [...state.apiLogs.filter(l => !l.step.startsWith('Step 4:')), entry]
+        : [...state.apiLogs, entry];
       renderLogs();
     }
 
+    const META_KEYS = new Set(['intense_positive_emotions','intense_negative_emotions','brand_search','brand_buy','brand_recommend','brand_share','recall_correct','recall_competitor','recall_could_not_tell','recall_cant_remember','recall_no_brand','attention','creative_effectiveness_score']);
+
     function extractTopEmotions(results) {
-      const candidates = [];
-      walkEmotionValues(results, '', candidates);
-      const deduped = new Map();
-      candidates.forEach(({ name, score }) => {
-        const normalizedName = formatEmotionName(name);
-        const current = deduped.get(normalizedName);
-        if (!current || score > current.score) deduped.set(normalizedName, { name: normalizedName, score });
-      });
-      return [...deduped.values()].filter(item => item.score > 0).sort((a, b) => b.score - a.score).slice(0, 4);
-    }
-
-    function walkEmotionValues(value, path, bucket) {
-      if (!value || typeof value !== 'object') return;
-      Object.entries(value).forEach(([key, nested]) => {
-        const nextPath = path ? `${path}.${key}` : key;
-        if (typeof nested === 'number' && isEmotionLikeKey(key)) {
-          bucket.push({ name: key, score: nested <= 1 ? nested * 100 : nested });
-        } else if (nested && typeof nested === 'object') {
-          walkEmotionValues(nested, nextPath, bucket);
+      // Results come from analysis_model_runs[*].results
+      const runs = results?.analysis_model_runs || [];
+      for (const run of runs) {
+        const data = run?.results;
+        if (data && typeof data === 'object') {
+          return Object.entries(data)
+            .filter(([key, v]) => !META_KEYS.has(key) && v && typeof v.overall === 'number')
+            .map(([key, v]) => ({ name: v.label || formatEmotionName(key), score: v.overall }))
+            .filter(e => e.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 4);
         }
-      });
-    }
-
-    function isEmotionLikeKey(key) {
-      const blocked = ['frame', 'second', 'time', 'start', 'end', 'duration', 'confidence', 'score'];
-      return !blocked.includes(key.toLowerCase()) && /^[a-z_\- ]+$/i.test(key);
+      }
+      return [];
     }
 
     function formatEmotionName(value) {
