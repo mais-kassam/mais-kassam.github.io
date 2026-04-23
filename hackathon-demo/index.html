@@ -350,11 +350,14 @@
       async pollMediaStatus(mediaId, maxAttempts = 60, intervalMs = 4000, onProgress = () => {}) {
         for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
           const response = await this.getMedia(mediaId, attempt);
-          const status = response?.body?.status || response?.body?.data?.status || 'UNKNOWN';
+          const body = response?.body;
+          const status = body?.status || body?.data?.status || 'UNKNOWN';
+          const runs = body?.analysis_model_runs || [];
+          const analysisComplete = runs.length === 0 || runs.every(r => String(r.status).toUpperCase() !== 'IN_PROGRESS');
           onProgress({ attempt, status, response });
-          if (String(status).toUpperCase() === 'SUCCESS') return response.body;
+          if (String(status).toUpperCase() === 'SUCCESS' && analysisComplete) return body;
           if (['FAILED', 'ERROR'].includes(String(status).toUpperCase())) {
-            throw new Error(response?.body?.message || `Processing failed with status ${status}`);
+            throw new Error(body?.message || `Processing failed with status ${status}`);
           }
           await new Promise(resolve => setTimeout(resolve, intervalMs));
         }
