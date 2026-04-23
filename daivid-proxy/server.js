@@ -40,7 +40,7 @@ app.use('/v1', (req, res) => {
 });
 
 // Proxy a PUT to an arbitrary presigned S3 URL
-// Frontend sends: PUT /s3-upload with x-target-url header and raw file body
+// Buffers the full body first so Content-Length can be set (required by S3)
 app.put('/s3-upload', (req, res) => {
   const targetUrl = req.headers['x-target-url'];
   if (!targetUrl) return res.status(400).json({ message: 'Missing x-target-url header' });
@@ -50,22 +50,30 @@ app.put('/s3-upload', (req, res) => {
     return res.status(400).json({ message: 'Invalid x-target-url' });
   }
 
-  const options = {
-    hostname: parsed.hostname,
-    path: parsed.pathname + parsed.search,
-    method: 'PUT',
-    headers: {
-      'content-type': req.headers['content-type'] || 'application/octet-stream',
-    },
-  };
+  const chunks = [];
+  req.on('data', (chunk) => chunks.push(chunk));
+  req.on('end', () => {
+    const body = Buffer.concat(chunks);
+    const options = {
+      hostname: parsed.hostname,
+      path: parsed.pathname + parsed.search,
+      method: 'PUT',
+      headers: {
+        'content-type': req.headers['content-type'] || 'application/octet-stream',
+        'content-length': body.length,
+      },
+    };
 
-  const proxy = https.request(options, (upstream) => {
-    res.status(upstream.statusCode);
-    upstream.pipe(res);
+    const s3req = https.request(options, (upstream) => {
+      res.status(upstream.statusCode);
+      upstream.pipe(res);
+    });
+
+    s3req.on('error', (err) => res.status(502).json({ message: err.message }));
+    s3req.write(body);
+    s3req.end();
   });
-
-  proxy.on('error', (err) => res.status(502).json({ message: err.message }));
-  req.pipe(proxy);
+  req.on('error', (err) => res.status(500).json({ message: err.message }));
 });
 
 app.get('/health', (_req, res) => res.json({ ok: true }));
