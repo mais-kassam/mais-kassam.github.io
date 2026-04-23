@@ -39,6 +39,35 @@ app.use('/v1', (req, res) => {
   req.pipe(proxy);
 });
 
+// Proxy a PUT to an arbitrary presigned S3 URL
+// Frontend sends: PUT /s3-upload with x-target-url header and raw file body
+app.put('/s3-upload', (req, res) => {
+  const targetUrl = req.headers['x-target-url'];
+  if (!targetUrl) return res.status(400).json({ message: 'Missing x-target-url header' });
+
+  let parsed;
+  try { parsed = new URL(targetUrl); } catch {
+    return res.status(400).json({ message: 'Invalid x-target-url' });
+  }
+
+  const options = {
+    hostname: parsed.hostname,
+    path: parsed.pathname + parsed.search,
+    method: 'PUT',
+    headers: {
+      'content-type': req.headers['content-type'] || 'application/octet-stream',
+    },
+  };
+
+  const proxy = https.request(options, (upstream) => {
+    res.status(upstream.statusCode);
+    upstream.pipe(res);
+  });
+
+  proxy.on('error', (err) => res.status(502).json({ message: err.message }));
+  req.pipe(proxy);
+});
+
 app.get('/health', (_req, res) => res.json({ ok: true }));
 
 app.listen(PORT, () => console.log(`Daivid proxy listening on port ${PORT}`));

@@ -308,11 +308,12 @@
       }
 
       async uploadFile(uploadUrl, file, contentType) {
+        const proxyBase = this.baseUrl.replace(/\/v1$/, '');
         return this.request({
           step: 'Step 2: Upload File',
           method: 'PUT',
-          url: uploadUrl,
-          headers: { 'Content-Type': contentType },
+          url: `${proxyBase}/s3-upload`,
+          headers: { 'Content-Type': contentType, 'x-target-url': uploadUrl },
           rawBody: file,
           logBody: { filename: file.name, size: file.size, content_type: contentType, binary: true }
         });
